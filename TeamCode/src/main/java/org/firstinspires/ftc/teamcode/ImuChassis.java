@@ -7,12 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.teamcode.RelicRecovery.ConfigStrings;
-import org.firstinspires.ftc.teamcode.RelicRecovery.IMU;
 
-/**
- * Created by jezebelquit on 8/12/17.
- */
 
 public class ImuChassis {
     private static int[] ORIGIN = {0,0};
@@ -51,7 +46,6 @@ public class ImuChassis {
         rightMotor.setPower(0);
     }
 
-<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Sorter_Robot/Autonomous/ModularAutonomous/ImuChassis.java
     //SmartImu converts angles to Imu angles, which also serves to loop the Imu angle when adding two angles
     public static float smartImu(float input){
         while (input <= -180) {
@@ -65,9 +59,6 @@ public class ImuChassis {
 
     public void turnToAngle (float angleTo, double power){
 
-=======
-    public void turnToAngle(float angleTo, double power) {
->>>>>>> origin/master:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/RelicRecovery/ImuChassis.java
         float currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
 
         float angleDifference = Math.abs(currentAngle - angleTo);
