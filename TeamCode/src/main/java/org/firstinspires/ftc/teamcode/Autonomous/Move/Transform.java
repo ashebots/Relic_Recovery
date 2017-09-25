@@ -5,7 +5,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autonomous/Move/Transform.java
 
+=======
+>>>>>>> origin/master:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Move/Transform.java
 
 import java.util.Queue;
 
