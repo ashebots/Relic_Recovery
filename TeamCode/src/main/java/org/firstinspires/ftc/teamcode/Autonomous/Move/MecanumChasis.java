@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Move;
+package org.firstinspires.ftc.teamcode.Autonomous.Move;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -23,7 +23,7 @@ public class MecanumChasis {
         rightF = hardwareMap.dcMotor.get(ConfigStrings.RightMotor);
         rightB = hardwareMap.dcMotor.get(ConfigStrings.RightBackMotor);
         IMU = hardwareMap.get(BNO055IMU.class, ConfigStrings.IMU);
-        imu = new GoodIMU(IMU, org.firstinspires.ftc.teamcode.Move.IMU.Unit.RADIAN);
+        imu = new GoodIMU(IMU, org.firstinspires.ftc.teamcode.Autonomous.Move.IMU.Unit.RADIAN);
     }
 
     public void drive(double driveAngle, double targetAngle, double speed){

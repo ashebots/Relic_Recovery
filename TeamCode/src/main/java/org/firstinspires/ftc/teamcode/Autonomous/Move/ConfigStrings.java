@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Move;
+package org.firstinspires.ftc.teamcode.Autonomous.Move;
 
 public class ConfigStrings {
     public static final String LeftMotor = "Left";
