@@ -30,12 +30,10 @@ public class ImuChassis {
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         this.leftMotor = leftMotor;
 
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         this.rightMotor = rightMotor;
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -43,7 +41,6 @@ public class ImuChassis {
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.mode = BNO055IMU.SensorMode.NDOF;
         imu.initialize(parameters);
-
         this.imu = imu;
 
         this.maxSpeed = maxSpeed;
@@ -52,11 +49,11 @@ public class ImuChassis {
 
 
     //Simple programs to turn or drive forward at the motor speed you input, as well as stop
-    public void driveAtPower(double speed) {
+    public void driveAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(speed);
     }
-    public void turnAtPower(double speed) {
+    public void turnAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(-speed);
     }
@@ -91,26 +88,26 @@ public class ImuChassis {
         if (turnToRight) {
 
             while (currentAngle > angleTo) {
-                turnAtPower(speed);
+                turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
             stop();
 
             while (currentAngle < angleTo){
-                turnAtPower(speed);
+                turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
 
         } else{
 
             while (currentAngle < angleTo) {
-                turnAtPower(-speed);
+                turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
             stop();
 
             while (currentAngle > angleTo){
-                turnAtPower(-speed);
+                turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
         }
@@ -142,7 +139,7 @@ public class ImuChassis {
         rightMotor.setTargetPosition(rightGoal);
 
         while (leftMotor.getCurrentPosition() != leftGoal){
-            driveAtPower(power);
+            driveAtSpeed(power);
         }
 
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -158,7 +155,7 @@ public class ImuChassis {
         int distance = (int)Math.sqrt((startPosition[1]-coords[1])*(startPosition[1]-coords[1])+(startPosition[0]-coords[0])*(startPosition[0]-coords[0]));
 
         if (startPosition[0] != coords[0]) {
-            angleTo = (float) -Math.atan((startPosition[1] - coords[1]) / (startPosition[0] - coords[0]));
+            angleTo = (float) -Math.toDegrees(Math.atan((startPosition[1] - coords[1]) / (startPosition[0] - coords[0])));
 
         }else if (startPosition[1] < coords[1]){
             angleTo = -90;
@@ -171,7 +168,7 @@ public class ImuChassis {
         if (startPosition[0] > coords[0]){
             angleTo = angleTo - 180;
 
-            if (startPosition[1] > coords[1]){
+            if (startPosition[1] >= coords[1]){
                 angleTo = -angleTo;
             }
         }

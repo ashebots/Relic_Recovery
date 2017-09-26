@@ -6,11 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
 
 /**
  * Created by jezebelquit on 9/21/17.
@@ -35,13 +31,13 @@ public class ModularTest extends LinearOpMode{
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
-        imuChassis = new ImuChassis()
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2966);
 
         waitForStart();
 
         while (opModeIsActive()) {
-            leftMotor.setPower(1);
-            rightMotor.setPower(1);
+            imuChassis.driveAtSpeed(0.5);
+
         }
 
 
