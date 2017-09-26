@@ -38,7 +38,7 @@ public class VueMarkID {
         if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
             return vuMark;
         } else {
-            return null;
+            return RelicRecoveryVuMark.UNKNOWN;
         }
     }
 }
