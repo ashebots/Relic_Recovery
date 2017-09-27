@@ -1,10 +1,14 @@
-package org.firstinspires.ftc.teamcode.Move;
+package org.firstinspires.ftc.teamcode.Autonomous.Move;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autonomous/Move/Transform.java
+
+=======
+>>>>>>> origin/master:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Move/Transform.java
 
 import java.util.Queue;
 
@@ -32,7 +36,7 @@ public class Transform {
         leftMotor       = hardwareMap.dcMotor.get(ConfigStrings.LeftMotor);
         rightMotor      = hardwareMap.dcMotor.get(ConfigStrings.RightMotor);
         rawImu          = hardwareMap.get(BNO055IMU.class, ConfigStrings.IMU);
-        encoderCons     = (1 / ((wheelDiameter * Math.PI) / 12)) * MathConstants.neverRest40;
+        encoderCons     = ((MathConstants.neverRest40 * 12) / (wheelDiameter * Math.PI));
         this.theta0     = theta0;
         this.telemetry  = telemetry;
         rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
