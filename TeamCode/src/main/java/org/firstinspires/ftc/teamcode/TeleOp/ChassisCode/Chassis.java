@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Autonomous.Move.ConfigStrings;
+
 /**
  * Created by jezebelquit on 8/1/17.
  */
@@ -13,6 +15,9 @@ public class Chassis {
     DcMotor motorRight;
     DcMotor motorLeftRear;
     DcMotor motorRightRear;
+    DcMotor colL;
+    DcMotor colR;
+    DcMotor lift;
     Servo turningServo;
 
     public Chassis(DcMotor motorLeft, DcMotor motorRight){
@@ -33,6 +38,15 @@ public class Chassis {
     public Chassis(DcMotor motorLeft,Servo turningServo){
         this.motorLeft = motorLeft;
         this.turningServo = turningServo;
+    }
+
+    public Chassis(DcMotor motorLeft, DcMotor motorRight, DcMotor colL, DcMotor colR, DcMotor lift){
+        this.motorLeft = motorLeft;
+        this.motorRight = motorRight;
+        this.colL = colL;
+        this.colR = colR;
+        this.lift = lift;
+        motorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void NormalDrive(double xPos, double yPos){
@@ -58,5 +72,23 @@ public class Chassis {
 
         motorLeft.setPower(motorSpeeds[0]);
         turningServo.setPosition(motorSpeeds[1]);
+    }
+
+    public void glyphColecter(boolean pressedButton, double pow){
+        if (pressedButton) {
+            colL.setPower(pow);
+            colR.setPower(pow);
+        }else{
+            colL.setPower(0);
+            colR.setPower(0);
+        }
+    }
+
+    public void lift(boolean pressedButton, double pow){
+        if(pressedButton){
+            lift.setPower(pow);
+        }else {
+            lift.setPower(0);
+        }
     }
 }
