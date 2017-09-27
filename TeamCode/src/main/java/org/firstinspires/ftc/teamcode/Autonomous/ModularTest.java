@@ -24,10 +24,10 @@ public class ModularTest extends LinearOpMode{
 
     public void runOpMode(){
 
+        rightMotor = hardwareMap.dcMotor.get("Right");
+
         leftMotor = hardwareMap.dcMotor.get("Left");
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        rightMotor = hardwareMap.dcMotor.get("Right");
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
@@ -37,9 +37,7 @@ public class ModularTest extends LinearOpMode{
 
         while (opModeIsActive()) {
             imuChassis.driveAtSpeed(0.5);
-
         }
-
 
     }
 }

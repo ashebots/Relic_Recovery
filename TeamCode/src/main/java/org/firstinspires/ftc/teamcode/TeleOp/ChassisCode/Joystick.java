@@ -33,8 +33,8 @@ public class Joystick {
 
         }else if (joystickAngle >= 90){
 
-            motorSpeeds[1] = ((135 - joystickAngle) / 45) * joystickDistance;
-            motorSpeeds[0] = -joystickDistance;
+            motorSpeeds[0] = ((135 - joystickAngle) / 45) * joystickDistance;
+            motorSpeeds[1] = -joystickDistance;
 
         }else if (joystickAngle < 0 && joystickAngle > -90){
 
@@ -42,8 +42,8 @@ public class Joystick {
             motorSpeeds[1] = joystickDistance;
 
         }else if (joystickAngle <= -90){
-            motorSpeeds[0] = ((135 + joystickAngle) / 45) * joystickDistance;
-            motorSpeeds[1] = -joystickDistance;
+            motorSpeeds[1] = ((135 + joystickAngle) / 45) * joystickDistance;
+            motorSpeeds[0] = -joystickDistance;
         }
 
         return  motorSpeeds;
