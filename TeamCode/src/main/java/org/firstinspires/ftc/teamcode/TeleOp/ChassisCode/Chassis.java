@@ -18,24 +18,21 @@ public class Chassis {
     public Chassis(DcMotor motorLeft, DcMotor motorRight){
         this.motorLeft = motorLeft;
         this.motorRight = motorRight;
-        motorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    public Chassis(DcMotor motorLeft, DcMotor motorRight, DcMotor motorLeftRear, DcMotor motorRightRear){
+    public Chassis (DcMotor motorLeft, DcMotor motorRight, DcMotor motorLeftRear, DcMotor motorRightRear){
         this.motorLeft = motorLeft;
         this.motorRight = motorRight;
         this.motorLeftRear = motorLeftRear;
         this.motorRightRear = motorRightRear;
-        motorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorLeftRear.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    public Chassis(DcMotor motorLeft,Servo turningServo){
+    public Chassis (DcMotor motorLeft,Servo turningServo){
         this.motorLeft = motorLeft;
         this.turningServo = turningServo;
     }
 
-    public void NormalDrive(double xPos, double yPos){
+    public void NormalDrive (double xPos, double yPos){
         double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
         motorLeft.setPower(motorSpeeds[0]);
         motorRight.setPower(motorSpeeds[1]);
@@ -46,14 +43,14 @@ public class Chassis {
             motorRightRear.setPower(motorSpeeds[1]);
         }
     }
-    public void HoloMecaDrive(double xPos, double yPos){
+    public void HoloMecaDrive (double xPos, double yPos){
         double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
         motorLeft.setPower(motorSpeeds[0]);
         motorRight.setPower(motorSpeeds[1]);
         motorLeftRear.setPower(motorSpeeds[1]);
         motorRightRear.setPower(motorSpeeds[0]);
     }
-    public void CarDrive(double xPos, double yPos){
+    public void CarDrive (double xPos, double yPos){
         double[] motorSpeeds = Joystick.calculateCar(xPos, yPos);
 
         motorLeft.setPower(motorSpeeds[0]);
