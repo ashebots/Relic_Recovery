@@ -37,9 +37,6 @@ public class Chassis {
         this.turningServo = turningServo;
     }
 
-<<<<<<< HEAD
-    public void NormalDrive (double xPos, double yPos){
-=======
     public Chassis(DcMotor motorLeft, DcMotor motorRight, DcMotor colL, DcMotor colR, DcMotor lift){
         this.motorLeft = motorLeft;
         this.motorRight = motorRight;
@@ -50,7 +47,7 @@ public class Chassis {
     }
 
     public void NormalDrive(double xPos, double yPos){
->>>>>>> origin/master
+
         double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
         motorLeft.setPower(motorSpeeds[0]);
         motorRight.setPower(motorSpeeds[1]);
@@ -61,6 +58,7 @@ public class Chassis {
             motorRightRear.setPower(motorSpeeds[1]);
         }
     }
+
     public void HoloMecaDrive (double xPos, double yPos){
         double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
         motorLeft.setPower(motorSpeeds[0]);
