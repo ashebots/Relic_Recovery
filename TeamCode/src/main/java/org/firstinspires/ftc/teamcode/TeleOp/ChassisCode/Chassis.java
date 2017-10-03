@@ -31,8 +31,7 @@ public class Chassis {
         this.motorRight = motorRight;
         this.motorLeftRear = motorLeftRear;
         this.motorRightRear = motorRightRear;
-        motorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorLeftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+
     }
 
     public Chassis(DcMotor motorLeft,Servo turningServo){
