@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Autonomous.Move.ConfigStrings;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
-import org.firstinspires.ftc.teamcode.Autonomous.Move.IMU;
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
 /**

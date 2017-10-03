@@ -39,7 +39,6 @@ public class Transform {
     }
 
     //Encoder based forward movement. Superseded by imu based movement.
-    @Deprecated
     public void forward(double dist, double pow) {
         positionL = leftMotor.getCurrentPosition();
         positionR = rightMotor.getCurrentPosition();
@@ -58,7 +57,6 @@ public class Transform {
     }
 
     //Encoder based backward movement. Superseded by imu based movement.
-    @Deprecated
     public void backward(double dist, double pow) {
         positionL = leftMotor.getCurrentPosition();
         positionR = rightMotor.getCurrentPosition();
