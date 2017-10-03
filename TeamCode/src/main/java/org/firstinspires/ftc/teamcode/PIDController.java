@@ -4,7 +4,6 @@ package org.firstinspires.ftc.teamcode;
  * Created by rostifar on 9/21/17.
  */
 
-import java.sql.Time;
 
 /**
  *
@@ -40,74 +39,152 @@ import java.sql.Time;
  **/
 
 public class PIDController {
+    private static final Mode      DEFAULT_MODE        =   Mode.AUTO;
+    private static final Direction DEFAULT_DIRECTION   =   Direction.DIRECT;
+    private static final double    DEFAULT_TIMESTEP    =   1000;
+
     //tuning constants.
-    private double kp;
-    private double ki;
-    private double kd;
+    private double P, I, D;
 
-    private double setpoint;
-    private double lastUpdate;
-    private double lastError;
-    private double lastInput;
-    private double errorSum;
-    private double output;
+    //clamp values for control variables to prevent integrator and differentiation spike
+    private double min, max;
+    private double lastInput, lastUpdate;
+    private double setpoint, output;
     private double iterm;
+    private double timestep;
 
-    private double timestep = 1000;
+    private boolean inAuto = true;
 
+    //Automatic updates or manual updates
+    private Mode mode;
 
+    //Which direction control variable needs to be updated
+    private Direction direction;
 
-    public PIDController(double setpoint, double timestep, double kp, double ki, double kd) {
-        this.timestep = timestep;
-        this.setpoint = setpoint;
-        setKp(kp);
-        setKi(ki);
-        setKd(kd);
+    public enum Mode {
+        MANUAL, AUTO
     }
 
-    public PIDController(double setpoint) {
-        this.setpoint = setpoint;
+    public enum Direction {
+        DIRECT, REVERSE
     }
+
+    public PIDController(double setpoint, double timestep, double p, double i, double d, double minOutput,
+                         double maxOutput, Mode mode, Direction direction) {
+        this.timestep   =   timestep;
+        this.setpoint   =   setpoint;
+        this.min        =   minOutput;
+        this.max        =   maxOutput;
+        this.mode       =   mode;
+        this.P          =   p;
+        this.I          =   i;
+        this.D          =   d;
+        this.direction  =   direction;
+
+        setTunings(p, i, d);
+    }
+
+    public PIDController(double setpoint, double timestep, double p, double i, double d, double minOutput,
+                         double maxOutput, Mode mode) {
+        this(setpoint, timestep, p, i, d, minOutput, maxOutput, mode, DEFAULT_DIRECTION);
+    }
+
+    public PIDController(double setpoint, double timestep, double p, double i, double d, double minOutput,
+                         double maxOutput) {
+        this(setpoint, timestep, p, i, d, minOutput, maxOutput, DEFAULT_MODE, DEFAULT_DIRECTION);
+    }
+
+    public PIDController(double setpoint, double p, double i, double d, double minOutput, double maxOutput) {
+        this(setpoint, DEFAULT_TIMESTEP, p, i, d, minOutput, maxOutput, DEFAULT_MODE, DEFAULT_DIRECTION);
+    }
+
 
     public void update(double input) {
+        if (!inAuto) return;
         double now = System.currentTimeMillis();
+        double dt = now - lastUpdate;
 
-        if (now - lastUpdate < timestep) return;
-        double error    =   setpoint - input;
-        iterm           +=  (ki * error);
-        double dInput   =   input - lastError;
-        output          =   kp * error + iterm - kd * dInput;
+        if (dt < timestep) return;
 
-        lastInput       =   input;
-        lastUpdate      =   now;
+        double error = setpoint - input;
+        iterm +=  (I * error);
+        iterm = constrain(max, min, iterm);
+        double dInput = input - lastInput;
+
+        output = P * error + iterm - D * dInput;
+        output = constrain(max, min, dInput);
+
+        lastInput  = input;
+        lastUpdate = now;
     }
 
-
-    public void setTunings(double Kp, double Ki, double Kd) {
+    public void setTunings(double p, double i, double d) {
+        if (p < 0 || i < 0 || d < 0) return;
         double timeInSec = timestep / 1000;
-        kp = Kp;
-        ki = Ki * timeInSec;
-        kd = Kd / timeInSec;
+        P = p;
+        I = i * timeInSec;
+        D = d / timeInSec;
+
+        if (direction == Direction.REVERSE) {
+            P = -P; I = -I; D = -D;
+        }
     }
 
     public void setTimestep(double time) { //in ms
         if (time <= 0) return;
         double ratio = time / timestep;
 
-        ki          *=  ratio;
-        kd          /=  ratio;
+        I          *=  ratio;
+        D          /=  ratio;
         timestep    =   time;
     }
 
-    public void setKp(double Kp) {
-        kp = Kp;
+    public void clamp(double min, double max) {
+        if (min > max) return;
+        this.min = min;
+        this.max = max;
+
+        output = constrain(max, min, output);
+        iterm  = constrain(max, min, iterm);
     }
 
-    public void setKi(double Ki) {
-        ki = Ki;
+    public void setP(double p) {
+        P = p;
     }
 
-    public void setKd(double Kd) {
-        kd = Kd;
+    public void setI(double i) {
+        double timestepSec = timestep / 1000;
+        I = i * timestepSec;
+    }
+
+    public void setD(double d) {
+        double timestepSec = timestep / 1000;
+        D = d / timestepSec;
+    }
+
+    public void setPID(double p, double i, double d) {
+        setP(p); setI(i); setD(d);
+    }
+
+    public void setMode(Mode newMode, double input, double output) {
+        boolean newAuto = (newMode == Mode.AUTO);
+        if (newAuto && !inAuto) initialize(input, output);
+        inAuto = newAuto;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    private void initialize(double input, double output) {
+        lastInput = input;
+        iterm = output;
+        constrain(max, min, iterm);
+    }
+
+    private static double constrain(double max, double min, double value) {
+        if (value > max)        return max;
+        else if (value < min)   return min;
+        else                    return value;
     }
 }
