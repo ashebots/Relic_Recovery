@@ -4,12 +4,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Autonomous.Move.ConfigStrings;
-
-/**
- * Created by jezebelquit on 8/1/17.
- */
-
 public class Chassis {
     DcMotor motorLeft;
     DcMotor motorRight;
@@ -73,6 +67,7 @@ public class Chassis {
         motorLeft.setPower(motorSpeeds[0]);
         turningServo.setPosition(motorSpeeds[1]);
     }
+
 
     public void glyphColecter(boolean pressedButton, double pow){
         if (pressedButton) {
