@@ -146,27 +146,29 @@ public class ImuChassis {
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void driveToCoord (int[] startPosition, int[] coords, double driveSpeed, double turnSpeed){
+    public float[] driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, String teamColor){
 
         driveSpeed = driveSpeed * (maxSpeed / 4000);
-        turnSpeed = turnSpeed * (maxSpeed/4000);
+        turnSpeed = turnSpeed * (maxSpeed / 4000);
+
+        if (teamColor == "Red") {
+            startPosition[0] = -startPosition[0];
+            coords[0] = -coords[0];
+        }
 
         float angleTo;
         int distance = (int)Math.sqrt((startPosition[1]-coords[1])*(startPosition[1]-coords[1])+(startPosition[0]-coords[0])*(startPosition[0]-coords[0]));
 
         if (startPosition[0] != coords[0]) {
-            angleTo = (float) -Math.toDegrees(Math.atan((startPosition[1] - coords[1]) / (startPosition[0] - coords[0])));
-
+            angleTo = (float)-Math.toDegrees(Math.atan((startPosition[1] - coords[1]) / (startPosition[0] - coords[0])));
         }else if (startPosition[1] < coords[1]){
             angleTo = -90;
-
         }else{
             angleTo = 90;
-
         }
 
         if (startPosition[0] > coords[0]){
-            angleTo = angleTo - 180;
+            angleTo = Math.abs(angleTo)-180;
 
             if (startPosition[1] >= coords[1]){
                 angleTo = -angleTo;
@@ -176,15 +178,13 @@ public class ImuChassis {
         turnToAngle(angleTo, turnSpeed);
         driveXFeet(distance, driveSpeed);
 
-        startPosition = coords;
+        return coords;
 
     }
 
-    public void driveToCoords(int[][] coordList, double driveSpeed, double turnSpeed){
-
+    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, String teamColor){
         for (int i = 1; i < coordList.length; i++){
-            driveToCoord(coordList[0], coordList[i], driveSpeed, turnSpeed);
+            coordList[0] = driveToCoord(coordList[0], coordList[i], driveSpeed, turnSpeed, teamColor);
         }
-
     }
 }

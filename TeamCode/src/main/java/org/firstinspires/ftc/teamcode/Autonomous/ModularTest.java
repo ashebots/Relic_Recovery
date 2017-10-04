@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
  * Created by jezebelquit on 9/21/17.
  */
 
-@Autonomous (name = "Modular Autonomous Test")
+@Autonomous
 public class ModularTest extends LinearOpMode{
 
     DcMotor leftMotor;
@@ -20,26 +20,30 @@ public class ModularTest extends LinearOpMode{
 
     BNO055IMU imu;
 
-    ImuChassis imuChassis;
-
     public void runOpMode(){
+
+        rightMotor = hardwareMap.dcMotor.get("Right");
 
         leftMotor = hardwareMap.dcMotor.get("Left");
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        rightMotor = hardwareMap.dcMotor.get("Right");
-
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
-        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2966);
+        //imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2966);
 
         waitForStart();
 
-        while (opModeIsActive()) {
-            imuChassis.driveAtSpeed(0.5);
+        leftMotor.setPower(1);
+        rightMotor.setPower(1);
+        sleep(10000);
+        leftMotor.setPower(0);
+        rightMotor.setPower(0);
 
-        }
+        telemetry.addData("Left Encoder", leftMotor.getCurrentPosition());
+        telemetry.addData("Right Encoder", rightMotor.getCurrentPosition());
+        telemetry.update();
 
+        sleep(10000);
 
     }
 }

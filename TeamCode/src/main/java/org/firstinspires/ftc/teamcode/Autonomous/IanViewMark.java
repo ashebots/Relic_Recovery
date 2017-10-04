@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.ConfigStrings;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.Transform;
@@ -21,12 +20,12 @@ public class IanViewMark extends LinearOpMode {
     DcMotor LeftMotor;
     Transform transform;
 
-    public void RunOpMode(){
+    public void runOpMode(){
 
         ViewMark = new VueMarkID(hardwareMap);
         LeftMotor = hardwareMap.dcMotor.get(ConfigStrings.LeftMotor);
         RightMotor = hardwareMap.dcMotor.get(ConfigStrings.RightMotor);
-        transform = new Transform(Telemetry, hardwareMap, 4, 0);
+        transform = new Transform(telemetry, hardwareMap, 4, 0);
 
 
 
@@ -48,4 +47,3 @@ public class IanViewMark extends LinearOpMode {
 
         }
     }
-}
