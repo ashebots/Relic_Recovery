@@ -49,7 +49,7 @@ public class KeeganVueMark extends LinearOpMode {
 
             default:
 
-                transform.forward();
+                transform.forward(1, 20);
         }
     }
 
