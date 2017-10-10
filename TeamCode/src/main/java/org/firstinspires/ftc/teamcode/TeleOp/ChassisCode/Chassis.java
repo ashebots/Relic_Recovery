@@ -24,10 +24,7 @@ public class Chassis {
         this.motorRight = motorRight;
         this.motorLeftRear = motorLeftRear;
         this.motorRightRear = motorRightRear;
-<<<<<<< HEAD
 
-=======
->>>>>>> cdbfc1045b9375828d6b373aada0cd571cc4e0c4
     }
 
     public Chassis (DcMotor motorLeft,Servo turningServo){

@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.KeeganCodes.Keeg
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
@@ -28,7 +27,7 @@ public class KeeganVueMark extends LinearOpMode {
         LeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         RightMotor = hardwareMap.dcMotor.get("Right");
         vueMark = new VueMarkID(hardwareMap);
-        transform = new Transform(telemetry, hardwareMap, 4, 0);
+        transform = new Transform(hardwareMap, 4, 0);
         waitForStart();
 
         vuMark = vueMark.vueName();
@@ -49,7 +48,9 @@ public class KeeganVueMark extends LinearOpMode {
 
             default:
 
-                transform.forward();
+                transform.forward(.5, 1);
+
+                break;
         }
     }
 

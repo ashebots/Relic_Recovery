@@ -28,7 +28,7 @@ public class Transform {
     private     double      theta0;
 
 
-    public Transform(Telemetry telemetry, HardwareMap hardwareMap, double wheelDiameter, double theta0) {
+    public Transform( HardwareMap hardwareMap, double wheelDiameter, double theta0) {
         leftMotor       = hardwareMap.dcMotor.get(ConfigStrings.LeftMotor);
         rightMotor      = hardwareMap.dcMotor.get(ConfigStrings.RightMotor);
         rawImu          = hardwareMap.get(BNO055IMU.class, ConfigStrings.IMU);
@@ -73,11 +73,11 @@ public class Transform {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
     }
-
     public void turn(int angle, double pow) {
         float startAngle = imu.yaw();
         if (angle > 0) {
             while (startAngle - imu.yaw() < angle) {
+
                 leftMotor.setPower(pow);
                 rightMotor.setPower(-pow);
             }

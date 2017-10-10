@@ -25,7 +25,7 @@ public class IanViewMark extends LinearOpMode {
         ViewMark = new VueMarkID(hardwareMap);
         LeftMotor = hardwareMap.dcMotor.get(ConfigStrings.LeftMotor);
         RightMotor = hardwareMap.dcMotor.get(ConfigStrings.RightMotor);
-        transform = new Transform(telemetry, hardwareMap, 4, 0);
+
 
 
 

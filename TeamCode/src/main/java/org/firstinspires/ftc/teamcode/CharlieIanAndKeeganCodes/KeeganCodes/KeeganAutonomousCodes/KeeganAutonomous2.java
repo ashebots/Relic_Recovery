@@ -31,30 +31,30 @@ public class KeeganAutonomous2 extends LinearOpMode{
 
         sleep(150);
 
-        rightMotor.setPower(-1);
-        leftMotor.setPower(1);
-
-        sleep(3000);
-
-        rightMotor.setPower(0);
-        leftMotor.setPower(0);
-
-        sleep(150);
-
-        rightMotor.setPower(1);
-        leftMotor.setPower(-1);
+        rightMotor.setPower(-0.5);
+        leftMotor.setPower(0.5);
 
         sleep(6000);
 
         rightMotor.setPower(0);
         leftMotor.setPower(0);
 
+        sleep(150);
+
+        rightMotor.setPower(0.5);
+        leftMotor.setPower(-0.5);
+
+        sleep(12000);
+
+        rightMotor.setPower(0);
+        leftMotor.setPower(0);
+
         sleep(1000);
 
-        rightMotor.setPower(-1);
-        leftMotor.setPower(1);
+        rightMotor.setPower(-0.5);
+        leftMotor.setPower(0.5);
 
-        sleep(3000);
+        sleep(6000);
 
         rightMotor.setPower(1);
         leftMotor.setPower(1);
