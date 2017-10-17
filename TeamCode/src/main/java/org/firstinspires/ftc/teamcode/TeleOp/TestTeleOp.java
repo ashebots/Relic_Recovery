@@ -22,12 +22,12 @@ public class TestTeleOp extends OpMode{
 
     public void init() {
 
-        leftMotor = hardwareMap.dcMotor.get("Left");
+        leftMotor = hardwareMap.dcMotor.get("LeftForward");
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rearLeftMotor = hardwareMap.dcMotor.get("Left Rear");
+        rearLeftMotor = hardwareMap.dcMotor.get("LeftBack");
         rearLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightMotor = hardwareMap.dcMotor.get("Right");
-        rearRightMotor = hardwareMap.dcMotor.get("Right Rear");
+        rightMotor = hardwareMap.dcMotor.get("RightForward");
+        rearRightMotor = hardwareMap.dcMotor.get("RightBack");
 
         chassis = new Chassis(leftMotor, rightMotor, rearLeftMotor, rearRightMotor);
 

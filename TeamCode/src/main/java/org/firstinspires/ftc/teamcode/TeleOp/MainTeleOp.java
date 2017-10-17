@@ -3,17 +3,12 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.sun.tools.javac.util.Name;
 
-import org.firstinspires.ftc.teamcode.Autonomous.Move.ConfigStrings;
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-/**
- * Created by jezebelquit on 9/21/17.
- */
 @TeleOp(name = "USE THIS ONE!!!!!", group = "A")
 public class MainTeleOp extends OpMode{
+
     Chassis drive;
     DcMotor left;
     DcMotor right;
