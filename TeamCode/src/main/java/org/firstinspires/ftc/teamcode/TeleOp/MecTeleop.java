@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-@TeleOp(name = "USE THIS ONE!!!!!", group = "A")
-public class MainTeleOp extends OpMode{
+@TeleOp(name = "Mech Teleop", group = "A")
+public class MecTeleop extends OpMode{
 
     Chassis drive;
     DcMotor left;
