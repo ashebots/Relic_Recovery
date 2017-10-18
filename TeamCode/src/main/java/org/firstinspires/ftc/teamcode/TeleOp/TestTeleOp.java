@@ -34,7 +34,9 @@ public class TestTeleOp extends OpMode{
     }
 
     public void loop() {
-        chassis.HoloMecaDrive(gamepad1.left_stick_x, gamepad1.left_stick_y);
+
+        chassis.HoloMecaDrive(gamepad1.right_stick_x, -gamepad1.right_stick_y);
+        chassis.NormalDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y);
 
     }
 }
