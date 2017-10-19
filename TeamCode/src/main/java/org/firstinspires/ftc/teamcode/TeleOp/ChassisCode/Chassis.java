@@ -17,6 +17,8 @@ public class Chassis {
 
         FORWARD, BACKWARD;}
 
+    boolean priority;
+
     public Chassis(DcMotor motorLeft, DcMotor motorRight){
         this.motorLeft = motorLeft;
         this.motorRight = motorRight;
@@ -45,6 +47,12 @@ public class Chassis {
 
     public void NormalDrive(double xPos, double yPos){
 
+        if (xPos != 0 || yPos != 0) {
+            priority = true;
+        }else{
+            priority = false;
+        }
+        
         double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
         motorLeft.setPower(motorSpeeds[0]);
         motorRight.setPower(motorSpeeds[1]);
@@ -57,11 +65,13 @@ public class Chassis {
     }
 
     public void HoloMecaDrive (double xPos, double yPos){
-        double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
-        motorLeft.setPower(motorSpeeds[0]);
-        motorRight.setPower(motorSpeeds[1]);
-        motorLeftRear.setPower(motorSpeeds[1]);
-        motorRightRear.setPower(motorSpeeds[0]);
+        if (!priority) {
+            double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
+            motorLeft.setPower(motorSpeeds[0]);
+            motorRight.setPower(motorSpeeds[1]);
+            motorLeftRear.setPower(motorSpeeds[1]);
+            motorRightRear.setPower(motorSpeeds[0]);
+        }
     }
     public void CarDrive (double xPos, double yPos){
         double[] motorSpeeds = Joystick.calculateCar(xPos, yPos);
@@ -88,10 +98,10 @@ public class Chassis {
             lift.setPower(0);
         }
     }
-    public void glyphCollector(boolean buttonpressed) {
+    public void glyphCollector(boolean buttonrightbumper) {
 
 
-        if () {
+        if (buttonrightbumper) {
 
             colL.setPower(0.8);
             colR.setPower(0.8);
@@ -102,5 +112,6 @@ public class Chassis {
         }
 
     }
+
 
 }

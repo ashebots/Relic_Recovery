@@ -18,8 +18,7 @@ public class KeeganExampleCode extends OpMode{
     public void init() {
 
     }
-}   public void loop() {
-
-
+     public void loop() {
+     }
 
 }

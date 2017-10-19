@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.motors.NeveRest60Gearmotor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
 
 /**
  * Created by jezebelquit on 9/21/17.
@@ -20,6 +22,8 @@ public class ModularTest extends LinearOpMode{
 
     BNO055IMU imu;
 
+    ImuChassis imuChassis;
+
     public void runOpMode(){
 
         rightMotor = hardwareMap.dcMotor.get("Right");
@@ -29,21 +33,12 @@ public class ModularTest extends LinearOpMode{
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
-        //imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2966);
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 4000);
+        imuChassis.driveSetup(ModularConstants.NEVERREST_60, 1, 4);
 
         waitForStart();
 
-        leftMotor.setPower(1);
-        rightMotor.setPower(1);
-        sleep(10000);
-        leftMotor.setPower(0);
-        rightMotor.setPower(0);
-
-        telemetry.addData("Left Encoder", leftMotor.getCurrentPosition());
-        telemetry.addData("Right Encoder", rightMotor.getCurrentPosition());
-        telemetry.update();
-
-        sleep(10000);
+        imuChassis.driveXFeet(1, 0.5);
 
     }
 }

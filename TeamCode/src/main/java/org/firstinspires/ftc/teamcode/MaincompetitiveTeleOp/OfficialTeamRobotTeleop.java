@@ -36,7 +36,7 @@ public class OfficialTeamRobotTeleop extends LinearOpMode {
 
         chassis.NormalDrive(gamepad1.left_stick_x, gamepad1.left_stick_y);
 
-        chassis.glyphColecter(boolean);
+
 
 
 
