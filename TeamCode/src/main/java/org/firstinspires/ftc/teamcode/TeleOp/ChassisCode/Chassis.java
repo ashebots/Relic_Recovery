@@ -13,6 +13,9 @@ public class Chassis {
     DcMotor colR;
     DcMotor lift;
     Servo turningServo;
+    enum directions{
+
+        FORWARD, BACKWARD;}
 
     public Chassis(DcMotor motorLeft, DcMotor motorRight){
         this.motorLeft = motorLeft;
@@ -24,7 +27,6 @@ public class Chassis {
         this.motorRight = motorRight;
         this.motorLeftRear = motorLeftRear;
         this.motorRightRear = motorRightRear;
-
     }
 
     public Chassis (DcMotor motorLeft,Servo turningServo){
@@ -86,4 +88,19 @@ public class Chassis {
             lift.setPower(0);
         }
     }
+    public void glyphCollector(boolean buttonpressed) {
+
+
+        if () {
+
+            colL.setPower(0.8);
+            colR.setPower(0.8);
+
+        }else {
+            colL.setPower(0);
+            colR.setPower(0);
+        }
+
+    }
+
 }

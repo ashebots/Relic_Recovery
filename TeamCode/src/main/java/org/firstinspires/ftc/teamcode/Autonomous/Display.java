@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-<<<<<<< HEAD
-public class Display {
-=======
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -25,5 +22,4 @@ public class Display extends OpMode {
         telemetry.addData("Angle", imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
 
     }
->>>>>>> 8d77e597d8459ed5a44846f78f92cf98bb9556a0
 }

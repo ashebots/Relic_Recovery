@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.CharlieCodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
@@ -12,21 +13,25 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
  */
 @TeleOp
 public class Charlitelpeop extends OpMode {
+
     DcMotor leftmotor;
     DcMotor rightmotor;
+
     Chassis Drive;
 
     public void init() {
-        leftmotor = hardwareMap.dcMotor.get("left");
+
+        leftmotor = hardwareMap.dcMotor.get("Left");
+        leftmotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
         rightmotor = hardwareMap.dcMotor.get("Right");
+
         Drive = new Chassis(leftmotor, rightmotor);
     }
 
 
     public void loop() {
-
-        Drive.NormalDrive(-gamepad1.left_stick_x, -gamepad1.left_stick_y);
-
+        Drive.NormalDrive(-gamepad1.left_stick_x, gamepad1.left_stick_y);
 
     }
 }

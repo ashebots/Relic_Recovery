@@ -36,28 +36,25 @@ public class KeeganMainTeleOp extends OpMode {
 
         driveChassis.NormalDrive(-gamepad1.left_stick_x, -gamepad1.left_stick_y);
 
-        if (gamepad1.a){boxMotors.setPower(0.8);}
-        else if (gamepad1.y){boxMotors.setPower(-0.8);}
+        if (gamepad1.y){boxMotors.setPower(0.8);}
+        else if (gamepad1.a){boxMotors.setPower(-0.8);}
         else boxMotors.setPower(0);
 
-        if (gamepad2.y){armMotors.setPower(0.8);}
-        else if (gamepad2.a){armMotors.setPower(-0.8);}
+        if (gamepad1.x){armMotors.setPower(0.8);}
+        else if (gamepad2.b){armMotors.setPower(-0.8);}
         else armMotors.setPower(0);
-
-        if (gamepad2.right_bumper){armExtenders.setPower(0.8);}
-        else if (gamepad2.left_bumper){armExtenders.setPower(-0.8);}
-        else armExtenders.setPower(0);
 
         if (gamepad1.right_bumper){armExtenders.setPower(0.8);}
         else if (gamepad1.left_bumper){armExtenders.setPower(-0.8);}
+        else armExtenders.setPower(0);
+
+        if (gamepad1.dpad_up){armExtenders.setPower(0.8);}
+        else if (gamepad1.dpad_down){armExtenders.setPower(-0.8);}
         else armExtenders.setPower(0);
 
         if (gamepad1.left_stick_button){boxExtenderMotor.setPower(0.4);}
         else if (gamepad1.right_stick_button){boxExtenderMotor.setPower(-0.4);}
         else boxExtenderMotor.setPower(0);
 
-        if (gamepad2.left_stick_button){boxExtenderMotor.setPower(0.4);}
-        else if (gamepad2.right_stick_button){boxExtenderMotor.setPower(-0.4);}
-        else boxExtenderMotor.setPower(0);
     }
 }
