@@ -136,7 +136,7 @@ public class ImuChassis {
     }
 
     public void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
-        encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
+        encodersPerFoot = (int)((72 * encodersPerRotation) / (7 * gearRatio * Math.PI * wheelDiameter));
     }
 
     public void driveXFeet(int feet, double speed) {
@@ -178,7 +178,7 @@ public class ImuChassis {
 
         turnXDegrees(angleTo, turnSpeed);
         driveXFeet(distance, driveSpeed);
-
+        
         return coords;
 
     }

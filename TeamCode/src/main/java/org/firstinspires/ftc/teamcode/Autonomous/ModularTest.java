@@ -34,7 +34,7 @@ public class ModularTest extends LinearOpMode{
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
         imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 4000);
-        imuChassis.driveSetup(ModularConstants.NEVERREST_60, 1, 4);
+        imuChassis.driveSetup(ModularConstants.NEVERREST_40, 2, 4);
 
         waitForStart();
 
