@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.KeeganCodes.Keeg
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
@@ -15,46 +17,83 @@ public class KeeganMainTeleOp extends OpMode {
     DcMotor leftMotor;
     DcMotor rightMotor;
     DcMotor boxMotors;
-    DcMotor boxExtenderMotor;
-    DcMotor armMotors;
-    DcMotor armExtenders;
-    Chassis driveChassis;
+    DcMotor BoxMotorRight;
+    DcMotor BoxMotorLeft;
+    Servo RotatorLeft;
+    Servo RotatorRight;
+    Chassis Chassis;
 
     public void init() {
 
         leftMotor = hardwareMap.dcMotor.get("Left");
+        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         rightMotor = hardwareMap.dcMotor.get("Right");
-        boxMotors = hardwareMap.dcMotor.get("BoxMotors");
-        armMotors = hardwareMap.dcMotor.get("ArmMotors");
-        armExtenders = hardwareMap.dcMotor.get("ArmExtensionsMotor");
-        boxExtenderMotor = hardwareMap.dcMotor.get("BoxExtensionMotor");
+        BoxMotorRight = hardwareMap.dcMotor.get("Right intake");
+        BoxMotorLeft = hardwareMap.dcMotor.get("Left intake");
+        BoxMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        RotatorRight = hardwareMap.servo.get("Right rotator");
+        RotatorLeft = hardwareMap.servo.get("Left rotator");
+        RotatorLeft.setDirection(Servo.Direction.REVERSE);
 
-        driveChassis = new Chassis(leftMotor, rightMotor);
+        Chassis = new Chassis(leftMotor, rightMotor);
+
     }
 
     public void loop() {
 
-        driveChassis.NormalDrive(-gamepad1.left_stick_x, -gamepad1.left_stick_y);
+        Chassis.NormalDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y);
 
-        if (gamepad1.y){boxMotors.setPower(0.8);}
-        else if (gamepad1.a){boxMotors.setPower(-0.8);}
-        else boxMotors.setPower(0);
+        if (gamepad1.a) {
 
-        if (gamepad1.x){armMotors.setPower(0.8);}
-        else if (gamepad2.b){armMotors.setPower(-0.8);}
-        else armMotors.setPower(0);
+            BoxMotorLeft.setPower(1);
+            BoxMotorRight.setPower(1);
 
-        if (gamepad1.right_bumper){armExtenders.setPower(0.8);}
-        else if (gamepad1.left_bumper){armExtenders.setPower(-0.8);}
-        else armExtenders.setPower(0);
+        }
+        else if (gamepad1.y) {
 
-        if (gamepad1.dpad_up){armExtenders.setPower(0.8);}
-        else if (gamepad1.dpad_down){armExtenders.setPower(-0.8);}
-        else armExtenders.setPower(0);
+            BoxMotorLeft.setPower(-1);
+            BoxMotorRight.setPower(-1);
 
-        if (gamepad1.left_stick_button){boxExtenderMotor.setPower(0.4);}
-        else if (gamepad1.right_stick_button){boxExtenderMotor.setPower(-0.4);}
-        else boxExtenderMotor.setPower(0);
+        }
+        else if (gamepad1.x) {
+
+            BoxMotorLeft.setPower(-1);
+            BoxMotorRight.setPower(1);
+
+        }
+        else if (gamepad1.b) {
+
+            BoxMotorLeft.setPower(1);
+            BoxMotorRight.setPower(-1);
+
+        }
+        else {
+
+            BoxMotorRight.setPower(0);
+            BoxMotorLeft.setPower(0);
+
+        }
+
+        if (gamepad1.dpad_up) {
+
+            RotatorLeft.setPosition(0.75);
+            RotatorRight.setPosition(0.75);
+
+        }
+        else if (gamepad1.dpad_down) {
+
+            RotatorLeft.setPosition(0);
+            RotatorRight.setPosition(0);
+
+        }
+        else {
+
+            RotatorLeft.setPosition(0.5);
+            RotatorRight.setPosition(0.5);
+
+        }
+
+
 
     }
 }
