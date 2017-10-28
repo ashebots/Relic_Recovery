@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
 
@@ -24,6 +27,8 @@ public class ModularTest extends LinearOpMode{
 
     ImuChassis imuChassis;
 
+    float[] b = {1, 1};
+
     public void runOpMode(){
 
         rightMotor = hardwareMap.dcMotor.get("Right");
@@ -33,12 +38,12 @@ public class ModularTest extends LinearOpMode{
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
-        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 4000);
-        imuChassis.driveSetup(ModularConstants.NEVERREST_40, 2, 4);
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959);
+        imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
-        imuChassis.driveXFeet(1, 0.5);
+        imuChassis.driveXFeet(1.5, -0.1);
 
     }
 }

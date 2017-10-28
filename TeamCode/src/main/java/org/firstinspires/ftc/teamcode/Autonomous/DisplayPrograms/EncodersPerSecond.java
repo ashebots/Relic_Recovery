@@ -23,12 +23,12 @@ public class EncodersPerSecond extends LinearOpMode {
     public void runOpMode(){
 
         rightMotor = hardwareMap.dcMotor.get("Right");
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         leftMotor = hardwareMap.dcMotor.get("Left");
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -45,10 +45,13 @@ public class EncodersPerSecond extends LinearOpMode {
 
         sleep(100);
 
-        telemetry.addData("Encoders per second on left", leftMotor.getCurrentPosition() / 10);
-        telemetry.addData("Encoders per second on right", rightMotor.getCurrentPosition() / 10);
+        telemetry.addData("Encoders per second on left", leftMotor.getCurrentPosition()/10);
+        telemetry.addData("Encoders per second on right", rightMotor.getCurrentPosition()/10);
+        telemetry.update();
 
         sleep(15000);
 
     }
 }
+
+

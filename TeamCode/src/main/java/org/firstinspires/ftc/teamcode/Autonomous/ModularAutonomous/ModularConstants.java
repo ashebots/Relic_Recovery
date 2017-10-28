@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous;
 public class ModularConstants {
 
     //Coordinate constants
-    public static int[] ORIGIN = {0,0};
+    public static float[] ORIGIN = {0,0};
 
 
     //Encoders per rotation constants
