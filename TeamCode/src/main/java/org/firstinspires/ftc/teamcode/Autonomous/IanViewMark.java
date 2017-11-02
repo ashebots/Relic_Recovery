@@ -27,8 +27,6 @@ public class IanViewMark extends LinearOpMode {
         RightMotor = hardwareMap.dcMotor.get(ConfigStrings.RightMotor);
 
 
-
-
         waitForStart();
 
         VueMark = ViewMark.vueName();
