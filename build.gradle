@@ -12,4 +12,6 @@ buildscript {
     }
 }
 
-
+dependencies {
+     project(':openCVLibrary330')
+}
