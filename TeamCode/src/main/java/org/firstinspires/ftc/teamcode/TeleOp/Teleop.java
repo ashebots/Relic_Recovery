@@ -15,15 +15,22 @@ public class Teleop extends OpMode {
 
     DcMotor left;
     DcMotor right;
-    DcMotor pickUp;
-    Servo place;
+    DcMotor pickUpL;
+    DcMotor pickUpR;
+    Servo placeR;
+    Servo placeL;
+    Servo grab;
+    boolean pos;
 
     Chassis chassis;
     public void init(){
         left = hardwareMap.dcMotor.get(ConfigStrings.LeftMotor);
         right = hardwareMap.dcMotor.get(ConfigStrings.RightMotor);
-        pickUp = hardwareMap.dcMotor.get("pickUp");
-        place = hardwareMap.servo.get("place");
+        pickUpL = hardwareMap.dcMotor.get("pickUpL");
+        pickUpR = hardwareMap.dcMotor.get("pickUpR");
+        placeR = hardwareMap.servo.get("placeR");
+        placeL = hardwareMap.servo.get("placeL");
+        grab = hardwareMap.servo.get("grab");
         chassis = new Chassis(left, right);
     }
 
@@ -31,19 +38,32 @@ public class Teleop extends OpMode {
         chassis.NormalDrive(gamepad1.left_stick_x, gamepad1.right_stick_y);
 
         if(gamepad1.a){
-            pickUp.setPower(0.5);
+            pickUpL.setPower(0.5);
+            pickUpR.setPower(0.5);
         }else if (gamepad1.b){
-            pickUp.setPower(-0.5);
+            pickUpL.setPower(-0.5);
+            pickUpR.setPower(-0.5);
         }else{
-            pickUp.setPower(0);
+            pickUpL.setPower(0);
+            pickUpR.setPower(0);
         }
 
         if(gamepad1.x){
-            place.setPosition(0.5);
+            placeL.setPosition(0.5);
+            placeR.setPosition(0.5);
         }else {
-            place.setPosition(0);
+            placeL.setPosition(0);
+            placeR.setPosition(0);
         }
 
+        if(gamepad1.y){
+            pos = !pos;
+        }
 
+        if(pos){
+            grab.setPosition(0.05);
+        }else{
+            grab.setPosition(0.72);
+        }
     }
 }

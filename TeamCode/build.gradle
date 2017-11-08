@@ -11,5 +11,7 @@
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 dependencies {
-    compile project(':openCVLibrary330')
+}
+android {
+    buildToolsVersion '26.0.2'
 }
