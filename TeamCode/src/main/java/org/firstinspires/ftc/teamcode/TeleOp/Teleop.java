@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
  * Created by secre on 10/17/2017.
  */
 
+@TeleOp
 public class Teleop extends OpMode {
 
     DcMotor left;
