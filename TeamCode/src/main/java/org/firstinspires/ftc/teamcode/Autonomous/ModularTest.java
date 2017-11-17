@@ -28,16 +28,12 @@ public class ModularTest extends LinearOpMode{
     ImuChassis imuChassis;
 
     float[] b = {1, 1};
-    float[][] pos ={
-            {2,4,4},
-            {2,2,4}
-    };
 
     public void runOpMode(){
 
-        rightMotor = hardwareMap.dcMotor.get("right");
+        rightMotor = hardwareMap.dcMotor.get("Right wheel");
 
-        leftMotor = hardwareMap.dcMotor.get("left");
+        leftMotor = hardwareMap.dcMotor.get("left wheel");
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
@@ -47,7 +43,7 @@ public class ModularTest extends LinearOpMode{
 
         waitForStart();
 
-        imuChassis.driveToCoords(pos,.5,.8,false);
+        imuChassis.driveToCoord(ModularConstants.ORIGIN, b, 0.1, 0.1, false);
 
     }
 }

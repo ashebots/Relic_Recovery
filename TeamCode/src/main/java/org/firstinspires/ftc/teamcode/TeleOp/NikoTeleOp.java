@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -20,13 +21,20 @@ public class NikoTeleOp extends OpMode{
 
     Chassis chassis;
 
+    int slowness;
+
     DcMotor leftSweeper;
     DcMotor rightSweeper;
 
-    Servo leftRotate;
-    Servo rightRotate;
+    CRServo leftRotate;
+    CRServo rightRotate;
 
     DcMotor lift;
+
+    Servo adjuster;
+
+    String speedStatus;
+    String adjusterStatus;
 
     public void init(){
 
@@ -37,27 +45,52 @@ public class NikoTeleOp extends OpMode{
 
         chassis = new Chassis(leftWheel, rightWheel);
 
+        slowness = 1;
+
         leftSweeper = hardwareMap.dcMotor.get("Left sweeper");
         rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
 
         leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        leftRotate = hardwareMap.servo.get("Left rotator");
-        rightRotate = hardwareMap.servo.get("Right rotator");
+        leftRotate = hardwareMap.crservo.get("Left rotator");
+        rightRotate = hardwareMap.crservo.get("Right rotator");
 
-        rightRotate.setDirection(Servo.Direction.REVERSE);
+        rightRotate.setDirection(CRServo.Direction.REVERSE);
 
         lift = hardwareMap.dcMotor.get("Lift");
+
+        adjuster = hardwareMap.servo.get("Adjuster");
+        adjuster.setPosition(0.75);
+
+        speedStatus = "Normal";
+        adjusterStatus = "Raised";
+
     }
 
     public void loop(){
 
-        chassis.NormalDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y);
-
         if (gamepad1.a){
+            slowness = 2;
+            speedStatus = "Slow";
+        } else if (gamepad1.y) {
+            slowness = 1;
+            speedStatus = "Normal";
+        }
+
+        chassis.NormalDrive(gamepad1.left_stick_x/slowness, gamepad1.left_stick_y/slowness);
+
+        if (gamepad1.dpad_down){
+            adjuster.setPosition(0.05);
+            adjusterStatus = "Lowered";
+        }else if (gamepad1.dpad_up){
+            adjuster.setPosition(0.75);
+            adjusterStatus = "Raised";
+        }
+
+        if (gamepad1.right_bumper){
             leftSweeper.setPower(1);
             rightSweeper.setPower(1);
-        }else if (gamepad1.y){
+        }else if (gamepad1.right_trigger > 0){
             leftSweeper.setPower(-1);
             rightSweeper.setPower(-1);
         }else{
@@ -65,15 +98,18 @@ public class NikoTeleOp extends OpMode{
             rightSweeper.setPower(0);
         }
 
-        leftRotate.setPosition((0.75*gamepad1.right_stick_y+1)/2);
-        rightRotate.setPosition((0.75*gamepad1.right_stick_y+1)/2);
+        leftRotate.setPower(gamepad1.right_stick_y/2);
+        rightRotate.setPower(gamepad1.right_stick_y/2);
 
         if (gamepad1.left_bumper){
             lift.setPower(1);
         }else if (gamepad1.left_trigger > 0){
             lift.setPower(-1);
         }else{
-            lift.setPower(0);4
+            lift.setPower(0);
         }
+
+        telemetry.addData("Speed", speedStatus);
+        telemetry.addData("Adjuster position", adjusterStatus);
     }
 }
