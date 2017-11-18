@@ -25,9 +25,13 @@ public class NikoTeleOp extends OpMode{
 
     DcMotor leftSweeper;
     DcMotor rightSweeper;
+    DcMotor arm;
+    DcMotor tilt;
 
     CRServo leftRotate;
     CRServo rightRotate;
+    Servo rist;
+    Servo grab;
 
     DcMotor lift;
 
@@ -49,8 +53,9 @@ public class NikoTeleOp extends OpMode{
 
         leftSweeper = hardwareMap.dcMotor.get("Left sweeper");
         rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
-
         leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
 
         leftRotate = hardwareMap.crservo.get("Left rotator");
         rightRotate = hardwareMap.crservo.get("Right rotator");
@@ -109,7 +114,9 @@ public class NikoTeleOp extends OpMode{
             lift.setPower(0);
         }
 
+
         telemetry.addData("Speed", speedStatus);
         telemetry.addData("Adjuster position", adjusterStatus);
+        telemetry.addData("Motor Speed", leftWheel.getCurrentPosition() + "," + rightWheel.getCurrentPosition());
     }
 }
