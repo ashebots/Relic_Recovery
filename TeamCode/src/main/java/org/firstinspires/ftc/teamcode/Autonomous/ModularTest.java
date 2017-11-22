@@ -31,11 +31,8 @@ public class ModularTest extends LinearOpMode{
     ImuChassis imuChassis;
 
     float[] b = {1, 1};
-<<<<<<< HEAD
+
     float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.Mid_COLUMN_A};
-=======
-    float[][] test = {ModularConstants.BALANCE_STONE_A,ModularConstants.Mid_COLUMN_A};
->>>>>>> a1264641a1325c059ab7e719fc2c8529394babdb
 
     public void runOpMode(){
 

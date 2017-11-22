@@ -18,7 +18,7 @@ public class ToggleTest extends OpMode {
     public void loop(){
 
         if (Toggle.toggle(gamepad1.a, 0)){
-            telemetry.addData("A", "On");
+            telemetry.addData("A ", "On");
         }else {
             telemetry.addData("A", "Off");
         }
