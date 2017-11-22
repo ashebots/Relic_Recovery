@@ -147,7 +147,7 @@ public class ImuChassis {
         stop();
     }
 
-    public float[] driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
+    public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
 
         driveSpeed = driveSpeed * (maxSpeed / 4000);
         turnSpeed = turnSpeed * (maxSpeed / 4000);
@@ -177,15 +177,14 @@ public class ImuChassis {
 
         turnToAngle(initialAngle, turnSpeed);
         driveXFeet(distance, driveSpeed);
-        
-        return coords;
 
     }
 
     public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
 
         for (int i = 1; i < coordList.length; i++){
-            coordList[0] = driveToCoord(coordList[0], coordList[i], driveSpeed, turnSpeed, isRed);
+            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
+
         }
 
     }

@@ -28,6 +28,7 @@ public class ModularTest extends LinearOpMode{
     ImuChassis imuChassis;
 
     float[] b = {1, 1};
+    float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.Mid_COLUMN_A};
 
     public void runOpMode(){
 

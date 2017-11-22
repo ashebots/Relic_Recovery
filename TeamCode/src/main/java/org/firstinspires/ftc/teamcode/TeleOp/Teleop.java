@@ -6,13 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-<<<<<<< HEAD
-/**
- * Created by secre on 10/17/2017.
- */
-
-=======
->>>>>>> 1dcfd3ceada450e4386302919a240d8b09a93782
 @TeleOp
 public class Teleop extends OpMode {
 
