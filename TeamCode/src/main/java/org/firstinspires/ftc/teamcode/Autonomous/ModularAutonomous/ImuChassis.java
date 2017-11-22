@@ -2,10 +2,14 @@ package org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 
 /**
@@ -20,30 +24,46 @@ public class ImuChassis {
     //The IMU chassis consists of two motors and an IMU.
     DcMotor leftMotor;
     DcMotor rightMotor;
+    Servo lTray;
+    Servo rTray;
+    Servo gemArm;
 
     BNO055IMU imu;
 
     Double maxSpeed;
 
+    VueMarkID mark;
+
+    RelicRecoveryVuMark vuMark;
+
+    float[][] placePosA = {ModularConstants.LEFT_COLUMN_A, ModularConstants.RIGHT_COLUMN_A,ModularConstants.MID_COLUMN_A};
+    float[][] placePosB = {ModularConstants.LEFT_COLUMN_B, ModularConstants.RIGHT_COLUMN_B,ModularConstants.MID_COLUMN_B};
+
     //The IMU chassis constructor
-    public ImuChassis(DcMotor leftMotor, DcMotor rightMotor, BNO055IMU imu, double maxSpeed){
+    public ImuChassis(HardwareMap hardwareMap, Double maxSpeed){
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.leftMotor = leftMotor;
+        leftMotor = hardwareMap.dcMotor.get("Left wheel");
 
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.rightMotor = rightMotor;
+        rightMotor = hardwareMap.dcMotor.get("Right wheel");
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.mode = BNO055IMU.SensorMode.NDOF;
         imu.initialize(parameters);
-        this.imu = imu;
+        imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
         this.maxSpeed = maxSpeed;
+
+        lTray = hardwareMap.servo.get("Left rotator");
+        rTray = hardwareMap.servo.get("Right rotator");
+        gemArm = hardwareMap.servo.get("gemArm");
+
+        mark = new VueMarkID(hardwareMap);
 
     }
 
@@ -141,7 +161,7 @@ public class ImuChassis {
 
         if(leftGoal < 0) {
             while (leftMotor.getCurrentPosition() < leftGoal) {
-                driveAtSpeed(speed);
+                driveAtSpeed(-speed);
             }
         }else{
             while (leftMotor.getCurrentPosition() > leftGoal) {
@@ -190,7 +210,58 @@ public class ImuChassis {
         for (int i = 1; i < coordList.length; i++){
             driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
 
+            //Scan the pictograph and set next location to the appropriate crypto box position
+            if(coordList[i] == ModularConstants.PICTOGRAPH_A){
+                vuMark = mark.vueName();
+                if(vuMark == RelicRecoveryVuMark.UNKNOWN){
+                    vuMark = mark.vueName();
+                }
+
+                if(vuMark == RelicRecoveryVuMark.LEFT){
+                    coordList[i + 1] = ModularConstants.LEFT_COLUMN_A;
+                }else if(vuMark == RelicRecoveryVuMark.RIGHT){
+                    coordList[i + 1] = ModularConstants.RIGHT_COLUMN_A;
+                }else{
+                    coordList[i + 1] = ModularConstants.MID_COLUMN_A;
+                }
+            }else if(coordList[i] == ModularConstants.PICTOGRAPH_B){
+                vuMark = mark.vueName();
+                if(vuMark == RelicRecoveryVuMark.UNKNOWN){
+                    vuMark = mark.vueName();
+                }
+
+                if(vuMark == RelicRecoveryVuMark.LEFT){
+                    coordList[i + 1] = ModularConstants.LEFT_COLUMN_B;
+                }else if(vuMark == RelicRecoveryVuMark.RIGHT){
+                    coordList[i + 1] = ModularConstants.RIGHT_COLUMN_B;
+                }else{
+                    coordList[i + 1] = ModularConstants.MID_COLUMN_B;
+                }//Check if robot is at placing locations
+            }else if (posCheck(coordList[i], placePosA)){
+                glyphPlace(90);
+            }else if(posCheck(coordList[i], placePosB)){
+                glyphPlace(180);
+            }
         }
 
+    }
+
+    private void glyphPlace(float angle){
+
+        turnToAngle(angle, .4);
+        driveXFeet(-2, .8);
+        lTray.setPosition(0.4);
+        rTray.setPosition(0.4);
+        driveXFeet(2,.8);
+    }
+
+    private boolean posCheck(float[] curPos, float[][] checkPos){
+
+        for(int i = 0; checkPos.length < i; i++){
+            if(curPos == checkPos[i]){
+                return true;
+            }
+        }
+        return false;
     }
 }
