@@ -17,6 +17,10 @@ public class ModularTest extends LinearOpMode{
     ImuChassis imuChassis;
     HardwareMap map;
 
+    float[] b = {1, 1};
+    float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.MID_COLUMN_A};
+
+
     public void runOpMode(){
         imuChassis = new ImuChassis(map, 2959.0);
         imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);

@@ -6,8 +6,24 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 public class Toggle {
 
-    public boolean toggle (boolean check){
-        return check;
+    static boolean[] output = {false, false, false, false, false};
+    static boolean[] gate = {true, true, true, true, true};
+
+    public static boolean toggle (boolean input, int modeNum){
+
+        if (input && gate[modeNum]){
+            output[modeNum] = !output[modeNum];
+            gate[modeNum] = false;
+        }
+
+        if (!input){
+            gate[modeNum] = true;
+        }
+
+        return output[modeNum];
     }
 
 }
+
+
+

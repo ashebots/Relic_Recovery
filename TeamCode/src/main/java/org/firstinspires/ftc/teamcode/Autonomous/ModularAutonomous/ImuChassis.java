@@ -209,6 +209,7 @@ public class ImuChassis {
 
         for (int i = 1; i < coordList.length; i++){
             driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
+
             //Scan the pictograph and set next location to the appropriate crypto box position
             if(coordList[i] == ModularConstants.PICTOGRAPH_A){
                 vuMark = mark.vueName();
