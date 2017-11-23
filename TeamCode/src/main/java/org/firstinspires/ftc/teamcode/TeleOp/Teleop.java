@@ -7,9 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.ConfigStrings;
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-/**
- * Created by secre on 10/17/2017.
- */
 
 public class Teleop extends OpMode {
 
@@ -49,11 +46,11 @@ public class Teleop extends OpMode {
         }
 
         if(gamepad1.x){
-            placeL.setPosition(0.5);
-            placeR.setPosition(0.5);
-        }else {
             placeL.setPosition(0);
             placeR.setPosition(0);
+        }else {
+            placeL.setPosition(0.5);
+            placeR.setPosition(0.5);
         }
 
         if(gamepad1.y){
