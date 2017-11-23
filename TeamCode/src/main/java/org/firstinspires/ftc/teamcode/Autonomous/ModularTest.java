@@ -1,15 +1,9 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.motors.NeveRest60Gearmotor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
 
@@ -20,34 +14,36 @@ import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConsta
 @Autonomous
 public class ModularTest extends LinearOpMode{
 
-    DcMotor leftMotor;
-    DcMotor rightMotor;
-
-    BNO055IMU imu;
-
     ImuChassis imuChassis;
+    HardwareMap map;
 
     float[] b = {1, 1};
-    float[][] pos ={
-            {2,4,4},
-            {2,2,4}
-    };
+<<<<<<< HEAD
+
+    float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.Mid_COLUMN_A};
 
     public void runOpMode(){
 
-        rightMotor = hardwareMap.dcMotor.get("right");
+        rightMotor = hardwareMap.dcMotor.get("Right wheel");
 
-        leftMotor = hardwareMap.dcMotor.get("left");
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftMotor = hardwareMap.dcMotor.get("Left wheel");
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        imu = hardwareMap.get(BNO055IMU.class, "Imu");
+        lTray = hardwareMap.servo.get("Left rotator");
+        rTray = hardwareMap.servo.get("Right rotator");
+        rTray.setDirection(Servo.Direction.REVERSE);
+=======
+    float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.MID_COLUMN_A};
+>>>>>>> 5ed81744a9706e59d6153d6a81f8955405eb2488
 
-        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959);
+
+    public void runOpMode(){
+        imuChassis = new ImuChassis(map, 2959.0);
         imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
+        float[][] test = {ModularConstants.BALANCE_STONE_A,ModularConstants.MID_COLUMN_A};
 
         waitForStart();
 
-        imuChassis.driveToCoords(pos,.5,.8,false);
-
+        imuChassis.driveToCoords(test, 0.8, 0.3, false);
     }
 }
