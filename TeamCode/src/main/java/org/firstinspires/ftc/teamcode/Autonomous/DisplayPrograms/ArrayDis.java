@@ -42,6 +42,18 @@ public class ArrayDis {
         return output;
     }
 
+    public String displayMatrix(float[][] input) {
+        String output = "";
+
+        for(int i = 0; i < input.length; i++) {
+            for(int n = 0; n < input[i].length; n++) {
+                output = output.concat(Float.toString(input[i][n]) + " , ");
+            }
+            output = output.concat("\n");
+        }
+        return output;
+    }
+
     public String displayMatrix(String[][] input) {
         String output = "";
 
@@ -78,6 +90,21 @@ public class ArrayDis {
                 }
             }
             output = output.concat("\n");
+        }
+        return output;
+    }
+
+    public boolean[][] arrayInverter(boolean[][] input){
+        boolean[][] output = {};
+
+        for(int i = 0; i < input.length; i++){
+            for(int n = 0; n < input[i].length; n++){
+                if(input[i][n]){
+                    output[i][n] = false;
+                }else{
+                    output[i][n] = true;
+                }
+            }
         }
         return output;
     }
