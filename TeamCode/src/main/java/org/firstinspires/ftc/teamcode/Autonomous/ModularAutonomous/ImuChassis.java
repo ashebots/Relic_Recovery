@@ -5,10 +5,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Autonomous.DisplayPrograms.ArrayDis;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 
@@ -35,6 +37,8 @@ public class ImuChassis {
     VueMarkID mark;
 
     RelicRecoveryVuMark vuMark;
+
+    Telemetry telemetry;
 
     float[][] placePosA = {ModularConstants.LEFT_COLUMN_A, ModularConstants.RIGHT_COLUMN_A,ModularConstants.MID_COLUMN_A};
     float[][] placePosB = {ModularConstants.LEFT_COLUMN_B, ModularConstants.RIGHT_COLUMN_B,ModularConstants.MID_COLUMN_B};
@@ -205,41 +209,42 @@ public class ImuChassis {
 
     }
 
-    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
-
-        for (int i = 1; i < coordList.length; i++){
-            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
+    public void driveToCords(float[][] cordList, double driveSpeed, double turnSpeed, Boolean isRed){
+        ArrayDis display = new ArrayDis();
+        for(int i = 1; i < cordList.length; i++){
+            telemetry.addData("Target Locations", display.displayMatrix(cordList));
+            driveToCoord(cordList[i-1], cordList[i], driveSpeed, turnSpeed, isRed);
 
             //Scan the pictograph and set next location to the appropriate crypto box position
-            if(coordList[i] == ModularConstants.PICTOGRAPH_A){
+            if(cordList[i] == ModularConstants.PICTOGRAPH_A){
                 vuMark = mark.vueName();
                 if(vuMark == RelicRecoveryVuMark.UNKNOWN){
                     vuMark = mark.vueName();
                 }
 
                 if(vuMark == RelicRecoveryVuMark.LEFT){
-                    coordList[i + 1] = ModularConstants.LEFT_COLUMN_A;
+                    cordList[i + 1] = ModularConstants.LEFT_COLUMN_A;
                 }else if(vuMark == RelicRecoveryVuMark.RIGHT){
-                    coordList[i + 1] = ModularConstants.RIGHT_COLUMN_A;
+                    cordList[i + 1] = ModularConstants.RIGHT_COLUMN_A;
                 }else{
-                    coordList[i + 1] = ModularConstants.MID_COLUMN_A;
+                    cordList[i + 1] = ModularConstants.MID_COLUMN_A;
                 }
-            }else if(coordList[i] == ModularConstants.PICTOGRAPH_B){
+            }else if(cordList[i] == ModularConstants.PICTOGRAPH_B){
                 vuMark = mark.vueName();
                 if(vuMark == RelicRecoveryVuMark.UNKNOWN){
                     vuMark = mark.vueName();
                 }
 
                 if(vuMark == RelicRecoveryVuMark.LEFT){
-                    coordList[i + 1] = ModularConstants.LEFT_COLUMN_B;
+                    cordList[i + 1] = ModularConstants.LEFT_COLUMN_B;
                 }else if(vuMark == RelicRecoveryVuMark.RIGHT){
-                    coordList[i + 1] = ModularConstants.RIGHT_COLUMN_B;
+                    cordList[i + 1] = ModularConstants.RIGHT_COLUMN_B;
                 }else{
-                    coordList[i + 1] = ModularConstants.MID_COLUMN_B;
+                    cordList[i + 1] = ModularConstants.MID_COLUMN_B;
                 }//Check if robot is at placing locations
-            }else if (posCheck(coordList[i], placePosA)){
+            }else if (posCheck(cordList[i], placePosA)){
                 glyphPlace(90);
-            }else if(posCheck(coordList[i], placePosB)){
+            }else if(posCheck(cordList[i], placePosB)){
                 glyphPlace(180);
             }
         }
