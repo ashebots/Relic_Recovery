@@ -18,24 +18,8 @@ public class ModularTest extends LinearOpMode{
     HardwareMap map;
 
     float[] b = {1, 1};
-<<<<<<< HEAD
 
-    float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.Mid_COLUMN_A};
-
-    public void runOpMode(){
-
-        rightMotor = hardwareMap.dcMotor.get("Right wheel");
-
-        leftMotor = hardwareMap.dcMotor.get("Left wheel");
-        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        lTray = hardwareMap.servo.get("Left rotator");
-        rTray = hardwareMap.servo.get("Right rotator");
-        rTray.setDirection(Servo.Direction.REVERSE);
-=======
     float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.MID_COLUMN_A};
->>>>>>> 5ed81744a9706e59d6153d6a81f8955405eb2488
-
 
     public void runOpMode(){
         imuChassis = new ImuChassis(map, 2959.0);
