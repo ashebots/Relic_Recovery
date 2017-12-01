@@ -38,36 +38,38 @@ public class ImuChassis {
 
     RelicRecoveryVuMark vuMark;
 
-    Telemetry telemetry;
-
     float[][] placePosA = {ModularConstants.LEFT_COLUMN_A, ModularConstants.RIGHT_COLUMN_A,ModularConstants.MID_COLUMN_A};
     float[][] placePosB = {ModularConstants.LEFT_COLUMN_B, ModularConstants.RIGHT_COLUMN_B,ModularConstants.MID_COLUMN_B};
 
     //The IMU chassis constructor
-    public ImuChassis(HardwareMap hardwareMap, Double maxSpeed){
+    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Servo leftGrab, Servo rightGrab, Servo gemArm,VueMarkID mark, Double maxSpeed){
 
+        leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftMotor = hardwareMap.dcMotor.get("Left wheel");
 
+        rightMotor = right;
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightMotor = hardwareMap.dcMotor.get("Right wheel");
 
+        imu = IMU;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.mode = BNO055IMU.SensorMode.NDOF;
         imu.initialize(parameters);
-        imu = hardwareMap.get(BNO055IMU.class, "Imu");
+
+        lTray = leftGrab;
+        rTray = rightGrab;
+        this.gemArm = gemArm;
+        this.mark = mark;
+
 
         this.maxSpeed = maxSpeed;
 
-        lTray = hardwareMap.servo.get("Left rotator");
-        rTray = hardwareMap.servo.get("Right rotator");
-        gemArm = hardwareMap.servo.get("gemArm");
 
-        mark = new VueMarkID(hardwareMap);
+
+        //mark = new VueMarkID(hardwareMap);
 
     }
 
@@ -113,7 +115,7 @@ public class ImuChassis {
 
             while (currentAngle > angleTo) {
 
-                turnAtSpeed(-speed);
+                turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
 
@@ -121,7 +123,7 @@ public class ImuChassis {
 
             while (currentAngle < angleTo) {
 
-                turnAtSpeed(-speed);
+                turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
 
@@ -131,7 +133,7 @@ public class ImuChassis {
 
             while (currentAngle < angleTo) {
 
-                turnAtSpeed(speed);
+                turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
 
@@ -139,7 +141,7 @@ public class ImuChassis {
 
             while (currentAngle > angleTo){
 
-                turnAtSpeed(speed);
+                turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
 
@@ -163,13 +165,13 @@ public class ImuChassis {
         speed = speed * maxSpeed / 4000;
         int leftGoal = (int)((feet*encodersPerFoot) + leftMotor.getCurrentPosition());
 
-        if(leftGoal < 0) {
+        if (leftMotor.getCurrentPosition() < leftGoal) {
             while (leftMotor.getCurrentPosition() < leftGoal) {
-                driveAtSpeed(-speed);
+                driveAtSpeed(speed);
             }
         }else{
             while (leftMotor.getCurrentPosition() > leftGoal) {
-                driveAtSpeed(speed);
+                driveAtSpeed(-speed);
             }
         }
 
@@ -212,7 +214,6 @@ public class ImuChassis {
     public void driveToCords(float[][] cordList, double driveSpeed, double turnSpeed, Boolean isRed){
         ArrayDis display = new ArrayDis();
         for(int i = 1; i < cordList.length; i++){
-            telemetry.addData("Target Locations", display.displayMatrix(cordList));
             driveToCoord(cordList[i-1], cordList[i], driveSpeed, turnSpeed, isRed);
 
             //Scan the pictograph and set next location to the appropriate crypto box position

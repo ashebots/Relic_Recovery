@@ -22,13 +22,12 @@ public class EncodersPerSecond extends LinearOpMode {
 
     public void runOpMode(){
 
-        rightMotor = hardwareMap.dcMotor.get("Right");
-        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotor = hardwareMap.dcMotor.get("Right wheel");
 
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        leftMotor = hardwareMap.dcMotor.get("Left");
+        leftMotor = hardwareMap.dcMotor.get("Left wheel");
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
