@@ -22,9 +22,9 @@ public class ModularTest extends LinearOpMode{
     float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.MID_COLUMN_A};
 
     public void runOpMode(){
-        imuChassis = new ImuChassis(map, 2959.0);
+
+        imuChassis = new ImuChassis(map, (double)2959);
         imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
-        float[][] test = {ModularConstants.BALANCE_STONE_A,ModularConstants.MID_COLUMN_A};
 
         waitForStart();
 
