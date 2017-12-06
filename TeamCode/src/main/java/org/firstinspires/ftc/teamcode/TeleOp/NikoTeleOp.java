@@ -55,7 +55,11 @@ public class NikoTeleOp extends OpMode{
         rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
         leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        arm = hardwareMap.dcMotor.get("arm");
+        tilt = hardwareMap.dcMotor.get("tilt");
 
+        rist = hardwareMap.servo.get("rist");
+        grab = hardwareMap.servo.get("grab");
 
         leftRotate = hardwareMap.crservo.get("Left rotator");
         rightRotate = hardwareMap.crservo.get("Right rotator");
@@ -82,7 +86,11 @@ public class NikoTeleOp extends OpMode{
             speedStatus = "Normal";
         }
 
-        chassis.NormalDrive(gamepad1.left_stick_x/slowness, gamepad1.left_stick_y/slowness);
+        if(Toggle.toggle(gamepad1.dpad_down || gamepad1.dpad_left || gamepad1.dpad_right || gamepad1.dpad_up || gamepad2.dpad_down || gamepad2.dpad_left || gamepad2.dpad_right || gamepad2.dpad_up,0)) {
+            chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
+        }else{
+            chassis.NormalDrive(gamepad2.left_stick_x / slowness, gamepad2.left_stick_y / slowness);
+        }
 
         if (gamepad1.dpad_down){
             adjuster.setPosition(0.05);
@@ -114,6 +122,24 @@ public class NikoTeleOp extends OpMode{
             lift.setPower(0);
         }
 
+         if (gamepad2.right_bumper){
+            tilt.setPower(.5);
+         }else if (gamepad2.left_bumper){
+             tilt.setPower(-.5);
+         }else{
+             tilt.setPower(0);
+         }
+
+         if (gamepad2.right_trigger > 0){
+             arm.setPower(gamepad2.right_trigger);
+         }else if (gamepad2.left_trigger > 0){
+             arm.setPower(-gamepad2.left_trigger);
+         }else{
+             arm.setPower(0);
+         }
+
+        rist.setPosition((gamepad2.right_stick_y/2)+.5);
+        grab.setPosition((gamepad2.right_stick_x/2)+.5);
 
         telemetry.addData("Speed", speedStatus);
         telemetry.addData("Adjuster position", adjusterStatus);
