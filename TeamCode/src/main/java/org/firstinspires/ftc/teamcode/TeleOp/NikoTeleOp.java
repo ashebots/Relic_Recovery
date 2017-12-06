@@ -78,10 +78,10 @@ public class NikoTeleOp extends OpMode{
 
     public void loop(){
 
-        if (gamepad1.a){
+        if (Toggle.toggle(gamepad1.a, 0)){
             slowness = 2;
             speedStatus = "Slow";
-        } else if (gamepad1.y) {
+        } else {
             slowness = 1;
             speedStatus = "Normal";
         }
@@ -92,10 +92,10 @@ public class NikoTeleOp extends OpMode{
             chassis.NormalDrive(gamepad2.left_stick_x / slowness, gamepad2.left_stick_y / slowness);
         }
 
-        if (gamepad1.dpad_down){
+        if (Toggle.toggle(gamepad1.dpad_down, 1)){
             adjuster.setPosition(0.05);
             adjusterStatus = "Lowered";
-        }else if (gamepad1.dpad_up){
+        }else {
             adjuster.setPosition(0.75);
             adjusterStatus = "Raised";
         }

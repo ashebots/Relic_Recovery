@@ -211,7 +211,7 @@ public class ImuChassis {
 
     }
 
-    public void driveToCords(float[][] cordList, double driveSpeed, double turnSpeed, Boolean isRed){
+    public void driveToCoords(float[][] cordList, double driveSpeed, double turnSpeed, Boolean isRed){
         ArrayDis display = new ArrayDis();
         for(int i = 1; i < cordList.length; i++){
             driveToCoord(cordList[i-1], cordList[i], driveSpeed, turnSpeed, isRed);
