@@ -9,10 +9,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-/**
- * Created by famil on 11/11/2017.
- */
-
 @TeleOp
 public class NikoTeleOp extends OpMode{
 
