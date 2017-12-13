@@ -9,6 +9,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
+import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.LOW;
+import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.MID;
+import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.TOP;
+
 @TeleOp
 public class NikoTeleOp extends OpMode{
 
@@ -35,6 +39,9 @@ public class NikoTeleOp extends OpMode{
 
     String speedStatus;
     String adjusterStatus;
+
+    public enum lift{TOP, MID, LOW}
+    lift liftPos = LOW;
 
     public void init(){
 
@@ -82,7 +89,7 @@ public class NikoTeleOp extends OpMode{
             speedStatus = "Normal";
         }
 
-        if(Toggle.toggle(gamepad1.dpad_down || gamepad1.dpad_left || gamepad1.dpad_right || gamepad1.dpad_up || gamepad2.dpad_down || gamepad2.dpad_left || gamepad2.dpad_right || gamepad2.dpad_up,0)) {
+        if(Toggle.toggle(gamepad1.dpad_down || gamepad2.dpad_down,0)) {
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
         }else{
             chassis.NormalDrive(gamepad2.left_stick_x / slowness, gamepad2.left_stick_y / slowness);
@@ -132,6 +139,38 @@ public class NikoTeleOp extends OpMode{
              arm.setPower(-gamepad2.left_trigger);
          }else{
              arm.setPower(0);
+         }
+
+         if(gamepad1.dpad_right || gamepad2.dpad_right){
+             liftPos = LOW;
+         }else if(gamepad1.dpad_up || gamepad2.dpad_up){
+             liftPos = MID;
+         }else if(gamepad1.dpad_left || gamepad2.dpad_left){
+             liftPos = TOP;
+         }
+
+         switch (liftPos){
+             case TOP:
+                 if (lift.getCurrentPosition() < 200){
+                     lift.setPower(.2);
+                 }else{
+                     lift.setPower(-.2);
+                 }
+                 break;
+             case MID:
+                 if (lift.getCurrentPosition() < 100){
+                     lift.setPower(.2);
+                 }else{
+                     lift.setPower(-.2);
+                 }
+                 break;
+             default:
+                 if (lift.getCurrentPosition() < 0){
+                     lift.setPower(.2);
+                 }else{
+                     lift.setPower(-.2);
+                 }
+                 break;
          }
 
         rist.setPosition((gamepad2.right_stick_y/2)+.5);
