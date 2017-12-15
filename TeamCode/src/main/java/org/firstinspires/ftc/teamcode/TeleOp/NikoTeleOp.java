@@ -145,33 +145,11 @@ public class NikoTeleOp extends OpMode{
              liftPos = LOW;
          }else if(gamepad1.dpad_up || gamepad2.dpad_up){
              liftPos = MID;
-         }else if(gamepad1.dpad_left || gamepad2.dpad_left){
+         }else if(gamepad1.dpad_left || gamepad2.dpad_left) {
              liftPos = TOP;
          }
 
-         switch (liftPos){
-             case TOP:
-                 if (lift.getCurrentPosition() < 200){
-                     lift.setPower(.2);
-                 }else{
-                     lift.setPower(-.2);
-                 }
-                 break;
-             case MID:
-                 if (lift.getCurrentPosition() < 100){
-                     lift.setPower(.2);
-                 }else{
-                     lift.setPower(-.2);
-                 }
-                 break;
-             default:
-                 if (lift.getCurrentPosition() < 0){
-                     lift.setPower(.2);
-                 }else{
-                     lift.setPower(-.2);
-                 }
-                 break;
-         }
+         liftMove(liftPos);
 
         rist.setPosition((gamepad2.right_stick_y/2)+.5);
         grab.setPosition((gamepad2.right_stick_x/2)+.5);
@@ -179,5 +157,32 @@ public class NikoTeleOp extends OpMode{
         telemetry.addData("Speed", speedStatus);
         telemetry.addData("Adjuster position", adjusterStatus);
         telemetry.addData("Motor Speed", leftWheel.getCurrentPosition() + "," + rightWheel.getCurrentPosition());
+        telemetry.addData("Lift Position", liftPos);
+    }
+
+    private void liftMove(lift pos){
+        switch (pos){
+            case TOP:
+                if (lift.getCurrentPosition() < 200){
+                    lift.setPower(.2);
+                }else{
+                    lift.setPower(-.2);
+                }
+                break;
+            case MID:
+                if (lift.getCurrentPosition() < 100){
+                    lift.setPower(.2);
+                }else{
+                    lift.setPower(-.2);
+                }
+                break;
+            default:
+                if (lift.getCurrentPosition() < 0){
+                    lift.setPower(.2);
+                }else{
+                    lift.setPower(-.2);
+                }
+                break;
+        }
     }
 }
