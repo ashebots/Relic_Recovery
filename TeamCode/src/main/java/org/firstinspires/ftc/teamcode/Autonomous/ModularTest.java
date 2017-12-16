@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.AnnualModule;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
@@ -25,17 +26,16 @@ public class ModularTest extends LinearOpMode{
     Servo rTray;
     Servo gemArm;
     VueMarkID mark;
-
+    AnnualModule annualModule;
     float[] s = {0,0};
     float[] b = {1, 1};
     float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.MID_COLUMN_A};
 
     public void runOpMode(){
 
-<<<<<<< HEAD
-        imuChassis = new ImuChassis(map, (double)2959);
-=======
         leftMotor = hardwareMap.dcMotor.get("Left wheel");
+        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
         rightMotor = hardwareMap.dcMotor.get("Right wheel");
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
@@ -45,13 +45,12 @@ public class ModularTest extends LinearOpMode{
         gemArm = hardwareMap.servo.get("gemArm");
         mark = new VueMarkID(hardwareMap);
 
-        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, lTray, rTray, gemArm, mark, 2959.0);
->>>>>>> 11b40532af8cc7110c20bdeeff45d31b9d487464
+        annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0, annualModule);
         imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
-        imuChassis.driveToCoord(s, b, 0.6, 0.2, false);
-        //imuChassis.driveToCords(test, 0.6, 0.5, false);
+        imuChassis.turnToAngle(45, 0.3);
     }
 }

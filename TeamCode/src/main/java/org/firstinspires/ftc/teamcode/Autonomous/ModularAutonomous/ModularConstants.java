@@ -24,6 +24,10 @@ public class ModularConstants {
     public static float[] PICTOGRAPH_A = {2, 3};
     public static float[] PICTOGRAPH_B = {2, 9};
 
+    //Coordinate set constants
+    public static float[][] placePosA = {ModularConstants.LEFT_COLUMN_A, ModularConstants.RIGHT_COLUMN_A,ModularConstants.MID_COLUMN_A};
+    public static float[][] placePosB = {ModularConstants.LEFT_COLUMN_B, ModularConstants.RIGHT_COLUMN_B,ModularConstants.MID_COLUMN_B};
+
     //Encoders per rotation constants
     public static int NEVERREST_20 = 560;
     public static int NEVERREST_40 = 1120;

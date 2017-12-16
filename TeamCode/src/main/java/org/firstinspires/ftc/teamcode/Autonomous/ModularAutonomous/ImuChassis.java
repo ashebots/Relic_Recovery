@@ -21,28 +21,20 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 public class ImuChassis {
 
     //encodersPerFoot is required for calculating the encoder position to drive
-    public int encodersPerFoot;
+    public static int encodersPerFoot;
 
     //The IMU chassis consists of two motors and an IMU.
-    DcMotor leftMotor;
-    DcMotor rightMotor;
-    Servo lTray;
-    Servo rTray;
-    Servo gemArm;
+    static DcMotor leftMotor;
+    static DcMotor rightMotor;
 
-    BNO055IMU imu;
+    static BNO055IMU imu;
 
-    Double maxSpeed;
+    static Double maxSpeed;
 
-    VueMarkID mark;
-
-    RelicRecoveryVuMark vuMark;
-
-    float[][] placePosA = {ModularConstants.LEFT_COLUMN_A, ModularConstants.RIGHT_COLUMN_A,ModularConstants.MID_COLUMN_A};
-    float[][] placePosB = {ModularConstants.LEFT_COLUMN_B, ModularConstants.RIGHT_COLUMN_B,ModularConstants.MID_COLUMN_B};
+    AnnualModule annualModule;
 
     //The IMU chassis constructor
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Servo leftGrab, Servo rightGrab, Servo gemArm,VueMarkID mark, Double maxSpeed){
+    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, AnnualModule annualModule){
 
         leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -59,31 +51,22 @@ public class ImuChassis {
         parameters.mode = BNO055IMU.SensorMode.NDOF;
         imu.initialize(parameters);
 
-        lTray = leftGrab;
-        rTray = rightGrab;
-        this.gemArm = gemArm;
-        this.mark = mark;
-
-
         this.maxSpeed = maxSpeed;
 
-
-
-        //mark = new VueMarkID(hardwareMap);
-
+        this.annualModule = annualModule;
     }
 
 
     //Simple programs to turn or drive forward at the motor speed you input, as well as stop
-    public void driveAtSpeed(double speed) {
+    public static void driveAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(speed);
     }
-    public void turnAtSpeed(double speed) {
+    public static void turnAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(-speed);
     }
-    public void stop() {
+    public static void stop() {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
     }
@@ -99,7 +82,7 @@ public class ImuChassis {
         return input;
     }
 
-    public void turnToAngle (float angleTo, double speed) {
+    public static void turnToAngle (float angleTo, double speed) {
 
         speed = speed * maxSpeed / 4000;
 
@@ -150,17 +133,17 @@ public class ImuChassis {
         }
     }
 
-    public void turnXDegrees (float angleTo, double speed){
+    public static void turnXDegrees (float angleTo, double speed){
         angleTo = smartImu(-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle + angleTo);
         turnToAngle(angleTo, speed);
         
     }
 
-    public void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
+    public static void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
 
-    public void driveXFeet(double feet, double speed) {
+    public static void driveXFeet(double feet, double speed) {
 
         speed = speed * maxSpeed / 4000;
         int leftGoal = (int)((feet*encodersPerFoot) + leftMotor.getCurrentPosition());
@@ -211,63 +194,14 @@ public class ImuChassis {
 
     }
 
-    public void driveToCoords(float[][] cordList, double driveSpeed, double turnSpeed, Boolean isRed){
-        ArrayDis display = new ArrayDis();
-        for(int i = 1; i < cordList.length; i++){
-            driveToCoord(cordList[i-1], cordList[i], driveSpeed, turnSpeed, isRed);
+    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
+
+        for(int i = 1; i < coordList.length; i++){
+            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
 
             //Scan the pictograph and set next location to the appropriate crypto box position
-            if(cordList[i] == ModularConstants.PICTOGRAPH_A){
-                vuMark = mark.vueName();
-                if(vuMark == RelicRecoveryVuMark.UNKNOWN){
-                    vuMark = mark.vueName();
-                }
-
-                if(vuMark == RelicRecoveryVuMark.LEFT){
-                    cordList[i + 1] = ModularConstants.LEFT_COLUMN_A;
-                }else if(vuMark == RelicRecoveryVuMark.RIGHT){
-                    cordList[i + 1] = ModularConstants.RIGHT_COLUMN_A;
-                }else{
-                    cordList[i + 1] = ModularConstants.MID_COLUMN_A;
-                }
-            }else if(cordList[i] == ModularConstants.PICTOGRAPH_B){
-                vuMark = mark.vueName();
-                if(vuMark == RelicRecoveryVuMark.UNKNOWN){
-                    vuMark = mark.vueName();
-                }
-
-                if(vuMark == RelicRecoveryVuMark.LEFT){
-                    cordList[i + 1] = ModularConstants.LEFT_COLUMN_B;
-                }else if(vuMark == RelicRecoveryVuMark.RIGHT){
-                    cordList[i + 1] = ModularConstants.RIGHT_COLUMN_B;
-                }else{
-                    cordList[i + 1] = ModularConstants.MID_COLUMN_B;
-                }//Check if robot is at placing locations
-            }else if (posCheck(cordList[i], placePosA)){
-                glyphPlace(90);
-            }else if(posCheck(cordList[i], placePosB)){
-                glyphPlace(180);
-            }
+            annualModule.coordCheck(coordList, i);
         }
 
-    }
-
-    private void glyphPlace(float angle){
-
-        turnToAngle(angle, .4);
-        driveXFeet(-2, .8);
-        lTray.setPosition(0.4);
-        rTray.setPosition(0.4);
-        driveXFeet(2,.8);
-    }
-
-    private boolean posCheck(float[] curPos, float[][] checkPos){
-
-        for(int i = 0; checkPos.length < i; i++){
-            if(curPos == checkPos[i]){
-                return true;
-            }
-        }
-        return false;
     }
 }
