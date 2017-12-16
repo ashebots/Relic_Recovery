@@ -3,16 +3,13 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.AnnualModule;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
-
 
 @Autonomous
 public class ModularTest extends LinearOpMode{
@@ -45,12 +42,21 @@ public class ModularTest extends LinearOpMode{
         gemArm = hardwareMap.servo.get("gemArm");
         mark = new VueMarkID(hardwareMap);
 
+<<<<<<< HEAD
         annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
         imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0, annualModule);
+=======
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, lTray, rTray, gemArm, mark, 2959.0);
+>>>>>>> c784519f5097fcd1238eda37d5f3e3d3327647ce
         imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
+<<<<<<< HEAD
         imuChassis.turnToAngle(45, 0.3);
+=======
+        //imuChassis.driveToCoord(s, b, 0.6, 0.2, false);
+        imuChassis.driveToCoords(test,0.8,0.5,true);
+>>>>>>> c784519f5097fcd1238eda37d5f3e3d3327647ce
     }
 }
