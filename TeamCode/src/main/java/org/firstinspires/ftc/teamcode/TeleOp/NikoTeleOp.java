@@ -30,12 +30,15 @@ public class NikoTeleOp extends OpMode{
 
     CRServo leftRotate;
     CRServo rightRotate;
-    Servo rist;
+    Servo wrist;
     Servo grab;
 
     DcMotor lift;
 
-    Servo adjuster;
+    Servo adjusterR;
+    Servo adjusterL;
+    CRServo armWheelR;
+    CRServo armWheelL;
 
     String speedStatus;
     String adjusterStatus;
@@ -44,6 +47,7 @@ public class NikoTeleOp extends OpMode{
     lift liftPos = LOW;
 
     public void init(){
+
 
         leftWheel = hardwareMap.dcMotor.get("Left wheel");
         rightWheel = hardwareMap.dcMotor.get("Right wheel");
@@ -58,11 +62,11 @@ public class NikoTeleOp extends OpMode{
         rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
         leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        arm = hardwareMap.dcMotor.get("arm");
-        tilt = hardwareMap.dcMotor.get("tilt");
+        arm = hardwareMap.dcMotor.get("Relic arm");
+        tilt = hardwareMap.dcMotor.get("Relic arm tilter");
 
-        rist = hardwareMap.servo.get("rist");
-        grab = hardwareMap.servo.get("grab");
+        wrist = hardwareMap.servo.get("Relic arm wrist");
+        grab = hardwareMap.servo.get("Relic arm claw");
 
         leftRotate = hardwareMap.crservo.get("Left rotator");
         rightRotate = hardwareMap.crservo.get("Right rotator");
@@ -71,8 +75,14 @@ public class NikoTeleOp extends OpMode{
 
         lift = hardwareMap.dcMotor.get("Lift");
 
-        adjuster = hardwareMap.servo.get("Adjuster");
-        adjuster.setPosition(0.75);
+        adjusterR = hardwareMap.servo.get("Right fly rotator");
+        adjusterR.setPosition(0.95);
+        adjusterL = hardwareMap.servo.get("Left fly rotator");
+        adjusterL.setDirection(Servo.Direction.REVERSE);
+        adjusterL.setPosition(0.95);
+        armWheelR = hardwareMap.crservo.get("Right fly wheel");
+        armWheelL = hardwareMap.crservo.get("Left fly wheel");
+        armWheelL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         speedStatus = "Normal";
         adjusterStatus = "Raised";
@@ -89,29 +99,37 @@ public class NikoTeleOp extends OpMode{
             speedStatus = "Normal";
         }
 
-        if(Toggle.toggle(gamepad1.dpad_down || gamepad2.dpad_down,0)) {
-            chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
+        if(Toggle.toggle(gamepad1.dpad_down || gamepad2.dpad_down,1)) {
+            chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
         }else{
-            chassis.NormalDrive(gamepad2.left_stick_x / slowness, gamepad2.left_stick_y / slowness);
+            chassis.NormalDrive(gamepad2.left_stick_x / slowness, -gamepad2.left_stick_y / slowness);
         }
 
-        if (Toggle.toggle(gamepad1.dpad_down, 1)){
-            adjuster.setPosition(0.05);
+        if (Toggle.toggle(gamepad1.left_stick_button || gamepad2.left_stick_button, 3)){
+            adjusterL.setPosition(0.4);
+            adjusterR.setPosition(0.4);
             adjusterStatus = "Lowered";
         }else {
-            adjuster.setPosition(0.75);
+            adjusterL.setPosition(0.95);
+            adjusterR.setPosition(0.95);
             adjusterStatus = "Raised";
         }
 
         if (gamepad1.right_bumper){
             leftSweeper.setPower(1);
             rightSweeper.setPower(1);
+            armWheelL.setPower(1);
+            armWheelR.setPower(1);
         }else if (gamepad1.right_trigger > 0){
             leftSweeper.setPower(-1);
             rightSweeper.setPower(-1);
+            armWheelL.setPower(-1);
+            armWheelR.setPower(-1);
         }else{
             leftSweeper.setPower(0);
             rightSweeper.setPower(0);
+            armWheelL.setPower(0);
+            armWheelR.setPower(0);
         }
 
         leftRotate.setPower(gamepad1.right_stick_y/2);
@@ -151,13 +169,14 @@ public class NikoTeleOp extends OpMode{
 
          liftMove(liftPos);
 
-        rist.setPosition((gamepad2.right_stick_y/2)+.5);
+        wrist.setPosition((gamepad2.right_stick_y/2)+.5);
         grab.setPosition((gamepad2.right_stick_x/2)+.5);
 
         telemetry.addData("Speed", speedStatus);
         telemetry.addData("Adjuster position", adjusterStatus);
         telemetry.addData("Motor Speed", leftWheel.getCurrentPosition() + "," + rightWheel.getCurrentPosition());
         telemetry.addData("Lift Position", liftPos);
+        
     }
 
     private void liftMove(lift pos){
