@@ -43,25 +43,16 @@ public class ModularTest extends LinearOpMode{
         gemArm = hardwareMap.servo.get("gemArm");
         mark = new VueMarkID(hardwareMap);
 
-<<<<<<< HEAD
 
         annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
         imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0, annualModule);
 
-=======
-        annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
-        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0, annualModule);
->>>>>>> 822b98206ad9a80169bbac48706bb7ebf39c6b8a
         imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
-<<<<<<< HEAD
-        imuChassis.turnToAngle(45, 0.3);
-
-=======
         //imuChassis.driveToCoord(s, b, 0.6, 0.2, false);
         imuChassis.driveToCoords(test,0.8,0.5,true);
->>>>>>> 822b98206ad9a80169bbac48706bb7ebf39c6b8a
+
     }
 }
