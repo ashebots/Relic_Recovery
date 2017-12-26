@@ -148,7 +148,12 @@ public class NikoTeleOp extends OpMode{
         }else{
             lift.setPower(0);
         }
-/*
+        if(lift.getCurrentPosition() < 0){
+
+            lift.setPower(.5);
+
+        }
+        
          if (gamepad2.right_bumper){
             tilt.setPower(.5);
          }else if (gamepad2.left_bumper){
@@ -156,7 +161,7 @@ public class NikoTeleOp extends OpMode{
          }else{
              tilt.setPower(0);
          }
-*/
+
          if (gamepad2.right_trigger > 0){
              arm.setPower(gamepad2.right_trigger);
          }else if (gamepad2.left_trigger > 0){
@@ -173,7 +178,7 @@ public class NikoTeleOp extends OpMode{
              liftPos = TOP;
          }
 
-         liftMove(liftPos);
+         //liftMove(liftPos);
 
         wrist.setPosition((gamepad2.right_stick_y/2)+.5);
         grab.setPosition((gamepad2.right_stick_x/2)+.5);
@@ -185,7 +190,7 @@ public class NikoTeleOp extends OpMode{
         
     }
 
-    private void liftMove(lift pos){
+   /* private void liftMove(lift pos){
         switch (pos){
             case TOP:
                 if(gamepad2.right_trigger > 0){
@@ -219,5 +224,5 @@ public class NikoTeleOp extends OpMode{
                 }
                 break;
         }
-    }
+    } */
 }

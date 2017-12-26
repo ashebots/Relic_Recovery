@@ -32,9 +32,9 @@ public class ModularTest extends LinearOpMode{
     public void runOpMode(){
 
         leftMotor = hardwareMap.dcMotor.get("Left wheel");
-        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightMotor = hardwareMap.dcMotor.get("Right wheel");
+        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
@@ -43,13 +43,16 @@ public class ModularTest extends LinearOpMode{
         gemArm = hardwareMap.servo.get("gemArm");
         mark = new VueMarkID(hardwareMap);
 
+
         annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
         imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0, annualModule);
+
         imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
         //imuChassis.driveToCoord(s, b, 0.6, 0.2, false);
         imuChassis.driveToCoords(test,0.8,0.5,true);
+
     }
 }
