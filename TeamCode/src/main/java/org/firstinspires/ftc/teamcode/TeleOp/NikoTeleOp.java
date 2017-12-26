@@ -91,18 +91,24 @@ public class NikoTeleOp extends OpMode{
 
     public void loop(){
 
-        if (Toggle.toggle(gamepad1.a, 0)){
-            slowness = 2;
-            speedStatus = "Slow";
-        } else {
-            slowness = 1;
-            speedStatus = "Normal";
-        }
-
-        if(Toggle.toggle(gamepad1.dpad_down || gamepad2.dpad_down,1)) {
+        if(Toggle.toggle(gamepad1.back || gamepad2.back,1)) {
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
+            if (Toggle.toggle(gamepad1.a, 0)){
+                slowness = 2;
+                speedStatus = "Slow";
+            } else {
+                slowness = 1;
+                speedStatus = "Normal";
+            }
         }else{
             chassis.NormalDrive(gamepad2.left_stick_x / slowness, -gamepad2.left_stick_y / slowness);
+            if (Toggle.toggle(gamepad2.a, 0)){
+                slowness = 2;
+                speedStatus = "Slow";
+            } else {
+                slowness = 1;
+                speedStatus = "Normal";
+            }
         }
 
         if (Toggle.toggle(gamepad1.left_stick_button || gamepad2.left_stick_button, 3)){
@@ -142,7 +148,7 @@ public class NikoTeleOp extends OpMode{
         }else{
             lift.setPower(0);
         }
-
+/*
          if (gamepad2.right_bumper){
             tilt.setPower(.5);
          }else if (gamepad2.left_bumper){
@@ -150,7 +156,7 @@ public class NikoTeleOp extends OpMode{
          }else{
              tilt.setPower(0);
          }
-
+*/
          if (gamepad2.right_trigger > 0){
              arm.setPower(gamepad2.right_trigger);
          }else if (gamepad2.left_trigger > 0){
@@ -182,8 +188,18 @@ public class NikoTeleOp extends OpMode{
     private void liftMove(lift pos){
         switch (pos){
             case TOP:
-                if (lift.getCurrentPosition() < 200){
-                    lift.setPower(.2);
+                if(gamepad2.right_trigger > 0){
+
+                    lift.setPower(1);
+
+                }
+                else{
+
+                    lift.setPower(0);
+
+                }
+                if (lift.getCurrentPosition() < 9400){
+                    lift.setPower(.8);
                 }else{
                     lift.setPower(-.2);
                 }
