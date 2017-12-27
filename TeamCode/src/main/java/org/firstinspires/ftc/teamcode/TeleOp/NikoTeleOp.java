@@ -87,12 +87,13 @@ public class NikoTeleOp extends OpMode{
         speedStatus = "Normal";
         adjusterStatus = "Raised";
 
+
     }
 
     public void loop(){
 
-        if(Toggle.toggle(gamepad1.back || gamepad2.back,1)) {
-            chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
+        if(Toggle.toggle(gamepad1.y || gamepad2.y,1)) {
+
             if (Toggle.toggle(gamepad1.a, 0)){
                 slowness = 2;
                 speedStatus = "Slow";
@@ -100,8 +101,17 @@ public class NikoTeleOp extends OpMode{
                 slowness = 1;
                 speedStatus = "Normal";
             }
+
+            if (Toggle.toggle(gamepad1.b, 2)){
+                chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
+                speedStatus = speedStatus + " & Reverse";
+            }else {
+                chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
+                speedStatus = speedStatus + " & Forward";
+            }
+
         }else{
-            chassis.NormalDrive(gamepad2.left_stick_x / slowness, -gamepad2.left_stick_y / slowness);
+
             if (Toggle.toggle(gamepad2.a, 0)){
                 slowness = 2;
                 speedStatus = "Slow";
@@ -109,9 +119,18 @@ public class NikoTeleOp extends OpMode{
                 slowness = 1;
                 speedStatus = "Normal";
             }
+
+            if (Toggle.toggle(gamepad2.b, 2)){
+                chassis.NormalDrive(gamepad2.left_stick_x / slowness, gamepad2.left_stick_y / slowness);
+                speedStatus = speedStatus + " & Reverse";
+            }else {
+                chassis.NormalDrive(gamepad2.left_stick_x / slowness, -gamepad2.left_stick_y / slowness);
+                speedStatus = speedStatus + " & Forward";
+            }
+
         }
 
-        if (Toggle.toggle(gamepad1.left_stick_button || gamepad2.left_stick_button, 3)){
+        if (Toggle.toggle(gamepad1.x || gamepad2.x, 3)){
             adjusterL.setPosition(0.4);
             adjusterR.setPosition(0.4);
             adjusterStatus = "Lowered";
@@ -124,13 +143,13 @@ public class NikoTeleOp extends OpMode{
         if (gamepad1.right_bumper){
             leftSweeper.setPower(1);
             rightSweeper.setPower(1);
-            armWheelL.setPower(1);
-            armWheelR.setPower(1);
+            armWheelL.setPower(0.5);
+            armWheelR.setPower(0.5);
         }else if (gamepad1.right_trigger > 0){
             leftSweeper.setPower(-1);
             rightSweeper.setPower(-1);
-            armWheelL.setPower(-1);
-            armWheelR.setPower(-1);
+            armWheelL.setPower(-0.5);
+            armWheelR.setPower(-0.5);
         }else{
             leftSweeper.setPower(0);
             rightSweeper.setPower(0);
@@ -148,12 +167,7 @@ public class NikoTeleOp extends OpMode{
         }else{
             lift.setPower(0);
         }
-        if(lift.getCurrentPosition() < 0){
 
-            lift.setPower(.5);
-
-        }
-        
          if (gamepad2.right_bumper){
             tilt.setPower(.5);
          }else if (gamepad2.left_bumper){
@@ -166,19 +180,9 @@ public class NikoTeleOp extends OpMode{
              arm.setPower(gamepad2.right_trigger);
          }else if (gamepad2.left_trigger > 0){
              arm.setPower(-gamepad2.left_trigger);
-         }else{
+         }else {
              arm.setPower(0);
          }
-
-         if(gamepad1.dpad_right || gamepad2.dpad_right){
-             liftPos = LOW;
-         }else if(gamepad1.dpad_up || gamepad2.dpad_up){
-             liftPos = MID;
-         }else if(gamepad1.dpad_left || gamepad2.dpad_left) {
-             liftPos = TOP;
-         }
-
-         //liftMove(liftPos);
 
         wrist.setPosition((gamepad2.right_stick_y/2)+.5);
         grab.setPosition((gamepad2.right_stick_x/2)+.5);
@@ -187,42 +191,5 @@ public class NikoTeleOp extends OpMode{
         telemetry.addData("Adjuster position", adjusterStatus);
         telemetry.addData("Motor Speed", leftWheel.getCurrentPosition() + "," + rightWheel.getCurrentPosition());
         telemetry.addData("Lift Position", liftPos);
-        
     }
-
-   /* private void liftMove(lift pos){
-        switch (pos){
-            case TOP:
-                if(gamepad2.right_trigger > 0){
-
-                    lift.setPower(1);
-
-                }
-                else{
-
-                    lift.setPower(0);
-
-                }
-                if (lift.getCurrentPosition() < 9400){
-                    lift.setPower(.8);
-                }else{
-                    lift.setPower(-.2);
-                }
-                break;
-            case MID:
-                if (lift.getCurrentPosition() < 100){
-                    lift.setPower(.2);
-                }else{
-                    lift.setPower(-.2);
-                }
-                break;
-            default:
-                if (lift.getCurrentPosition() < 0){
-                    lift.setPower(.2);
-                }else{
-                    lift.setPower(-.2);
-                }
-                break;
-        }
-    } */
 }
