@@ -27,6 +27,10 @@ public class KeeganMainTeleOp extends OpMode {
     Servo LeftFlyRotator;
     Chassis Chassis;
     DcMotor Lift;
+    Servo RelicWrist;
+    Servo RelicClaw;
+    DcMotor RelicArm;
+    DcMotor RelicTilt;
 
     public void init() {
 
@@ -46,6 +50,10 @@ public class KeeganMainTeleOp extends OpMode {
         RightFlyRotator = hardwareMap.servo.get("Right fly rotator");
         LeftFlyRotator = hardwareMap.servo.get("Left fly rotator");
         Lift = hardwareMap.dcMotor.get("Lift");
+        RelicWrist = hardwareMap.servo.get("Relic arm wrist");
+        RelicClaw = hardwareMap.servo.get("Relic arm claw");
+        RelicArm = hardwareMap.dcMotor.get("Relic arm");
+        RelicTilt = hardwareMap.dcMotor.get("Relic arm tilter");
 
 
 
@@ -59,31 +67,31 @@ public class KeeganMainTeleOp extends OpMode {
 
         if (gamepad1.a) {
 
-            BoxMotorLeft.setPower(1);
-            BoxMotorRight.setPower(1);
-            RightFlyWheel.setPower(1);
-            LeftFlyWheel.setPower(1);
+            BoxMotorLeft.setPower(-1);
+            BoxMotorRight.setPower(-1);
+            RightFlyWheel.setPower(-0.5);
+            LeftFlyWheel.setPower(-0.5);
 
         } else if (gamepad1.y) {
 
-            BoxMotorLeft.setPower(-1);
-            BoxMotorRight.setPower(-1);
-            RightFlyWheel.setPower(0);
-            LeftFlyWheel.setPower(0);
+            BoxMotorLeft.setPower(1);
+            BoxMotorRight.setPower(1);
+            RightFlyWheel.setPower(0.5);
+            LeftFlyWheel.setPower(0.5);
 
         } else if (gamepad1.x) {
 
             BoxMotorLeft.setPower(-1);
             BoxMotorRight.setPower(1);
-            RightFlyWheel.setPower(1);
-            LeftFlyWheel.setPower(1);
+            RightFlyWheel.setPower(0.5);
+            LeftFlyWheel.setPower(-0.5);
 
         } else if (gamepad1.b) {
 
             BoxMotorLeft.setPower(1);
             BoxMotorRight.setPower(-1);
-            RightFlyWheel.setPower(1);
-            LeftFlyWheel.setPower(1);
+            RightFlyWheel.setPower(-0.5);
+            LeftFlyWheel.setPower(0.5);
 
         } else {
 
@@ -96,18 +104,18 @@ public class KeeganMainTeleOp extends OpMode {
 
         if (gamepad1.left_bumper) {
 
-            RotatorLeft.setPower(1);
-            RotatorRight.setPower(1);
+            RotatorLeft.setPower(0.5);
+            RotatorRight.setPower(0.5);
 
         } else if (gamepad1.right_bumper) {
 
-            RotatorLeft.setPower(0);
-            RotatorRight.setPower(0);
+            RotatorLeft.setPower(-0.5);
+            RotatorRight.setPower(-0.5);
 
         } else {
 
-            RotatorLeft.setPower(0.5);
-            RotatorRight.setPower(0.5);
+            RotatorLeft.setPower(0);
+            RotatorRight.setPower(0);
 
         }
         if (gamepad1.right_trigger > 0) {
@@ -137,6 +145,61 @@ public class KeeganMainTeleOp extends OpMode {
         } else {
 
             Lift.setPower(0);
+
+        }
+        if (gamepad1.dpad_left) {
+
+            RelicArm.setPower(0.6);
+
+        }
+        else if (gamepad1.dpad_right) {
+
+            RelicArm.setPower(-0.6);
+
+        }
+        else {
+
+            RelicArm.setPower(0);
+
+        }
+        if (gamepad1.right_stick_y > 0) {
+
+            RelicTilt.setPower(0.6);
+
+        }
+        else if (gamepad1.right_stick_y < 0) {
+
+            RelicTilt.setPower(-0.6);
+
+        }
+        else {
+
+            RelicTilt.setPower(0);
+
+        }
+        if (gamepad1.right_stick_x > 0) {
+
+            RelicClaw.setPosition(0.75);
+
+        }
+        else {
+
+            RelicClaw.setPosition(0);
+
+        }
+        if (gamepad1.right_stick_x < 0) {
+
+            RelicWrist.setPosition(0);
+
+        }
+        else if (gamepad1.right_stick_y > 0) {
+
+            RelicWrist.setPosition(0.75);
+
+        }
+        else {
+
+            RelicWrist.setPosition(0.5);
 
         }
 

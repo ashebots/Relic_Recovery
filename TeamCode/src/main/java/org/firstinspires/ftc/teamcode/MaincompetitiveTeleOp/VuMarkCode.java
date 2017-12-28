@@ -38,7 +38,6 @@ public class VuMarkCode {
         vueMark = new VueMarkID(hardwareMap);
 
         chassis = new Chassis (leftMotor,rightMotor);
-        ImuChassis = new ImuChassis(leftMotor,rightMotor,Imu,4 );
 
 
 
