@@ -15,6 +15,8 @@ public class AnnualModule {
     static Servo rightRotator;
     static Servo gemArm;
 
+    static float[][] currentPos;
+
     VueMarkID mark;
     RelicRecoveryVuMark vuMark;
 

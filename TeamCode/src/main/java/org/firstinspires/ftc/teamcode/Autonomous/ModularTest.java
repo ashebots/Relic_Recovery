@@ -27,7 +27,7 @@ public class ModularTest extends LinearOpMode{
     AnnualModule annualModule;
     float[] s = {0,0};
     float[] b = {1, 1};
-    float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.MID_COLUMN_A};
+    float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.CRYPTOBOX_A};
 
     public void runOpMode(){
 
@@ -53,6 +53,5 @@ public class ModularTest extends LinearOpMode{
 
         //imuChassis.driveToCoord(s, b, 0.6, 0.2, false);
         imuChassis.driveToCoords(test,0.8,0.5,true);
-
     }
 }

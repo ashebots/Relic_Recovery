@@ -42,6 +42,7 @@ public class NikoTeleOp extends OpMode{
 
     String speedStatus;
     String adjusterStatus;
+    String driver;
 
     public enum lift{TOP, MID, LOW}
     lift liftPos = LOW;
@@ -74,6 +75,8 @@ public class NikoTeleOp extends OpMode{
         rightRotate.setDirection(CRServo.Direction.REVERSE);
 
         lift = hardwareMap.dcMotor.get("Lift");
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         adjusterR = hardwareMap.servo.get("Right fly rotator");
         adjusterR.setPosition(0.95);
@@ -92,7 +95,8 @@ public class NikoTeleOp extends OpMode{
 
     public void loop(){
 
-        if(Toggle.toggle(gamepad1.y || gamepad2.y,1)) {
+        if(!Toggle.toggle(gamepad1.y || gamepad2.y,1)) {
+            driver =  "GamePad 1";
 
             if (Toggle.toggle(gamepad1.a, 0)){
                 slowness = 2;
@@ -111,6 +115,7 @@ public class NikoTeleOp extends OpMode{
             }
 
         }else{
+            driver = "Gampad 2";
 
             if (Toggle.toggle(gamepad2.a, 0)){
                 slowness = 2;
@@ -131,8 +136,8 @@ public class NikoTeleOp extends OpMode{
         }
 
         if (Toggle.toggle(gamepad1.x || gamepad2.x, 3)){
-            adjusterL.setPosition(0.4);
-            adjusterR.setPosition(0.4);
+            adjusterL.setPosition(0.35);
+            adjusterR.setPosition(0.35);
             adjusterStatus = "Lowered";
         }else {
             adjusterL.setPosition(0.95);
@@ -169,9 +174,9 @@ public class NikoTeleOp extends OpMode{
         }
 
          if (gamepad2.right_bumper){
-            tilt.setPower(.5);
+            tilt.setPower(.2);
          }else if (gamepad2.left_bumper){
-             tilt.setPower(-.5);
+             tilt.setPower(-.2);
          }else{
              tilt.setPower(0);
          }
@@ -187,9 +192,9 @@ public class NikoTeleOp extends OpMode{
         wrist.setPosition((gamepad2.right_stick_y/2)+.5);
         grab.setPosition((gamepad2.right_stick_x/2)+.5);
 
-        telemetry.addData("Speed", speedStatus);
         telemetry.addData("Adjuster position", adjusterStatus);
-        telemetry.addData("Motor Speed", leftWheel.getCurrentPosition() + "," + rightWheel.getCurrentPosition());
-        telemetry.addData("Lift Position", liftPos);
+        telemetry.addData("Driver", driver);
+        telemetry.addData("Lift position", lift.getCurrentPosition());
+        telemetry.addData("Arm tilt position", tilt.getCurrentPosition());
     }
 }
