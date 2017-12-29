@@ -14,7 +14,8 @@ buildscript {
 }
 
 
-
+dependencies {
+}
 repositories {
     google()
 }

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 /*
  * Created by jezebelquit on 9/30/17.
  */
-@TeleOp
+
 public class TestTeleOp extends OpMode{
 
     DcMotor leftMotor;

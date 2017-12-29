@@ -2,10 +2,16 @@ package org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Autonomous.DisplayPrograms.ArrayDis;
+import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 
 /**
@@ -15,49 +21,52 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 public class ImuChassis {
 
     //encodersPerFoot is required for calculating the encoder position to drive
-    public int encodersPerFoot;
+    public static int encodersPerFoot;
 
     //The IMU chassis consists of two motors and an IMU.
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+    static DcMotor leftMotor;
+    static DcMotor rightMotor;
 
-    BNO055IMU imu;
+    static BNO055IMU imu;
 
-    Double maxEncodersPerFoot;
+    static Double maxSpeed;
+
+    AnnualModule annualModule;
 
     //The IMU chassis constructor
-    public ImuChassis(DcMotor leftMotor, DcMotor rightMotor, BNO055IMU imu, double maxEncodersPerFoot){
+    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, AnnualModule annualModule){
 
+        leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.leftMotor = leftMotor;
 
+        rightMotor = right;
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        this.rightMotor = rightMotor;
 
+        imu = IMU;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.mode = BNO055IMU.SensorMode.NDOF;
         imu.initialize(parameters);
-        this.imu = imu;
 
-        this.maxEncodersPerFoot = maxEncodersPerFoot;
+        this.maxSpeed = maxSpeed;
 
+        this.annualModule = annualModule;
     }
 
 
     //Simple programs to turn or drive forward at the motor speed you input, as well as stop
-    public void driveAtSpeed(double speed) {
+    public static void driveAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(speed);
     }
-    public void turnAtSpeed(double speed) {
+    public static void turnAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(-speed);
     }
-    public void stop() {
+    public static void stop() {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
     }
@@ -73,9 +82,9 @@ public class ImuChassis {
         return input;
     }
 
-    public void turnToAngle (float angleTo, double speed) {
+    public static void turnToAngle (float angleTo, double speed) {
 
-        speed =  speed * maxEncodersPerFoot / 4000;
+        speed = speed * maxSpeed / 4000;
 
         float currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
 
@@ -87,106 +96,111 @@ public class ImuChassis {
 
         if (turnToRight) {
 
-            if (currentAngle > angleTo) {
+            while (currentAngle > angleTo) {
 
                 turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-
-                while (currentAngle > angleTo) currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-
-                stop();
-
-            }else{
-
-                turnAtSpeed(speed);
-                currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-
-                while (currentAngle < angleTo) currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-
-                stop();
             }
+
+            stop();
+
+            while (currentAngle < angleTo) {
+
+                turnAtSpeed(speed);
+                currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+            }
+
+            stop();
 
         } else{
 
-            if (currentAngle < angleTo) {
+            while (currentAngle < angleTo) {
 
                 turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-
-                while (currentAngle < angleTo) currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-
-                stop();
-
-            }else{
-
-                turnAtSpeed(-speed);
-                currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-
-                while (currentAngle > angleTo) currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-
-                stop();
             }
+
+            stop();
+
+            while (currentAngle > angleTo){
+
+                turnAtSpeed(-speed);
+                currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
+            }
+
+            stop();
+
         }
     }
 
-    public void turnXDegrees (float angleTo, double speed){
+    public static void turnXDegrees (float angleTo, double speed){
         angleTo = smartImu(-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle + angleTo);
         turnToAngle(angleTo, speed);
         
     }
 
-    public void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
+    public static void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
 
-    public void driveXFeet(int feet, double speed) {
+    public static void driveXFeet(double feet, double speed) {
 
-        speed = speed * maxEncodersPerFoot / 4000;
-        int leftGoal = (feet*encodersPerFoot) + leftMotor.getCurrentPosition();
+        speed = speed * maxSpeed / 4000;
+        int leftGoal = (int)((feet*encodersPerFoot) + leftMotor.getCurrentPosition());
 
-        driveAtSpeed(speed);
-
-        while (leftMotor.getCurrentPosition() < leftGoal){}
+        if (leftMotor.getCurrentPosition() < leftGoal) {
+            while (leftMotor.getCurrentPosition() < leftGoal) {
+                driveAtSpeed(speed);
+            }
+        }else{
+            while (leftMotor.getCurrentPosition() > leftGoal) {
+                driveAtSpeed(-speed);
+            }
+        }
 
         stop();
     }
 
-    public float[] driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, String teamColor){
+    public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
 
-        driveSpeed = driveSpeed * (maxEncodersPerFoot / 4000);
-        turnSpeed = turnSpeed * (maxEncodersPerFoot / 4000);
+        driveSpeed = driveSpeed * (maxSpeed / 4000);
+        turnSpeed = turnSpeed * (maxSpeed / 4000);
 
-        float angleTo;
-        int distance = (int)Math.sqrt((startPosition[1]-coords[1])*(startPosition[1]-coords[1])+(startPosition[0]-coords[0])*(startPosition[0]-coords[0]));
+        float initialAngle;
+
+        float distance = (int)Math.sqrt((startPosition[1]-coords[1])*(startPosition[1]-coords[1])+(startPosition[0]-coords[0])*(startPosition[0]-coords[0]));
 
         if (startPosition[0] != coords[0]) {
-            angleTo = (float)-Math.toDegrees(Math.atan((startPosition[1] - coords[1]) / (startPosition[0] - coords[0])));
+            initialAngle = (float)-Math.toDegrees(Math.atan((startPosition[1] - coords[1]) / (startPosition[0] - coords[0])));
         }else if (startPosition[1] < coords[1]){
-            angleTo = -90;
+            initialAngle = -90;
         }else{
-            angleTo = 90;
+            initialAngle = 90;
         }
 
         if (startPosition[0] > coords[0]){
-            angleTo = Math.abs(angleTo)-180;
+            initialAngle = Math.abs(initialAngle)-180;
 
-            if (startPosition[1] >= coords[1]) angleTo = -angleTo;
+            if (startPosition[1] >= coords[1]) initialAngle = -initialAngle;
 
         }
 
-        angleTo = smartImu(-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle - angleTo );
+        initialAngle = smartImu(initialAngle+90);
 
-        turnXDegrees(angleTo, turnSpeed);
+        if (isRed) initialAngle = -initialAngle;
+
+        turnToAngle(initialAngle, turnSpeed);
         driveXFeet(distance, driveSpeed);
-
-        return coords;
 
     }
 
-    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, String teamColor){
+    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
 
-        for (int i = 1; i < coordList.length; i++){
-            coordList[0] = driveToCoord(coordList[0], coordList[i], driveSpeed, turnSpeed, teamColor);
+        for(int i = 1; i < coordList.length; i++){
+            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
+
+            //Scan the pictograph and set next location to the appropriate crypto box position
+            annualModule.coordCheck(coordList, i);
         }
 
     }

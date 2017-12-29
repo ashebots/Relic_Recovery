@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.TeleOp.ChassisCode;
  */
 
 public class Joystick {
+
     public static double[] calculateNormal(double xPos, double yPos) {
 
         //The angle formed by the y axis and the line formed by (0,0) and where the joystick is located.

@@ -10,6 +10,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by Lenovo on 11/9/2017.
+=======
+import com.qualcomm.robotcore.hardware.Servo;
+
+/**
+ * Created by famil on 11/12/2017.
+>>>>>>> 30f1dcaec395d8461897b1568732e0592dd0f66f
  */
 @TeleOp
 public class RatRodTeleOp extends OpMode {
@@ -27,5 +33,6 @@ public class RatRodTeleOp extends OpMode {
     public void loop(){
         driveMotor.setPower(-gamepad1.left_stick_y);
         turnServo.setPosition((0.25*gamepad1.right_stick_x+1)/2);
+
     }
 }
