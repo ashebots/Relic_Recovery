@@ -64,6 +64,7 @@ public class KeeganMainTeleOp extends OpMode {
     public void loop() {
 
         Chassis.NormalDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y);
+        Chassis.NormalDrive(gamepad2.left_stick_x, -gamepad1.left_stick_y);
 
         if (gamepad1.a) {
 
@@ -83,15 +84,11 @@ public class KeeganMainTeleOp extends OpMode {
 
             BoxMotorLeft.setPower(-1);
             BoxMotorRight.setPower(1);
-            RightFlyWheel.setPower(0.5);
-            LeftFlyWheel.setPower(0.5);
 
         } else if (gamepad1.b) {
 
             BoxMotorLeft.setPower(1);
             BoxMotorRight.setPower(-1);
-            RightFlyWheel.setPower(0.5);
-            LeftFlyWheel.setPower(0.5);
 
         } else {
 
@@ -147,12 +144,12 @@ public class KeeganMainTeleOp extends OpMode {
             Lift.setPower(0);
 
         }
-        /*if (gamepad1.dpad_left) {
+        /*if (gamepad2.right_trigger > 0) {
 
             RelicArm.setPower(0.6);
 
         }
-        else if (gamepad1.dpad_right) {
+        else if (gamepad2.right_trigger > 0) {
 
             RelicArm.setPower(-0.6);
 
@@ -162,12 +159,12 @@ public class KeeganMainTeleOp extends OpMode {
             RelicArm.setPower(0);
 
         }
-        if (gamepad1.right_stick_y > 0) {
+        if (gamepad2.right_stick_y > 0) {
 
             RelicTilt.setPower(0.6);
 
         }
-        else if (gamepad1.right_stick_y < 0) {
+        else if (gamepad2.right_stick_y < 0) {
 
             RelicTilt.setPower(-0.6);
 
@@ -177,7 +174,7 @@ public class KeeganMainTeleOp extends OpMode {
             RelicTilt.setPower(0);
 
         }
-        if (gamepad1.right_stick_x > 0) {
+        if (gamepad2.right_bumper) {
 
             RelicClaw.setPosition(0.75);
 
@@ -187,18 +184,21 @@ public class KeeganMainTeleOp extends OpMode {
         RelicClaw.setPosition(0);
     }
 
-        if (gamepad1.right_stick_y > 0) {
+        if (gamepad2.left_bumper) {
+
+            RelicWrist.setPosition(0);
+
+        }
+        else if (gamepad2.y) {
 
             RelicWrist.setPosition(0.75);
 
         }
         else {
 
-            RelicWrist.setPosition(0);
-
+        RelicWrist.setPosition(0.5);
         }
         */
-
     }
 
 }
