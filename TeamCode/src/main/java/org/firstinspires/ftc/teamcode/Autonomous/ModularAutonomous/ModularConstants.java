@@ -12,13 +12,15 @@ public class ModularConstants {
     public static float[] BALANCE_STONE_A = {2, 2};
     public static float[] BALANCE_STONE_B = {2, 8};
 
-    public static float[] LEFT_COLUMN_A = {2, 4.5f};
-    public static float[] MID_COLUMN_A = {2, 5};
-    public static float[] RIGHT_COLUMN_A = {2, 5.5f};
+    public static float[] LEFT_COLUMN_A = {0.5f, 4.875f};
+    public static float[] MID_COLUMN_A = {0.5f, 5};
+    public static float[] RIGHT_COLUMN_A = {0.5f, 5.125f};
+    public static float[] CRYPTOBOX_A = {2, 5};
 
-    public static float[] LEFT_COLUMN_B = {2.5f, 10};
-    public static float[] MID_COLUMN_B = {3, 10};
-    public static float[] RIGHT_COLUMN_B = {3.5f, 10};
+    public static float[] LEFT_COLUMN_B = {2.125f, 11.5f};
+    public static float[] MID_COLUMN_B = {3, 11.5f};
+    public static float[] RIGHT_COLUMN_B = {3.875f, 11.5f};
+    public static float[] CRYPTOBOX_B = {3,10};
 
     //Pictograph scanning positions
     public static float[] PICTOGRAPH_A = {2, 3};
