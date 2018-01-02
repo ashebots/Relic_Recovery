@@ -144,7 +144,22 @@ public class KeeganMainTeleOp extends OpMode {
             Lift.setPower(0);
 
         }
-        /*if (gamepad2.right_trigger > 0) {
+        /*
+        if (gamepad1.a + gamepad1.start) {
+
+        gamepad1 == gamepad2
+
+        } else if (gamepad2.a + gamepad2.start) {
+
+        gamepad2 == gamepad1
+
+        } else {
+
+        gamepad2 == gamepad2
+        gamepad1 == gamepad1
+
+        }
+        if (gamepad2.right_trigger > 0) {
 
             RelicArm.setPower(0.6);
 
