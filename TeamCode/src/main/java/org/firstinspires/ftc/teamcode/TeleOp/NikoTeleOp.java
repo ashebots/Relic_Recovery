@@ -37,7 +37,7 @@ public class NikoTeleOp extends OpMode{
 
     Servo adjusterR;
     Servo adjusterL;
-    CRServo armWheelR;
+    //CRServo armWheelR;
     CRServo armWheelL;
 
     String speedStatus;
@@ -83,7 +83,7 @@ public class NikoTeleOp extends OpMode{
         adjusterL = hardwareMap.servo.get("Left fly rotator");
         adjusterL.setDirection(Servo.Direction.REVERSE);
         adjusterL.setPosition(0.95);
-        armWheelR = hardwareMap.crservo.get("Right fly wheel");
+        //armWheelR = hardwareMap.crservo.get("Right fly wheel");
         armWheelL = hardwareMap.crservo.get("Left fly wheel");
         armWheelL.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -95,7 +95,7 @@ public class NikoTeleOp extends OpMode{
 
     public void loop(){
 
-        if(!Toggle.toggle(gamepad1.y || gamepad2.y,1)) {
+        //if(!Toggle.toggle(gamepad1.y || gamepad2.y,1)) {
             driver =  "GamePad 1";
 
             if (Toggle.toggle(gamepad1.a, 0)){
@@ -114,7 +114,8 @@ public class NikoTeleOp extends OpMode{
                 speedStatus = speedStatus + " & Forward";
             }
 
-        }else{
+
+        /*}else{
             driver = "Gampad 2";
 
             if (Toggle.toggle(gamepad2.a, 0)){
@@ -134,7 +135,7 @@ public class NikoTeleOp extends OpMode{
             }
 
         }
-
+        */
         if (Toggle.toggle(gamepad1.x || gamepad2.x, 3)){
             adjusterL.setPosition(0.35);
             adjusterR.setPosition(0.35);
@@ -149,17 +150,17 @@ public class NikoTeleOp extends OpMode{
             leftSweeper.setPower(1);
             rightSweeper.setPower(1);
             armWheelL.setPower(0.5);
-            armWheelR.setPower(0.5);
+            //armWheelR.setPower(0.5);
         }else if (gamepad1.right_trigger > 0){
             leftSweeper.setPower(-1);
             rightSweeper.setPower(-1);
             armWheelL.setPower(-0.5);
-            armWheelR.setPower(-0.5);
+            //armWheelR.setPower(-0.5);
         }else{
             leftSweeper.setPower(0);
             rightSweeper.setPower(0);
             armWheelL.setPower(0);
-            armWheelR.setPower(0);
+            //armWheelR.setPower(0);
         }
 
         leftRotate.setPower(gamepad1.right_stick_y/2);
@@ -173,18 +174,18 @@ public class NikoTeleOp extends OpMode{
             lift.setPower(0);
         }
 
-         if (gamepad2.right_bumper){
-            tilt.setPower(.2);
-         }else if (gamepad2.left_bumper){
-             tilt.setPower(-.2);
+         if (gamepad2.right_trigger > 0){
+            tilt.setPower(0.2);
+         }else if (gamepad2.right_bumper){
+             tilt.setPower(-0.2);
          }else{
              tilt.setPower(0);
          }
 
-         if (gamepad2.right_trigger > 0){
-             arm.setPower(gamepad2.right_trigger);
-         }else if (gamepad2.left_trigger > 0){
-             arm.setPower(-gamepad2.left_trigger);
+         if (gamepad2.left_trigger > 0){
+             arm.setPower(1);
+         }else if (gamepad2.left_bumper){
+             arm.setPower(-1);
          }else {
              arm.setPower(0);
          }

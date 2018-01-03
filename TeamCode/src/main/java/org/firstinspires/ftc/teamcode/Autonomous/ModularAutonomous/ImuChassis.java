@@ -34,7 +34,7 @@ public class ImuChassis {
     AnnualModule annualModule;
 
     //The IMU chassis constructor
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, AnnualModule annualModule){
+    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed /*,AnnualModule annualModule*/){
 
         leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -53,7 +53,7 @@ public class ImuChassis {
 
         this.maxSpeed = maxSpeed;
 
-        this.annualModule = annualModule;
+        //this.annualModule = annualModule;
     }
 
 
@@ -97,11 +97,9 @@ public class ImuChassis {
         if (turnToRight) {
 
             while (currentAngle > angleTo) {
-
                 turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
-
             stop();
 
             while (currentAngle < angleTo) {
@@ -113,30 +111,24 @@ public class ImuChassis {
             stop();
 
         } else{
-
             while (currentAngle < angleTo) {
-
                 turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
-
             stop();
 
             while (currentAngle > angleTo){
-
                 turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
 
             stop();
-
         }
     }
 
     public static void turnXDegrees (float angleTo, double speed){
         angleTo = smartImu(-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle + angleTo);
         turnToAngle(angleTo, speed);
-        
     }
 
     public static void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
