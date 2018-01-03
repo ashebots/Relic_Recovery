@@ -9,10 +9,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.LOW;
-import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.MID;
-import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.TOP;
-
 @TeleOp
 public class NikoTeleOp extends OpMode{
 
@@ -43,9 +39,6 @@ public class NikoTeleOp extends OpMode{
     String speedStatus;
     String adjusterStatus;
     String driver;
-
-    public enum lift{TOP, MID, LOW}
-    lift liftPos = LOW;
 
     public void init(){
 

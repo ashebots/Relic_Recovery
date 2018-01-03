@@ -45,7 +45,11 @@ public class ModularTest extends LinearOpMode{
         */
 
         annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autonomous/ModularAutonomous/ModularTest.java
         //imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0);
+=======
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0);
+>>>>>>> b1589646755d5feba7f58e27e77e007bc1ebcd67:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/Autonomous/ModularTest.java
 
         //imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
