@@ -34,7 +34,7 @@ public class ImuChassis {
     AnnualModule annualModule;
 
     //The IMU chassis constructor
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, AnnualModule annualModule){
+    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed){
 
         leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -53,7 +53,7 @@ public class ImuChassis {
 
         this.maxSpeed = maxSpeed;
 
-        this.annualModule = annualModule;
+        //this.annualModule = annualModule;
     }
 
 

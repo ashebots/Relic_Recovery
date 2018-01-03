@@ -45,7 +45,7 @@ public class ModularTest extends LinearOpMode{
 
 
         annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
-        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0, annualModule);
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0);
 
         imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
