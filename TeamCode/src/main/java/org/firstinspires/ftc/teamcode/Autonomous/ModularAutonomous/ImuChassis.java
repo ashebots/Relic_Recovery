@@ -33,20 +33,16 @@ public class ImuChassis {
 
     AnnualModule annualModule;
 
-    //The IMU chassis constructor
-<<<<<<< HEAD
+    //The IMU chassis constr
     public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed /*,AnnualModule annualModule*/){
-=======
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed){
->>>>>>> b1589646755d5feba7f58e27e77e007bc1ebcd67
 
         leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         rightMotor = right;
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         imu = IMU;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -88,7 +84,7 @@ public class ImuChassis {
 
     public static void turnToAngle (float angleTo, double speed) {
 
-        speed = speed * maxSpeed / 4000;
+        //speed = speed * maxSpeed / 4000;
 
         float currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
 
@@ -141,15 +137,15 @@ public class ImuChassis {
 
     public static void driveXFeet(double feet, double speed) {
 
-        speed = speed * maxSpeed / 4000;
-        int leftGoal = (int)((feet*encodersPerFoot) + leftMotor.getCurrentPosition());
+        //speed = speed * maxSpeed / 4000;
+        int leftGoal = (int)((-feet*encodersPerFoot) + leftMotor.getCurrentPosition());
 
-        if (leftMotor.getCurrentPosition() < leftGoal) {
-            while (leftMotor.getCurrentPosition() < leftGoal) {
+        if (leftMotor.getCurrentPosition() > leftGoal) {
+            while (leftMotor.getCurrentPosition() > leftGoal) {
                 driveAtSpeed(speed);
             }
         }else{
-            while (leftMotor.getCurrentPosition() > leftGoal) {
+            while (leftMotor.getCurrentPosition() < leftGoal) {
                 driveAtSpeed(-speed);
             }
         }

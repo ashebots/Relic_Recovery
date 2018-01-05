@@ -21,8 +21,8 @@ public class NikoTeleOp extends OpMode{
 
     DcMotor leftSweeper;
     DcMotor rightSweeper;
-    DcMotor arm;
-    DcMotor tilt;
+    //DcMotor arm;
+    //DcMotor tilt;
 
     CRServo leftRotate;
     CRServo rightRotate;
@@ -56,8 +56,8 @@ public class NikoTeleOp extends OpMode{
         rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
         leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        arm = hardwareMap.dcMotor.get("Relic arm");
-        tilt = hardwareMap.dcMotor.get("Relic arm tilter");
+        //arm = hardwareMap.dcMotor.get("Relic arm");
+        //tilt = hardwareMap.dcMotor.get("Relic arm tilter");
 
         wrist = hardwareMap.servo.get("Relic arm wrist");
         grab = hardwareMap.servo.get("Relic arm claw");
@@ -167,21 +167,21 @@ public class NikoTeleOp extends OpMode{
             lift.setPower(0);
         }
 
-         if (gamepad2.right_trigger > 0){
+         /*if (gamepad2.right_trigger > 0){
             tilt.setPower(0.2);
          }else if (gamepad2.right_bumper){
              tilt.setPower(-0.2);
          }else{
              tilt.setPower(0);
-         }
+         }*/
 
-         if (gamepad2.left_trigger > 0){
+         /*if (gamepad2.left_trigger > 0){
              arm.setPower(1);
          }else if (gamepad2.left_bumper){
              arm.setPower(-1);
          }else {
              arm.setPower(0);
-         }
+         }*/
 
         wrist.setPosition((gamepad2.right_stick_y/2)+.5);
         grab.setPosition((gamepad2.right_stick_x/2)+.5);
@@ -189,6 +189,6 @@ public class NikoTeleOp extends OpMode{
         telemetry.addData("Adjuster position", adjusterStatus);
         telemetry.addData("Driver", driver);
         telemetry.addData("Lift position", lift.getCurrentPosition());
-        telemetry.addData("Arm tilt position", tilt.getCurrentPosition());
+        //telemetry.addData("Arm tilt position", tilt.getCurrentPosition());
     }
 }

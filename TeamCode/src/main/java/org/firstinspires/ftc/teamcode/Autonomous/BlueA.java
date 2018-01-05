@@ -28,6 +28,7 @@ public class BlueA extends LinearOpMode{
     BNO055IMU imu;
 
     public void runOpMode() throws InterruptedException {
+
         left = hardwareMap.dcMotor.get("Left wheel");
         right = hardwareMap.dcMotor.get("Right wheel");
         left.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -39,34 +40,36 @@ public class BlueA extends LinearOpMode{
 
         mark = new VueMarkID(hardwareMap);
 
-        chassis = new ImuChassis(left, right, imu, 2960d);
+        chassis = new ImuChassis(left, right, imu, 2960.0);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
-        placeL.setPower(-.3);
-        placeR.setPower(-.3);
+        placeL.setPower(-0.3);
+        placeR.setPower(-0.3);
         sleep(500);
         placeL.setPower(0);
         placeR.setPower(0);
 
         vueMark = mark.vueName();
 
-        chassis.driveXFeet(0.295, 0.8);
+        chassis.driveXFeet(1, 0.1);
+        /*
+        chassis.driveXFeet(-0.295, 0.8);
         switch (vueMark){
             case LEFT:
-                chassis.driveXFeet(7/3, .8);
+                chassis.driveXFeet(-8/3, .8);
                 break;
             case CENTER:
-                chassis.driveXFeet(3, 0.8);
+                chassis.driveXFeet(-3, 0.8);
                 break;
             default:
-                chassis.driveXFeet(11/3, 0.8);
+                chassis.driveXFeet(-11/3, 0.8);
                 break;
         }
 
         chassis.turnToAngle(90, .5);
-        chassis.driveXFeet(-1, .4);
+        chassis.driveXFeet(1, .4);
 
         placeL.setPower(.5);
         placeR.setPower(.5);
@@ -74,6 +77,7 @@ public class BlueA extends LinearOpMode{
         placeL.setPower(0);
         placeR.setPower(0);
 
-        chassis.driveXFeet(.5, .5);
+        chassis.driveXFeet(-.5, .5);
+        */
     }
 }
