@@ -53,18 +53,15 @@ public class BlueA extends LinearOpMode{
 
         vueMark = mark.vueName();
 
-        chassis.driveXFeet(1, 0.1);
-        /*
-        chassis.driveXFeet(-0.295, 0.8);
         switch (vueMark){
             case LEFT:
-                chassis.driveXFeet(-8/3, .8);
+                chassis.driveXFeet(3, .8);
                 break;
             case CENTER:
-                chassis.driveXFeet(-3, 0.8);
+                chassis.driveXFeet(11/3, 0.8);
                 break;
             default:
-                chassis.driveXFeet(-11/3, 0.8);
+                chassis.driveXFeet(13/3, 0.8);
                 break;
         }
 
@@ -78,6 +75,6 @@ public class BlueA extends LinearOpMode{
         placeR.setPower(0);
 
         chassis.driveXFeet(-.5, .5);
-        */
+
     }
 }

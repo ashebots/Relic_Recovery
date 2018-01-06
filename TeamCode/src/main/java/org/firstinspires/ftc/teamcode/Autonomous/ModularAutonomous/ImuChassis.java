@@ -37,11 +37,11 @@ public class ImuChassis {
     public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed /*,AnnualModule annualModule*/){
 
         leftMotor = left;
-        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         rightMotor = right;
-        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         imu = IMU;
@@ -141,13 +141,23 @@ public class ImuChassis {
         int leftGoal = (int)((-feet*encodersPerFoot) + leftMotor.getCurrentPosition());
 
         if (leftMotor.getCurrentPosition() > leftGoal) {
+
             while (leftMotor.getCurrentPosition() > leftGoal) {
                 driveAtSpeed(speed);
             }
+            while (leftMotor.getCurrentPosition() < leftGoal) {
+                driveAtSpeed(-speed/2);
+            }
+
         }else{
+
             while (leftMotor.getCurrentPosition() < leftGoal) {
                 driveAtSpeed(-speed);
             }
+            while (leftMotor.getCurrentPosition() > leftGoal) {
+                driveAtSpeed(speed/2);
+            }
+
         }
 
         stop();
