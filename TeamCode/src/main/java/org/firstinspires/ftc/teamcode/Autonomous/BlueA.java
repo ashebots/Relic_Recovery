@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
@@ -43,38 +46,43 @@ public class BlueA extends LinearOpMode{
         chassis = new ImuChassis(left, right, imu, 2960.0);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
-        waitForStart();
+         waitForStart();
 
-        placeL.setPower(-0.3);
-        placeR.setPower(-0.3);
+        placeL.setPower(0.3);
+        placeR.setPower(0.3);
         sleep(500);
         placeL.setPower(0);
         placeR.setPower(0);
 
         vueMark = mark.vueName();
 
+
         switch (vueMark){
             case LEFT:
-                chassis.driveXFeet(3, .8);
+                chassis.driveXFeet(13/6d, 0.5);
                 break;
             case CENTER:
-                chassis.driveXFeet(11/3, 0.8);
+                chassis.driveXFeet(17/6d, 0.5);
                 break;
             default:
-                chassis.driveXFeet(13/3, 0.8);
+                chassis.driveXFeet(21/6d, 0.5);
                 break;
         }
 
-        chassis.turnToAngle(90, .5);
-        chassis.driveXFeet(1, .4);
+        sleep(250);
+        chassis.turnToAngle(85, 0.5);
 
-        placeL.setPower(.5);
-        placeR.setPower(.5);
-        sleep(750);
+
+        sleep(250);
+        chassis.driveXFeet(-0.8, 0.4);
+
+        placeL.setPower(-0.3);
+        placeR.setPower(-0.3);
+        sleep(1000);
         placeL.setPower(0);
         placeR.setPower(0);
 
-        chassis.driveXFeet(-.5, .5);
+        chassis.driveXFeet(0.5, 0.5);
 
     }
 }
