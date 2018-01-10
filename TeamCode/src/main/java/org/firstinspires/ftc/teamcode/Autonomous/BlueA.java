@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 @Autonomous
 public class BlueA extends LinearOpMode{
+
     ImuChassis chassis;
     VueMarkID mark;
 
@@ -43,7 +44,7 @@ public class BlueA extends LinearOpMode{
 
         mark = new VueMarkID(hardwareMap);
 
-        chassis = new ImuChassis(left, right, imu, 2960.0);
+        chassis = new ImuChassis(left, right, imu, 2960.0, vueMark);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
          waitForStart();
@@ -54,27 +55,25 @@ public class BlueA extends LinearOpMode{
         placeL.setPower(0);
         placeR.setPower(0);
 
-        vueMark = mark.vueName();
-
+        chassis.driveXFeet(7/3d, 0.5, true);
 
         switch (vueMark){
-            case LEFT:
-                chassis.driveXFeet(13/6d, 0.5);
-                break;
+
             case CENTER:
-                chassis.driveXFeet(17/6d, 0.5);
+                chassis.driveXFeet(2/3d, 0.5, false);
                 break;
-            default:
-                chassis.driveXFeet(21/6d, 0.5);
+            case RIGHT:
+                chassis.driveXFeet(7/6d, 0.5, false);
                 break;
         }
 
+
         sleep(250);
-        chassis.turnToAngle(85, 0.5);
+        chassis.turnToAngle(80, 0.5);
 
 
         sleep(250);
-        chassis.driveXFeet(-0.8, 0.4);
+        chassis.driveXFeet(-0.8, 0.4, false);
 
         placeL.setPower(-0.3);
         placeR.setPower(-0.3);
@@ -82,7 +81,7 @@ public class BlueA extends LinearOpMode{
         placeL.setPower(0);
         placeR.setPower(0);
 
-        chassis.driveXFeet(0.5, 0.5);
+        chassis.driveXFeet(0.5, 0.5, false);
 
     }
 }
