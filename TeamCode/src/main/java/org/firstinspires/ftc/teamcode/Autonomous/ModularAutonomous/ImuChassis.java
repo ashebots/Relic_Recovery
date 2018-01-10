@@ -31,10 +31,11 @@ public class ImuChassis {
 
     static Double maxSpeed;
 
-    AnnualModule annualModule;
+    static VueMarkID mark;
+    static RelicRecoveryVuMark vuMark;
 
-    //The IMU chassis constr
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed /*,AnnualModule annualModule*/){
+    //The IMU chassis constructor
+    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, RelicRecoveryVuMark vuMark){
 
         leftMotor = left;
         //leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -53,7 +54,7 @@ public class ImuChassis {
 
         this.maxSpeed = maxSpeed;
 
-        //this.annualModule = annualModule;
+        this.vuMark = vuMark;
     }
 
 
@@ -135,7 +136,7 @@ public class ImuChassis {
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
 
-    public static void driveXFeet(double feet, double speed) {
+    public static void driveXFeet(double feet, double speed, Boolean checkForVuMark) {
 
         //speed = speed * maxSpeed / 4000;
         int leftGoal = (int)((-feet*encodersPerFoot) + leftMotor.getCurrentPosition());
@@ -144,6 +145,10 @@ public class ImuChassis {
 
             while (leftMotor.getCurrentPosition() > leftGoal) {
                 driveAtSpeed(speed);
+
+                if (checkForVuMark && mark.vueName() != RelicRecoveryVuMark.UNKNOWN){
+                    vuMark = mark.vueName();
+                }
             }
             while (leftMotor.getCurrentPosition() < leftGoal) {
                 driveAtSpeed(-speed/2);
@@ -153,6 +158,10 @@ public class ImuChassis {
 
             while (leftMotor.getCurrentPosition() < leftGoal) {
                 driveAtSpeed(-speed);
+
+                if (checkForVuMark && mark.vueName() != RelicRecoveryVuMark.UNKNOWN){
+                    vuMark = mark.vueName();
+                }
             }
             while (leftMotor.getCurrentPosition() > leftGoal) {
                 driveAtSpeed(speed/2);
@@ -192,7 +201,7 @@ public class ImuChassis {
         if (isRed) initialAngle = -initialAngle;
 
         turnToAngle(initialAngle, turnSpeed);
-        driveXFeet(distance, driveSpeed);
+        driveXFeet(distance, driveSpeed, false);
 
     }
 
@@ -202,7 +211,7 @@ public class ImuChassis {
             driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
 
             //Scan the pictograph and set next location to the appropriate crypto box position
-            annualModule.coordCheck(coordList, i);
+            //annualModule.coordCheck(coordList, i);
         }
 
     }
