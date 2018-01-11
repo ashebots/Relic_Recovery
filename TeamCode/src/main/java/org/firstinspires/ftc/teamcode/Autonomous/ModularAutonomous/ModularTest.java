@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.AnnualModule;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
@@ -24,7 +25,7 @@ public class ModularTest extends LinearOpMode{
     Servo rTray;
     Servo gemArm;
     VueMarkID mark;
-    AnnualModule annualModule;
+    RelicRecoveryVuMark vuMark;
     float[] s = {0,0};
     float[] b = {1, 1};
     float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.CRYPTOBOX_A};
@@ -44,7 +45,7 @@ public class ModularTest extends LinearOpMode{
         mark = new VueMarkID(hardwareMap);
         */
 
-        annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
+        //annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
         imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0);
 
         //imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);

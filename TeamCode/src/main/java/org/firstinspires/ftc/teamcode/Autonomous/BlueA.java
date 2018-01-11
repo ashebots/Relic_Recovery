@@ -44,7 +44,7 @@ public class BlueA extends LinearOpMode{
 
         mark = new VueMarkID(hardwareMap);
 
-        chassis = new ImuChassis(left, right, imu, 2960.0, vueMark);
+        chassis = new ImuChassis(left, right, imu, 2960.0);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
          waitForStart();
@@ -55,16 +55,20 @@ public class BlueA extends LinearOpMode{
         placeL.setPower(0);
         placeR.setPower(0);
 
-        chassis.driveXFeet(7/3d, 0.5, true);
+        chassis.driveXFeet(0.5d, 0.5);
+
+        vueMark = mark.vueName();
 
         switch (vueMark){
 
             case CENTER:
-                chassis.driveXFeet(2/3d, 0.5, false);
+                chassis.driveXFeet(2.5d, 0.5);
                 break;
             case RIGHT:
-                chassis.driveXFeet(7/6d, 0.5, false);
+                chassis.driveXFeet(3d, 0.5);
                 break;
+            default:
+                chassis.driveXFeet(7/3d-0.5d,0.5);
         }
 
 
@@ -73,7 +77,7 @@ public class BlueA extends LinearOpMode{
 
 
         sleep(250);
-        chassis.driveXFeet(-0.8, 0.4, false);
+        chassis.driveXFeet(-0.8, 0.4);
 
         placeL.setPower(-0.3);
         placeR.setPower(-0.3);
@@ -81,7 +85,7 @@ public class BlueA extends LinearOpMode{
         placeL.setPower(0);
         placeR.setPower(0);
 
-        chassis.driveXFeet(0.5, 0.5, false);
+        chassis.driveXFeet(0.5, 0.5);
 
     }
 }

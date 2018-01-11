@@ -56,7 +56,7 @@ public class RedA extends LinearOpMode {
         chassis.driveXFeet(0.295, 0.8);
         switch (vueMark){
             case LEFT:
-                chassis.driveXFeet(7/3, .8);
+                chassis.driveXFeet(7/3, 0.8);
                 break;
             case CENTER:
                 chassis.driveXFeet(3, 0.8);
@@ -67,14 +67,14 @@ public class RedA extends LinearOpMode {
         }
 
         chassis.turnToAngle(-90, .5);
-        chassis.driveXFeet(-1, .4);
+        chassis.driveXFeet(-1, 0.4);
 
-        placeL.setPower(.5);
-        placeR.setPower(.5);
+        placeL.setPower(0.5);
+        placeR.setPower(0.5);
         sleep(750);
         placeL.setPower(0);
         placeR.setPower(0);
 
-        chassis.driveXFeet(.5, .5);
+        chassis.driveXFeet(0.5, 0.5);
     }
 }
