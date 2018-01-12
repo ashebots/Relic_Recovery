@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -192,17 +192,6 @@ public class ImuChassis {
 
         turnToAngle(initialAngle, turnSpeed);
         driveXFeet(distance, driveSpeed);
-
-    }
-
-    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
-
-        for(int i = 1; i < coordList.length; i++){
-            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
-
-            //Scan the pictograph and set next location to the appropriate crypto box position
-            //annualModule.coordCheck(coordList, i);
-        }
 
     }
 }

@@ -6,9 +6,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-public class GoodIMU implements IMU {
+public class GoodIMU {
 
-    private Unit        unit;
+    private Unit unit;
+
+    public enum Unit {
+        RADIAN, DEGREE
+    }
+
     private BNO055IMU   imu;
 
     public GoodIMU (BNO055IMU imu, Unit unit){

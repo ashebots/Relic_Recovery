@@ -25,7 +25,7 @@ public class ImprovedDrive {
         right = Right;
 
         Imu = IMU;
-        imu = new GoodIMU(Imu, org.firstinspires.ftc.teamcode.Autonomous.Move.IMU.Unit.DEGREE);
+        imu = new GoodIMU(Imu, GoodIMU.Unit.DEGREE);
 
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
@@ -38,16 +38,18 @@ public class ImprovedDrive {
         switch(state[step]){
 
             case drive:
-                if(setup == true){
+                if(setup == true){//setup first run of drive mode
                     startPosition = (left.getCurrentPosition() + right.getCurrentPosition()) /2;
                     targetPosition = (int) (settings[step][0] * encodersPerFoot);
                     setup = false;
+                    //main drive loop
                 }else if(((left.getCurrentPosition() + right.getCurrentPosition()) / 2) - startPosition < targetPosition){
                     left.setPower(settings[step][1]);
                     right.setPower(settings[step][1]);
                 }else if(((left.getCurrentPosition() + right.getCurrentPosition()) / 2) - startPosition > targetPosition){
                     left.setPower(-settings[step][1]);
                     right.setPower(-settings[step][1]);
+                    //stop drive loop
                 }else{
                     left.setPower(0);
                     right.setPower(0);
@@ -58,8 +60,10 @@ public class ImprovedDrive {
 
             case turn:
                 if(setup == true){
+                    //setup turn
                     startPosition = imu.yaw();
                 }else if(imu.yaw() - startPosition < settings[step][0]){
+                    //main turn loop
                     if (settings[step][0] > 0){
                         left.setPower(settings[step][1]);
                         right.setPower(-settings[step][1]);
@@ -68,6 +72,7 @@ public class ImprovedDrive {
                         right.setPower(settings[step][1]);
                     }
                 }else{
+                    //end turn program
                     left.setPower(0);
                     right.setPower(0);
                     step++;
@@ -79,4 +84,6 @@ public class ImprovedDrive {
 
 
     }
+
+
 }
