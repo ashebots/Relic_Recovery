@@ -30,12 +30,10 @@ public class VueMarkID {
         relicTrackables = vuforia.loadTrackablesFromAsset("RelicVuMark");
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
+        relicTrackables.activate();
     }
 
     public RelicRecoveryVuMark vueName() {
-        relicTrackables.activate();
-        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-        relicTrackables.deactivate();
-        return vuMark;
+        return RelicRecoveryVuMark.from(relicTemplate);
     }
 }

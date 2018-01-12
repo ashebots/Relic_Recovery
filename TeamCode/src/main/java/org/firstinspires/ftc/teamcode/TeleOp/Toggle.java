@@ -16,9 +16,7 @@ public class Toggle {
             gate[modeNum] = false;
         }
 
-        if (!input){
-            gate[modeNum] = true;
-        }
+        if (!input) gate[modeNum] = true;
 
         return output[modeNum];
     }
