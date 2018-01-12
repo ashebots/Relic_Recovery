@@ -77,6 +77,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
      * localization engine.
      */
     VuforiaLocalizer vuforia;
+    RelicRecoveryVuMark mark;
 
     @Override public void runOpMode() {
 
@@ -136,6 +137,9 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
              * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMark is visible, something other than
              * UNKNOWN will be returned by {@link RelicRecoveryVuMark#from(VuforiaTrackable)}.
              */
+
+            telemetry.addData("vuemark", RelicRecoveryVuMark.from(relicTemplate));
+            telemetry.update();
 
         }
     }
