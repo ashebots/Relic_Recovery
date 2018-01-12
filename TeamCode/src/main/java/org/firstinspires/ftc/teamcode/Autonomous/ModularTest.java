@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,9 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.AnnualModule;
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 @Autonomous

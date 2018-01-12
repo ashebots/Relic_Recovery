@@ -25,7 +25,7 @@ public class ImprovedDrive {
         right = Right;
 
         Imu = IMU;
-        imu = new GoodIMU(Imu, org.firstinspires.ftc.teamcode.Autonomous.Move.IMU.Unit.DEGREE);
+        imu = new GoodIMU(Imu, GoodIMU.Unit.DEGREE);
 
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
