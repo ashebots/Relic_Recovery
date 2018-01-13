@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 /**
  * Created by secre on 11/18/2017.
  */
-@TeleOp
+//@TeleOp
 public class Test extends OpMode {
 
 

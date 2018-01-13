@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 /**
  * Created by Lenovo on 10/5/2017.
  */
-@TeleOp
+//@TeleOp
 public class FourWheelDriveTeleOp extends OpMode {
 
         DcMotor RightBack;

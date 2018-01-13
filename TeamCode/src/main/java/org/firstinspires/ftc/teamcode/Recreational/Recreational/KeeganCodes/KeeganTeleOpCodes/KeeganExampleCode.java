@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by Lenovo on 10/17/2017.
  */
 
-@TeleOp
+//@TeleOp
 public class KeeganExampleCode extends OpMode{
 
     DcMotor leftMotor;

@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 /**
  * Created by jezebelquit on 9/21/17.
  */
-@Autonomous
+//@Autonomous
 public class EncodersPerSecond extends LinearOpMode {
 
     DcMotor rightMotor;

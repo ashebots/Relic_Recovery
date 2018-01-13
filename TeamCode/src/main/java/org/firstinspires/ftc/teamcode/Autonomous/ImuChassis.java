@@ -130,6 +130,7 @@ public class ImuChassis {
         turnToAngle(angleTo, speed);
     }
 
+    //driveSetup is needed to calculate the encoders per foot of the robot, using the encoders per rotation, the gear ratio, and the wheel diameter.
     public static void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
@@ -164,13 +165,15 @@ public class ImuChassis {
 
     public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
 
-        driveSpeed = driveSpeed * (maxSpeed / 4000);
-        turnSpeed = turnSpeed * (maxSpeed / 4000);
+        //driveSpeed = driveSpeed * (maxSpeed / 4000);
+        //turnSpeed = turnSpeed * (maxSpeed / 4000);
 
         float initialAngle;
 
+        //The distance calculation
         float distance = (int)Math.sqrt((startPosition[1]-coords[1])*(startPosition[1]-coords[1])+(startPosition[0]-coords[0])*(startPosition[0]-coords[0]));
 
+        //Calculating the angle is a bit tricky, and takes quite a bit of if statements
         if (startPosition[0] != coords[0]) {
             initialAngle = (float)-Math.toDegrees(Math.atan((startPosition[1] - coords[1]) / (startPosition[0] - coords[0])));
         }else if (startPosition[1] < coords[1]){
@@ -178,6 +181,7 @@ public class ImuChassis {
         }else{
             initialAngle = 90;
         }
+
 
         if (startPosition[0] > coords[0]){
             initialAngle = Math.abs(initialAngle)-180;
@@ -188,8 +192,10 @@ public class ImuChassis {
 
         initialAngle = smartImu(initialAngle+90);
 
+        //If the robots are on the red alliance, the angle needs to be reversed
         if (isRed) initialAngle = -initialAngle;
 
+        //Turns in the direction of the coordinate, and then drives until it reaches it
         turnToAngle(initialAngle, turnSpeed);
         driveXFeet(distance, driveSpeed);
 

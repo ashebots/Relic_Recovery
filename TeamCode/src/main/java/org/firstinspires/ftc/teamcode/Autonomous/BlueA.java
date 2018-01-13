@@ -50,27 +50,25 @@ public class BlueA extends LinearOpMode{
         chassis = new ImuChassis(left, right, imu, 2960.0);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
-         waitForStart();
-
-        placeL.setPower(0.5);
-        placeR.setPower(0.5);
-        sleep(1650);
-
-        placeL.setPower(0);
-        placeR.setPower(0);
+        waitForStart();
 
         intakeL.setPower(1);
         intakeR.setPower(1);
 
-        sleep(1500);
+        sleep(250);
 
         intakeL.setPower(0);
         intakeR.setPower(0);
 
-        chassis.driveXFeet(0.25d, 0.5);
+        chassis.driveXFeet(-0.5d, 0.5);
 
-        sleep(1000);
-        vueMark = mark.vueName();
+        sleep(250);
+
+        for (int i = 0; i < 10; i++) {
+            if (!mark.vueName().equals(RelicRecoveryVuMark.UNKNOWN)) {
+                vueMark = mark.vueName();
+            }
+        }
 
         sleep(250);
         switch (vueMark){
@@ -97,20 +95,36 @@ public class BlueA extends LinearOpMode{
                 break;
         }
 
+        placeL.setPower(0.5);
+        placeR.setPower(0.5);
+        sleep(1600);
 
-        sleep(250);
+        placeL.setPower(0);
+        placeR.setPower(0);
+
+        intakeL.setPower(1);
+        intakeR.setPower(1);
+
+        sleep(1250);
+
+        intakeL.setPower(0);
+        intakeR.setPower(0);
+
         chassis.turnToAngle(80, 0.5);
 
         placeL.setPower(-0.5);
         placeR.setPower(-0.5);
-        sleep(1500);
+        sleep(1000);
+
+        placeL.setPower(0);
+        placeR.setPower(0);
 
         chassis.driveAtSpeed(-0.4);
         sleep(1000);
 
         placeL.setPower(-0.3);
         placeR.setPower(-0.3);
-        sleep(1000);
+        sleep(300);
         placeL.setPower(0);
         placeR.setPower(0);
 

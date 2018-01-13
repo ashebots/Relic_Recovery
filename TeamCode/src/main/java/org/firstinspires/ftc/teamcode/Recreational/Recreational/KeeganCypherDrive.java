@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.Transform;
 /**
  * Created by Lenovo on 10/3/2017.
  */
-@Autonomous
+//@Autonomous
 public class KeeganCypherDrive {
 
     DcMotor boxMotor;

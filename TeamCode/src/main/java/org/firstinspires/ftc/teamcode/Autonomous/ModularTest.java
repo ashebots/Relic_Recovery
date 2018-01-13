@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
-@Autonomous
+//@Autonomous
 public class ModularTest extends LinearOpMode{
 
     ImuChassis imuChassis;

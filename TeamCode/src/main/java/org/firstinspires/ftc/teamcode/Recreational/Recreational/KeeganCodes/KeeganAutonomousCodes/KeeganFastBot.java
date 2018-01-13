@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Created by Lenovo on 10/7/2017.
  */
-@Autonomous
+//@Autonomous
 public class KeeganFastBot extends LinearOpMode{
 
     DcMotor LeftMotor;

@@ -10,6 +10,10 @@ public class Joystick {
     //[0] is the speed of the left motor, and [1] is the speed of the right motor.
     public static double[] calculateNormal(double xPos, double yPos) {
 
+        //angleCount is the amount of different angles you can have on the joystick.
+        double angleCount = 360;
+        angleCount = 360d/angleCount;
+
         //The angle formed by the y axis and the line formed by (0,0) and where the joystick is located.
         double joystickAngle;
 
@@ -20,41 +24,39 @@ public class Joystick {
         double[] motorSpeeds = new double[2];
 
         //The distance that the joystick is from the center can be calculated by using the pythagorean theorem.
-        //While the angle of the joystick dictates dictates the maximum speed the motors should be at, the distance from the center dictates what fraction of this maximum speed it should be.
         joystickDistance = Math.sqrt((xPos * xPos) + (yPos * yPos));
 
         //When calculating the joystick's distance from the center, sometimes the distance exceeds this by a tiny bit. This if statement sets the distance to 1 if this happens.
         if (joystickDistance > 1) joystickDistance = 1;
 
         //Trigonometry is used to calculate joystickAngle.
-        joystickAngle = Math.toDegrees(Math.atan2(xPos, yPos));
+        joystickAngle = Math.round(Math.toDegrees(Math.atan2(xPos, yPos))/angleCount)*angleCount;
 
+
+        //While the angle of the joystick dictates dictates the maximum speed the motors should be at, the distance from the center dictates what fraction of this maximum speed it should be.
         //Depending on which quadrant of the joystick we are in, the method of calculating motor speeds will vary.
 
-        //Checks if you are in quadrant 1, which is the upper right corner.
+        //The following if statements see which quadrant you are in. The quadrant order is 1, 4, 2, 3
         if (joystickAngle >= 0 && joystickAngle < 90) {
 
             //Calculates the motors speeds.
             motorSpeeds[1] = ((45 - joystickAngle) / 45) * joystickDistance;
             motorSpeeds[0] = joystickDistance;
 
-        //Checks if you are in quadrant 4, which is the bottom right corner.
         } else if (joystickAngle >= 90) {
 
             motorSpeeds[0] = ((135 - joystickAngle) / 45) * joystickDistance;
             motorSpeeds[1] = -joystickDistance;
 
-        //Checks if you are in quadrant 2, which is the upper left corner.
         } else if (joystickAngle < 0 && joystickAngle > -90) {
 
             //The only difference between the left and right sides of the joystick is that the speeds assinged to the motors are swapped.
-            motorSpeeds[0] = ((45 - joystickAngle) / 45) * joystickDistance;
+            motorSpeeds[0] = ((45 + joystickAngle) / 45) * joystickDistance;
             motorSpeeds[1] = joystickDistance;
 
-        //Checks if you are in quadrant 3, which is in the bottom left corner.
         } else if (joystickAngle <= -90) {
 
-            motorSpeeds[1] = ((135 - joystickAngle) / 45) * joystickDistance;
+            motorSpeeds[1] = ((135 + joystickAngle) / 45) * joystickDistance;
             motorSpeeds[0] = -joystickDistance;
 
         }
