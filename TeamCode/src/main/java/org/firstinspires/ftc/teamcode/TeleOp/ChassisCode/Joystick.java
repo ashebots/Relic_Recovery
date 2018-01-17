@@ -1,18 +1,15 @@
 package org.firstinspires.ftc.teamcode.TeleOp.ChassisCode;
 
+import org.firstinspires.ftc.teamcode.Autonomous.ImuChassis;
+
 /**
  * Created by jezebelquit on 8/1/17.
  */
 
 public class Joystick {
 
-    //caclulateNormal returns the double array that should be assigned to a two (or 4) wheel drive depending on the joystick's position.
     //[0] is the speed of the left motor, and [1] is the speed of the right motor.
     public static double[] calculateNormal(double xPos, double yPos) {
-
-        //angleCount is the amount of different angles you can have on the joystick.
-        double angleCount = 360;
-        angleCount = 360d/angleCount;
 
         //The angle formed by the y axis and the line formed by (0,0) and where the joystick is located.
         double joystickAngle;
@@ -24,13 +21,13 @@ public class Joystick {
         double[] motorSpeeds = new double[2];
 
         //The distance that the joystick is from the center can be calculated by using the pythagorean theorem.
-        joystickDistance = Math.sqrt((xPos * xPos) + (yPos * yPos));
+        joystickDistance = ImuChassis.smartImu((float)Math.sqrt((xPos * xPos) + (yPos * yPos)));
 
         //When calculating the joystick's distance from the center, sometimes the distance exceeds this by a tiny bit. This if statement sets the distance to 1 if this happens.
         if (joystickDistance > 1) joystickDistance = 1;
 
         //Trigonometry is used to calculate joystickAngle.
-        joystickAngle = Math.round(Math.toDegrees(Math.atan2(xPos, yPos))/angleCount)*angleCount;
+        joystickAngle = Math.toDegrees(Math.atan2(xPos, yPos));
 
 
         //While the angle of the joystick dictates dictates the maximum speed the motors should be at, the distance from the center dictates what fraction of this maximum speed it should be.

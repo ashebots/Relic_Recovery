@@ -32,9 +32,8 @@ public class MainTeleOp extends OpMode{
     //CRServo armWheelR;
     CRServo armWheelL;
 
-    String speedStatus;
+    String driveMode;
     String adjusterStatus;
-    String driver;
 
     public void init(){
 
@@ -71,7 +70,7 @@ public class MainTeleOp extends OpMode{
         armWheelL = hardwareMap.crservo.get("Left fly wheel");
         armWheelL.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        speedStatus = "Normal";
+        driveMode = "Normal";
         adjusterStatus = "Raised";
 
 
@@ -79,26 +78,23 @@ public class MainTeleOp extends OpMode{
 
     public void loop(){
 
-        //if(!Toggle.toggle(gamepad1.y || gamepad2.y,1)) {
-            //driver =  "GamePad 1";
+        if (Toggle.toggle(gamepad1.a, 0)){
+            slowness = 2;
+            driveMode = "Slow";
+        } else {
+            slowness = 1;
+            driveMode = "Normal";
+        }
 
-            if (Toggle.toggle(gamepad1.a, 0)){
-                slowness = 2;
-                speedStatus = "Slow";
-            } else {
-                slowness = 1;
-                speedStatus = "Normal";
-            }
+        if (Toggle.toggle(gamepad1.b, 1)){
+            chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
+            driveMode = driveMode + " & Reverse";
+        }else {
+            chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
+            driveMode = driveMode + " & Forward";
+        }
 
-            if (Toggle.toggle(gamepad1.b, 2)){
-                chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
-                speedStatus = speedStatus + " & Reverse";
-            }else {
-                chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
-                speedStatus = speedStatus + " & Forward";
-            }
-
-        if (Toggle.toggle(gamepad1.x || gamepad2.x, 3)){
+        if (Toggle.toggle(gamepad1.x || gamepad2.x, 2)){
             adjusterL.setPosition(0.35);
             adjusterR.setPosition(0.35);
             adjusterStatus = "Lowered";
@@ -136,8 +132,7 @@ public class MainTeleOp extends OpMode{
             lift.setPower(0);
         }
 
+        telemetry.addData("Drive mode", driveMode);
         telemetry.addData("Adjuster position", adjusterStatus);
-        telemetry.addData("Driver", driver);
-        telemetry.addData("Lift position", lift.getCurrentPosition());
     }
 }
