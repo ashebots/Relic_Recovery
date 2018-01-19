@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by famil on 11/12/2017.
  */
-@TeleOp
+//@TeleOp
 public class RatRodTeleOp extends OpMode {
 
     DcMotor driveMotor;

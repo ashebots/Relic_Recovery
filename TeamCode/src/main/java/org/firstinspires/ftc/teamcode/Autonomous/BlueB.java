@@ -44,8 +44,8 @@ public class BlueB extends LinearOpMode{
 
         waitForStart();
 
-        placeL.setPower(-.3);
-        placeR.setPower(-.3);
+        placeL.setPower(-0.3);
+        placeR.setPower(-0.3);
         sleep(500);
         placeL.setPower(0);
         placeR.setPower(0);

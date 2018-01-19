@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-@TeleOp
+//@TeleOp
 public class KeeganTeleOp2 extends OpMode {
 
         DcMotor leftMotor;

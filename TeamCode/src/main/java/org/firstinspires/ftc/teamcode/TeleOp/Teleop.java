@@ -7,13 +7,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-@TeleOp
+//@TeleOp
 public class Teleop extends OpMode {
 
     DcMotor left;
     DcMotor right;
-    DcMotor arm;
-    DcMotor tilt;
+    //DcMotor arm;
+    //DcMotor tilt;
     DcMotor pickUpR;
     DcMotor pickUpL;
     Servo placeR;
@@ -23,8 +23,8 @@ public class Teleop extends OpMode {
     public void init(){
         left = hardwareMap.dcMotor.get("Left wheel");
         right = hardwareMap.dcMotor.get("Right wheel");
-        arm = hardwareMap.dcMotor.get("arm");
-        tilt = hardwareMap.dcMotor.get("tilt");
+       // arm = hardwareMap.dcMotor.get("arm");
+        //tilt = hardwareMap.dcMotor.get("tilt");
         pickUpL = hardwareMap.dcMotor.get("pickUpL");
         pickUpR = hardwareMap.dcMotor.get("pickUpR");
         placeL = hardwareMap.servo.get("placeL");
@@ -53,14 +53,6 @@ public class Teleop extends OpMode {
             placeL.setPosition(0.5);
             placeR.setPosition(0.5);
         }
-
-        arm.setPower(-gamepad1.right_stick_y);
-        if(gamepad1.left_bumper){
-            tilt.setPower(.25);
-        }else if(gamepad1.right_bumper){
-            tilt.setPower(-.25);
-        }else{
-            tilt.setPower(0);
-        }
+        
     }
 }

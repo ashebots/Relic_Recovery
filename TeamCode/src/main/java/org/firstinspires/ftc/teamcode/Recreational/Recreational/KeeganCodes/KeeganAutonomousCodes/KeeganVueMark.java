@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
  * Created by Lenovo on 9/30/2017.
  */
 
-@Autonomous
+//@Autonomous
 public class KeeganVueMark extends LinearOpMode {
 
     DcMotor LeftMotor;

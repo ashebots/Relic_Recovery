@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Created by Lenovo on 9/28/2017.
  */
-@Autonomous
+//@Autonomous
 public class IanCode extends LinearOpMode {
 
     DcMotor RightMotor;
