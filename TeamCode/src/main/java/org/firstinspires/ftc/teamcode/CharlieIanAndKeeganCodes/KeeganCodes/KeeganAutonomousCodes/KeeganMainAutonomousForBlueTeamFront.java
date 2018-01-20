@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.KeeganCodes.Keeg
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -16,35 +17,46 @@ public class KeeganMainAutonomousForBlueTeamFront extends LinearOpMode {
     DcMotor RightMotor;
     DcMotor BoxMotorLeft;
     DcMotor BoxMotorRight;
-    Servo RotatorLeft;
-    Servo RotatorRight;
+    CRServo RotatorLeft;
+    CRServo RotatorRight;
+    Servo LeftFlyRotator;
+    Servo RightFlyRotator;
 
     public void runOpMode() {
 
-        LeftMotor = hardwareMap.dcMotor.get("Left");
-        RightMotor = hardwareMap.dcMotor.get("Right");
+        LeftMotor = hardwareMap.dcMotor.get("Left wheel");
+        RightMotor = hardwareMap.dcMotor.get("Right wheel");
         LeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         BoxMotorLeft = hardwareMap.dcMotor.get("Left intake");
         BoxMotorRight = hardwareMap.dcMotor.get("Right intake");
         BoxMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        RotatorLeft = hardwareMap.servo.get("Left rotator");
-        RotatorRight = hardwareMap.servo.get("Right rotator");
-        RotatorLeft.setDirection(Servo.Direction.REVERSE);
+        RotatorLeft = hardwareMap.crservo.get("Left rotator");
+        RotatorRight = hardwareMap.crservo.get("Right rotator");
+        RotatorLeft.setDirection(CRServo.Direction.REVERSE);
+        LeftFlyRotator = hardwareMap.servo.get("Left fly rotator");
+        RightFlyRotator = hardwareMap.servo.get("Right fly rotator");
+        LeftFlyRotator.setDirection(Servo.Direction.REVERSE);
 
         LeftMotor.setPower(1);
         RightMotor.setPower(1);
+        LeftFlyRotator.setPosition(0.5);
+        RightFlyRotator.setPosition(0.5);
         sleep(888);
 
         LeftMotor.setPower(0);
         RightMotor.setPower(0);
         BoxMotorLeft.setPower(-1);
         BoxMotorRight.setPower(-1);
-        RotatorLeft.setPosition(0);
-        RotatorRight.setPosition(0);
+        RotatorLeft.setPower(-1);
+        RotatorRight.setPower(-1);
+        LeftFlyRotator.setPosition(0.5);
+        RightFlyRotator.setPosition(0.5);
         sleep(1000);
 
         LeftMotor.setPower(-1);
         RightMotor.setPower(-1);
+        LeftFlyRotator.setPosition(0.75);
+        RightFlyRotator.setPosition(0.75);
         sleep(400);
 
         LeftMotor.setPower(1);
@@ -83,11 +95,11 @@ public class KeeganMainAutonomousForBlueTeamFront extends LinearOpMode {
         RightMotor.setPower(1);
         sleep(1000);
 
-        RotatorLeft.setPosition(0.75);
-        RotatorRight.setPosition(0.75);
+        RotatorLeft.setPower(1);
+        RotatorRight.setPower(1);
         LeftMotor.setPower(1);
         RightMotor.setPower(1);
-        sleep(500);
+        sleep(1500);
     }
 
 }
