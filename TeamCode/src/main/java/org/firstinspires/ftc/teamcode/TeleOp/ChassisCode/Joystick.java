@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOp.ChassisCode;
 
-import org.firstinspires.ftc.teamcode.Autonomous.ImuChassis;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ImuChassis;
 
 /**
  * Created by jezebelquit on 8/1/17.

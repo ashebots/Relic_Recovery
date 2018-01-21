@@ -18,6 +18,7 @@ public class MainTeleOp extends OpMode{
     Chassis chassis;
 
     int slowness;
+    String driveMode;
 
     DcMotor leftSweeper;
     DcMotor rightSweeper;
@@ -27,13 +28,15 @@ public class MainTeleOp extends OpMode{
 
     DcMotor lift;
 
+    int liftPos;
+
     Servo adjusterR;
     Servo adjusterL;
+
+    String adjusterStatus;
+
     //CRServo armWheelR;
     CRServo armWheelL;
-
-    String driveMode;
-    String adjusterStatus;
 
     public void init(){
 
@@ -59,7 +62,7 @@ public class MainTeleOp extends OpMode{
 
         lift = hardwareMap.dcMotor.get("Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         adjusterR = hardwareMap.servo.get("Right fly rotator");
         adjusterR.setPosition(0.95);
@@ -73,25 +76,19 @@ public class MainTeleOp extends OpMode{
         driveMode = "Normal";
         adjusterStatus = "Raised";
 
-
+        Toggle.resetStates();
     }
 
     public void loop(){
 
-        if (Toggle.toggle(gamepad1.a, 0)){
-            slowness = 2;
-            driveMode = "Slow";
-        } else {
-            slowness = 1;
-            driveMode = "Normal";
-        }
+        slowness = Toggle.numChange(gamepad1.dpad_right, gamepad1.dpad_left, 5, 0);
 
         if (Toggle.toggle(gamepad1.b, 1)){
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
-            driveMode = driveMode + " & Reverse";
+            driveMode = "Reverse";
         }else {
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
-            driveMode = driveMode + " & Forward";
+            driveMode = "Forward";
         }
 
         if (Toggle.toggle(gamepad1.x || gamepad2.x, 2)){
@@ -124,6 +121,11 @@ public class MainTeleOp extends OpMode{
         leftRotate.setPower(gamepad1.right_stick_y/2);
         rightRotate.setPower(gamepad1.right_stick_y/2);
 
+        liftPos = Toggle.numChange(gamepad1.left_trigger > 0.5, gamepad1.left_bumper, 4, 1);
+
+        lift.setTargetPosition(1105*(liftPos-1));
+        lift.setPower(1);
+
         if (gamepad1.left_bumper){
             lift.setPower(1);
         }else if (gamepad1.left_trigger > 0){
@@ -132,7 +134,9 @@ public class MainTeleOp extends OpMode{
             lift.setPower(0);
         }
 
+        telemetry.addData("Speed", (int)(100/slowness)+"%");
         telemetry.addData("Drive mode", driveMode);
+        telemetry.addData("Lift position", liftPos);
         telemetry.addData("Adjuster position", adjusterStatus);
     }
 }

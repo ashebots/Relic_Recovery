@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ImuChassis;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ModularConstants;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 @Autonomous
@@ -38,7 +40,7 @@ public class RedB extends LinearOpMode {
 
         mark = new VueMarkID(hardwareMap);
 
-        chassis = new ImuChassis(left, right, imu, 2960d);
+        chassis = new ImuChassis(left, right, imu, 2960d, this);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();

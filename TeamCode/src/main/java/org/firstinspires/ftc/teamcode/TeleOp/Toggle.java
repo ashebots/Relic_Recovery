@@ -25,7 +25,7 @@ public class Toggle {
 
     static int[] numOutput = {1, 1, 1, 1, 1};
 
-    public static int numChange (boolean rise, boolean lower, int numCap, int modeNum){
+    public static int numChange (boolean lower, boolean rise, int numCap, int modeNum){
 
         if (rise && gate[modeNum+5] && numOutput[modeNum] < numCap){
 
@@ -43,6 +43,17 @@ public class Toggle {
 
         return numOutput[modeNum];
     }
+
+    public static void resetStates(){
+
+        boolean[] newOutput = {false, false, false, false, false};
+        output = newOutput;
+
+        int[] newNumOutput = {1, 1, 1, 1, 1};
+        numOutput = newNumOutput;
+
+    }
+
 }
 
 

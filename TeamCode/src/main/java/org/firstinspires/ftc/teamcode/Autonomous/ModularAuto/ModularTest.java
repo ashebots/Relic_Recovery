@@ -1,7 +1,6 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.ModularAuto;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -28,7 +27,7 @@ public class ModularTest extends LinearOpMode{
     float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.CRYPTOBOX_A};
 
     public void runOpMode(){
-
+        while (opModeIsActive())
         leftMotor = hardwareMap.dcMotor.get("Left wheel");
         leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -43,7 +42,7 @@ public class ModularTest extends LinearOpMode{
         */
 
         //annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
-        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0);
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0, this);
 
         //imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 

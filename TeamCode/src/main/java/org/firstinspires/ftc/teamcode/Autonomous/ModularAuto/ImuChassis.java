@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous.ModularAuto;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -20,19 +21,21 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 public class ImuChassis {
 
+    LinearOpMode opMode;
+
     //encodersPerFoot is required for calculating the encoder position to drive
-    public static int encodersPerFoot;
+    public int encodersPerFoot;
 
     //The IMU chassis consists of two motors and an IMU.
-    static DcMotor leftMotor;
-    static DcMotor rightMotor;
+    DcMotor leftMotor;
+    DcMotor rightMotor;
 
-    static BNO055IMU imu;
+    BNO055IMU imu;
 
-    static Double maxSpeed;
+    Double maxSpeed;
 
     //The IMU chassis constructor
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed){
+    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, LinearOpMode opMode){
 
         leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -53,35 +56,37 @@ public class ImuChassis {
 
         this.maxSpeed = maxSpeed;
 
+        this.opMode = opMode;
+
     }
 
 
     //Simple programs to turn or drive forward at the motor speed you input, as well as stop
-    public static void driveAtSpeed(double speed) {
+    public void driveAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(speed);
     }
-    public static void turnAtSpeed(double speed) {
+    public void turnAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(-speed);
     }
-    public static void stop() {
+    public void stop() {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
     }
 
     //SmartImu converts angles to Imu angles, which also serves to loop the Imu angle when adding two angles
-    public static float smartImu (float input){
-        while (input <= -180) {
+    public float smartImu (float input){
+        while (input <= -180 && opMode.opModeIsActive()) {
             input += 360;
         }
-        while (input > 180){
+        while (input > 180 && opMode.opModeIsActive()){
             input -= 360;
         }
         return input;
     }
 
-    public static void turnToAngle (float angleTo, double speed) {
+    public void turnToAngle (float angleTo, double speed) {
 
         //speed = speed * maxSpeed / 4000;
 
@@ -95,13 +100,14 @@ public class ImuChassis {
 
         if (turnToRight) {
 
-            while (currentAngle > angleTo) {
+            while (currentAngle <= angleTo && opMode.opModeIsActive()) {
+
                 turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
             stop();
 
-            while (currentAngle < angleTo) {
+            while (currentAngle < angleTo && opMode.opModeIsActive()) {
 
                 turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
@@ -110,51 +116,57 @@ public class ImuChassis {
             stop();
 
         } else{
-            while (currentAngle < angleTo) {
+
+            while (currentAngle < angleTo && opMode.opModeIsActive()) {
+
                 turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
             stop();
 
-            while (currentAngle > angleTo){
+            while (currentAngle > angleTo && opMode.opModeIsActive()){
+
                 turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
-
             stop();
+
         }
     }
 
-    public static void turnXDegrees (float angleTo, double speed){
+    public void turnXDegrees (float angleTo, double speed){
+
         angleTo = smartImu(-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle + angleTo);
         turnToAngle(angleTo, speed);
+
     }
 
     //driveSetup is needed to calculate the encoders per foot of the robot, using the encoders per rotation, the gear ratio, and the wheel diameter.
-    public static void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
+    public void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
+
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
 
-    public static void driveXFeet(double feet, double speed) {
+    public void driveXFeet(double feet, double speed) {
 
         //speed = speed * maxSpeed / 4000;
         int leftGoal = (int)((-feet*encodersPerFoot) + leftMotor.getCurrentPosition());
 
         if (leftMotor.getCurrentPosition() > leftGoal) {
 
-            while (leftMotor.getCurrentPosition() > leftGoal) {
+            while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(speed);
             }
-            while (leftMotor.getCurrentPosition() < leftGoal) {
+            while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(-speed/2);
             }
 
         }else{
 
-            while (leftMotor.getCurrentPosition() < leftGoal) {
+            while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(-speed);
             }
-            while (leftMotor.getCurrentPosition() > leftGoal) {
+            while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(speed/2);
             }
 
