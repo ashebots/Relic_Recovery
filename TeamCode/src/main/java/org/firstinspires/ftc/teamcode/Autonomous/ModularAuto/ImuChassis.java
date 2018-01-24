@@ -21,8 +21,6 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 public class ImuChassis {
 
-    LinearOpMode opMode;
-
     //encodersPerFoot is required for calculating the encoder position to drive
     public int encodersPerFoot;
 
@@ -33,6 +31,8 @@ public class ImuChassis {
     BNO055IMU imu;
 
     Double maxSpeed;
+
+    LinearOpMode opMode;
 
     //The IMU chassis constructor
     public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, LinearOpMode opMode){
