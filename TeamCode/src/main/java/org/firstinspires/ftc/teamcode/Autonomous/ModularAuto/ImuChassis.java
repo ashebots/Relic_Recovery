@@ -22,20 +22,18 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 public class ImuChassis {
 
     //encodersPerFoot is required for calculating the encoder position to drive
-    public int encodersPerFoot;
+    private int encodersPerFoot;
 
     //The IMU chassis consists of two motors and an IMU.
-    DcMotor leftMotor;
-    DcMotor rightMotor;
-
-    BNO055IMU imu;
-
-    Double maxSpeed;
+    private DcMotor leftMotor;
+    private DcMotor rightMotor;
+    private BNO055IMU imu;
+    private double maxSpeed;
 
     LinearOpMode opMode;
 
     //The IMU chassis constructor
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, LinearOpMode opMode){
+    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU imu, double maxSpeed, LinearOpMode opMode){
 
         leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -47,17 +45,15 @@ public class ImuChassis {
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        imu = IMU;
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.mode = BNO055IMU.SensorMode.NDOF;
         imu.initialize(parameters);
 
+        this.imu = imu;
         this.maxSpeed = maxSpeed;
-
         this.opMode = opMode;
-
     }
 
 
@@ -135,15 +131,12 @@ public class ImuChassis {
     }
 
     public void turnXDegrees (float angleTo, double speed){
-
         angleTo = smartImu(-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle + angleTo);
         turnToAngle(angleTo, speed);
-
     }
 
     //driveSetup is needed to calculate the encoders per foot of the robot, using the encoders per rotation, the gear ratio, and the wheel diameter.
     public void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
-
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
 
@@ -210,6 +203,17 @@ public class ImuChassis {
         //Turns in the direction of the coordinate, and then drives until it reaches it
         turnToAngle(initialAngle, turnSpeed);
         driveXFeet(distance, driveSpeed);
+
+    }
+
+    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
+
+        for(int i = 1; i < coordList.length; i++){
+            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
+
+            //Scan the pictograph and set next location to the appropriate crypto box position
+            //annualModule.coordCheck(coordList, i);
+        }
 
     }
 }

@@ -44,4 +44,9 @@ public class GoodIMU {
                 ? (int)-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.RADIANS).secondAngle
                 : (int)-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).secondAngle;
     }
+
+    //Clamped between 180 and -180
+    public static float IMU2GlobalAngle(float imuAngle) {
+        return imuAngle >= 0 ? imuAngle : imuAngle + 360;
+    }
 }

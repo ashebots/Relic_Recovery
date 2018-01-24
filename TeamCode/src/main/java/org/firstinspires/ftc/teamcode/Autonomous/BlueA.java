@@ -15,21 +15,21 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 @Autonomous
 public class BlueA extends LinearOpMode{
 
-    ImuChassis chassis;
-    VueMarkID mark;
+    private ImuChassis chassis;
+    private VueMarkID mark;
 
-    RelicRecoveryVuMark vueMark;
+    private RelicRecoveryVuMark vueMark;
 
-    DcMotor left;
-    DcMotor right;
+    private DcMotor left;
+    private DcMotor right;
 
-    DcMotor intakeL;
-    DcMotor intakeR;
+    private DcMotor intakeL;
+    private DcMotor intakeR;
 
-    CRServo placeL;
-    CRServo placeR;
+    private CRServo placeL;
+    private CRServo placeR;
 
-    BNO055IMU imu;
+    private BNO055IMU imu;
 
     public void runOpMode() throws InterruptedException {
 
