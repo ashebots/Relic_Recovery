@@ -35,4 +35,6 @@ public class ModularConstants {
     public static int NEVERREST_40 = 1120;
     public static int NEVERREST_60 = 1680;
 
+    public static final float sqrt2 = 1.41421356237309504880168872420969807856967187537694807317667973799f;
+
 }
