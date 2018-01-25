@@ -20,53 +20,70 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
  */
 
 public class ImuChassis {
-
-    LinearOpMode opMode;
+    private LinearOpMode opMode; //this is not a good idea
 
     //encodersPerFoot is required for calculating the encoder position to drive
     private int encodersPerFoot;
-
-    //The IMU chassis consists of two motors and an IMU.
+    private DriveSpec driveSpec;
     private DcMotor leftMotor;
     private DcMotor rightMotor;
     private BNO055IMU imu;
-    private double maxSpeed;
 
-    //The IMU chassis constructor
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU imu, double maxSpeed, LinearOpMode opMode){
+    public class DriveSpec {
+        public float encodersPerRotation;
+        public float gearRatio;
+        public float wheelDiameter;
+    }
 
-        leftMotor = left;
+    public ImuChassis(DcMotor leftMotor, DcMotor rightMotor, BNO055IMU imu, LinearOpMode opMode) {
+        this.leftMotor = leftMotor;
+        this.rightMotor = rightMotor;
+        this.imu = imu;
+        this.opMode = opMode;
+
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        rightMotor = right;
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        initVuforia();
+    }
+
+    public ImuChassis(DcMotor leftMotor, DcMotor rightMotor, BNO055IMU imu, LinearOpMode opMode, DriveSpec driveSpec) {
+        this.leftMotor = leftMotor;
+        this.rightMotor = rightMotor;
+        this.imu = imu;
+        this.opMode = opMode;
+        this.driveSpec = driveSpec;
+
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        initVuforia();
+    }
+
+    private void initVuforia() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.mode = BNO055IMU.SensorMode.NDOF;
         imu.initialize(parameters);
-
-        this.imu = imu;
-        this.maxSpeed = maxSpeed;
-        this.opMode = opMode;
     }
 
-
     //Simple programs to turn or drive forward at the motor speed you input, as well as stop
+
     public void driveAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(speed);
     }
-    public void turnAtSpeed(double speed) {
+    private void turnAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(-speed);
     }
-    public void stop() {
+
+    private  void stop() {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
     }
@@ -83,9 +100,6 @@ public class ImuChassis {
     }
 
     public void turnToAngle (float angleTo, double speed) {
-
-        //speed = speed * maxSpeed / 4000;
-
         float currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
 
         float angleDifference = Math.abs(currentAngle - angleTo);
@@ -138,6 +152,10 @@ public class ImuChassis {
     //driveSetup is needed to calculate the encoders per foot of the robot, using the encoders per rotation, the gear ratio, and the wheel diameter.
     public void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
+    }
+
+    public void driveSetup(DriveSpec spec) {
+        encodersPerFoot = (int)((12 * spec.encodersPerRotation) / (spec.gearRatio * Math.PI * spec.wheelDiameter));
     }
 
     public void driveXFeet(double feet, double speed) {
