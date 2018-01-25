@@ -72,6 +72,7 @@ public class ImuChassis {
         imu.initialize(parameters);
     }
 
+
     //Simple programs to turn or drive forward at the motor speed you input, as well as stop
 
     public void driveAtSpeed(double speed) {
@@ -100,6 +101,9 @@ public class ImuChassis {
     }
 
     public void turnToAngle (float angleTo, double speed) {
+
+        //speed = speed * maxSpeed / 4000;
+
         float currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
 
         float angleDifference = Math.abs(currentAngle - angleTo);

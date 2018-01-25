@@ -40,15 +40,12 @@ public class MainTeleOp extends OpMode{
 
     public void init(){
 
-
         leftWheel = hardwareMap.dcMotor.get("Left wheel");
         rightWheel = hardwareMap.dcMotor.get("Right wheel");
 
         leftWheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
         chassis = new Chassis(leftWheel, rightWheel);
-
-        slowness = 1;
 
         leftSweeper = hardwareMap.dcMotor.get("Left sweeper");
         rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
