@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous.ModularAuto;
 
+import android.graphics.CornerPathEffect;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,65 +9,103 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+<<<<<<< HEAD
+=======
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Action;
+import org.firstinspires.ftc.teamcode.Autonomous.DisplayPrograms.ArrayDis;
+import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
+import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
+import org.firstinspires.ftc.teamcode.Coordinate;
+import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+
+import java.util.Queue;
+
+
+/**
+ * Created by jezebelquit on 8/12/17.*-
+ */
+>>>>>>> e7cd22a3cbe007b9c88a52e5c98839e603f538b0
 
 public class ImuChassis {
-
-    LinearOpMode opMode;
+    private LinearOpMode opMode; //this is not a good idea
 
     //encodersPerFoot is required for calculating the encoder position to drive
-    public int encodersPerFoot;
+    private int encodersPerFoot;
+    private DriveSpec driveSpec;
+    private DcMotor leftMotor;
+    private DcMotor rightMotor;
+    private BNO055IMU imu;
+    private GoodIMU goodIMU;
 
-    //The IMU chassis consists of two motors and an IMU.
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+    private Vector2 initialPosition;
+    private Vector2 currentPosition;
+    private Vector2 forward;
 
-    BNO055IMU imu;
+    public enum Direction {
+        Left, Right
+    }
 
-    Double maxSpeed;
+    public class DriveSpec {
+        public float encodersPerRotation;
+        public float gearRatio;
+        public float wheelDiameter;
+    }
 
-    //The IMU chassis constructor
-    public ImuChassis(DcMotor left, DcMotor right, BNO055IMU IMU, Double maxSpeed, LinearOpMode opMode){
+    public ImuChassis(DcMotor leftMotor, DcMotor rightMotor, BNO055IMU imu, LinearOpMode opMode) {
+        this.leftMotor = leftMotor;
+        this.rightMotor = rightMotor;
+        this.imu = imu;
+        this.opMode = opMode;
+        this.goodIMU = new GoodIMU(imu, GoodIMU.Unit.DEGREE);
 
-        leftMotor = left;
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //leftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        rightMotor = right;
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //rightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        imu = IMU;
+        initVuforia();
+    }
+
+    public ImuChassis(DcMotor leftMotor, DcMotor rightMotor, BNO055IMU imu, LinearOpMode opMode, DriveSpec driveSpec) {
+        this.leftMotor = leftMotor;
+        this.rightMotor = rightMotor;
+        this.imu = imu;
+        this.opMode = opMode;
+        this.driveSpec = driveSpec;
+
+        leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        initVuforia();
+    }
+
+    private void initVuforia() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
         parameters.mode = BNO055IMU.SensorMode.NDOF;
         imu.initialize(parameters);
-
-        this.maxSpeed = maxSpeed;
-
-        this.opMode = opMode;
-
     }
 
-
-    //Simple programs to turn or drive forward at the motor speed you input, as well as stop
     public void driveAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(speed);
     }
-    public void turnAtSpeed(double speed) {
+    private void turnAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(-speed);
     }
-    public void stop() {
+
+    private  void stop() {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
     }
 
     //SmartImu converts angles to Imu angles, which also serves to loop the Imu angle when adding two angles
-    public float smartImu (float input){
+    private float smartImu (float input){
         while (input <= -180 && opMode.opModeIsActive()) {
             input += 360;
         }
@@ -74,6 +114,13 @@ public class ImuChassis {
         }
         return input;
     }
+
+    public void lookAt(Vector2 target, double speed) {
+        float angle = Vector2.Vec2Angle(target, forward);
+
+    }
+
+
 
     public void turnToAngle (float angleTo, double speed) {
 
@@ -124,22 +171,27 @@ public class ImuChassis {
     }
 
     public void turnXDegrees (float angleTo, double speed){
-
         angleTo = smartImu(-imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle + angleTo);
         turnToAngle(angleTo, speed);
-
     }
 
     //driveSetup is needed to calculate the encoders per foot of the robot, using the encoders per rotation, the gear ratio, and the wheel diameter.
     public void driveSetup(float encodersPerRotation, float gearRatio, float wheelDiameter){
-
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
 
+<<<<<<< HEAD
+    public void driveFromStart(double feet, double speed){
+=======
+    public void driveSetup(DriveSpec spec) {
+        encodersPerFoot = (int)((12 * spec.encodersPerRotation) / (spec.gearRatio * Math.PI * spec.wheelDiameter));
+    }
+
     public void driveXFeet(double feet, double speed) {
+>>>>>>> 1d6d82860f25100cc8a63675d830bbd4427d431b
 
         //speed = speed * maxSpeed / 4000;
-        int leftGoal = (int)((-feet*encodersPerFoot) + leftMotor.getCurrentPosition());
+        int leftGoal = (int)(-feet*encodersPerFoot);
 
         if (leftMotor.getCurrentPosition() > leftGoal) {
 
@@ -162,6 +214,13 @@ public class ImuChassis {
         }
 
         stop();
+    }
+
+    public void driveXFeet(double feet, double speed) {
+
+        feet = feet - leftMotor.getCurrentPosition()/encodersPerFoot;
+        driveFromStart(feet, speed);
+
     }
 
     public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
@@ -199,6 +258,17 @@ public class ImuChassis {
         //Turns in the direction of the coordinate, and then drives until it reaches it
         turnToAngle(initialAngle, turnSpeed);
         driveXFeet(distance, driveSpeed);
+
+    }
+
+    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
+
+        for(int i = 1; i < coordList.length; i++){
+            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
+
+            //Scan the pictograph and set next location to the appropriate crypto box position
+            //annualModule.coordCheck(coordList, i);
+        }
 
     }
 }
