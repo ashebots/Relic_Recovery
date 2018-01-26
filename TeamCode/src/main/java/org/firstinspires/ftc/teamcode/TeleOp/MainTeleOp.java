@@ -20,11 +20,13 @@ public class MainTeleOp extends OpMode{
     int slowness;
     String driveMode;
 
-    DcMotor leftSweeper;
-    DcMotor rightSweeper;
+    DcMotor leftIntake;
+    DcMotor rightIntake;
 
-    CRServo leftRotate;
-    CRServo rightRotate;
+    Servo leftTray;
+    Servo rightTray;
+
+    String trayStatus;
 
     DcMotor lift;
 
@@ -35,7 +37,7 @@ public class MainTeleOp extends OpMode{
 
     String adjusterStatus;
 
-    //CRServo armWheelR;
+    CRServo armWheelR;
     CRServo armWheelL;
 
     public void init(){
@@ -47,27 +49,28 @@ public class MainTeleOp extends OpMode{
 
         chassis = new Chassis(leftWheel, rightWheel);
 
-        leftSweeper = hardwareMap.dcMotor.get("Left sweeper");
-        rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
-        leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftIntake = hardwareMap.dcMotor.get("Left intake");
+        rightIntake = hardwareMap.dcMotor.get("Right intake");
+        leftIntake.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        leftTray = hardwareMap.servo.get("Left tray");
+        rightTray = hardwareMap.servo.get("Right tray");
+        rightTray.setDirection(Servo.Direction.REVERSE);
 
-        leftRotate = hardwareMap.crservo.get("Left rotator");
-        rightRotate = hardwareMap.crservo.get("Right rotator");
-
-        rightRotate.setDirection(CRServo.Direction.REVERSE);
+        trayStatus = "Dump";
 
         lift = hardwareMap.dcMotor.get("Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        adjusterR = hardwareMap.servo.get("Right fly rotator");
+        adjusterR = hardwareMap.servo.get("Right intake rotator");
         adjusterR.setPosition(0.95);
-        adjusterL = hardwareMap.servo.get("Left fly rotator");
+        adjusterL = hardwareMap.servo.get("Left intake rotator");
         adjusterL.setDirection(Servo.Direction.REVERSE);
         adjusterL.setPosition(0.95);
-        //armWheelR = hardwareMap.crservo.get("Right fly wheel");
-        armWheelL = hardwareMap.crservo.get("Left fly wheel");
+
+        armWheelR = hardwareMap.crservo.get("Right intake wheel");
+        armWheelL = hardwareMap.crservo.get("Left intake wheel");
         armWheelL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         driveMode = "Normal";
@@ -80,7 +83,7 @@ public class MainTeleOp extends OpMode{
 
         slowness = Toggle.numChange(gamepad1.dpad_right, gamepad1.dpad_left, 5, 0);
 
-        if (Toggle.toggle(gamepad1.b, 1)){
+        if (Toggle.toggle(gamepad1.b, 0)){
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
             driveMode = "Reverse";
         }else {
@@ -88,7 +91,7 @@ public class MainTeleOp extends OpMode{
             driveMode = "Forward";
         }
 
-        if (Toggle.toggle(gamepad1.x || gamepad2.x, 2)){
+        if (Toggle.toggle(gamepad1.x || gamepad2.x, 1)){
             adjusterL.setPosition(0.35);
             adjusterR.setPosition(0.35);
             adjusterStatus = "Lowered";
@@ -99,26 +102,52 @@ public class MainTeleOp extends OpMode{
         }
 
         if (gamepad1.right_bumper){
-            leftSweeper.setPower(1);
-            rightSweeper.setPower(1);
+
+            leftIntake.setPower(1);
+            rightIntake.setPower(1);
+
             armWheelL.setPower(0.5);
-            //armWheelR.setPower(0.5);
+            armWheelR.setPower(0.5);
+
+            leftTray.setPosition(0.875);
+            rightTray.setPosition(0.875);
+
+            trayStatus = "Intake";
+
         }else if (gamepad1.right_trigger > 0){
-            leftSweeper.setPower(-1);
-            rightSweeper.setPower(-1);
+
+            leftIntake.setPower(-1);
+            rightIntake.setPower(-1);
+
             armWheelL.setPower(-0.5);
-            //armWheelR.setPower(-0.5);
+            armWheelR.setPower(-0.5);
+
         }else{
-            leftSweeper.setPower(0);
-            rightSweeper.setPower(0);
+
+            leftIntake.setPower(0);
+            rightIntake.setPower(0);
+
             armWheelL.setPower(0);
-            //armWheelR.setPower(0);
+            armWheelR.setPower(0);
+
         }
 
-        leftRotate.setPower(gamepad1.right_stick_y/2);
-        rightRotate.setPower(gamepad1.right_stick_y/2);
+        if (!gamepad1.right_bumper && Toggle.toggle(gamepad1.a, 2)){
 
-        liftPos = Toggle.numChange(gamepad1.left_trigger > 0.5, gamepad1.left_bumper, 4, 1);
+            leftTray.setPosition(0.75);
+            rightTray.setPosition(0.75);
+
+            trayStatus = "Lift";
+
+        }else if (!gamepad1.right_bumper){
+
+            leftTray.setPosition(0.5);
+            rightTray.setPosition(0.5);
+
+            trayStatus = "Dump";
+        }
+
+        liftPos = Toggle.numChange(gamepad1.left_trigger > 0.5, gamepad1.left_bumper, 4, 2);
 
         lift.setTargetPosition(1105*(liftPos-1));
         lift.setPower(1);
@@ -133,7 +162,10 @@ public class MainTeleOp extends OpMode{
 
         telemetry.addData("Speed", (int)(100/slowness)+"%");
         telemetry.addData("Drive mode", driveMode);
+
+        telemetry.addData("Tray position", trayStatus);
         telemetry.addData("Lift position", liftPos);
+
         telemetry.addData("Adjuster position", adjusterStatus);
     }
 }

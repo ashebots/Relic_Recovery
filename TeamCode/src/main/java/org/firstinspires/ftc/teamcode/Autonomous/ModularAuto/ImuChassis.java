@@ -140,10 +140,10 @@ public class ImuChassis {
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
 
-    public void driveXFeet(double feet, double speed) {
+    public void driveFromStart(double feet, double speed){
 
         //speed = speed * maxSpeed / 4000;
-        int leftGoal = (int)((-feet*encodersPerFoot) + leftMotor.getCurrentPosition());
+        int leftGoal = (int)(-feet*encodersPerFoot);
 
         if (leftMotor.getCurrentPosition() > leftGoal) {
 
@@ -166,6 +166,13 @@ public class ImuChassis {
         }
 
         stop();
+    }
+
+    public void driveXFeet(double feet, double speed) {
+
+        feet = feet - leftMotor.getCurrentPosition()/encodersPerFoot;
+        driveFromStart(feet, speed);
+
     }
 
     public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
