@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
 
 import java.util.Queue;
 
@@ -22,7 +23,7 @@ public class Transform {
     private     double      encoderCons;
 
     //Holds position of bot relative to starting position and world space
-    private     Vector2     localPosition;
+    private Vector2 localPosition;
     private     Vector2     position;
     private     Vector2     forwardVector;
     private     double      theta0;

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous.ModularAuto;
 
+import android.graphics.CornerPathEffect;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,8 +13,14 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Action;
 import org.firstinspires.ftc.teamcode.Autonomous.DisplayPrograms.ArrayDis;
+import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
+import org.firstinspires.ftc.teamcode.Coordinate;
+import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+
+import java.util.Queue;
 
 
 /**
@@ -28,6 +36,15 @@ public class ImuChassis {
     private DcMotor leftMotor;
     private DcMotor rightMotor;
     private BNO055IMU imu;
+    private GoodIMU goodIMU;
+
+    private Vector2 initialPosition;
+    private Vector2 currentPosition;
+    private Vector2 forward;
+
+    public enum Direction {
+        Left, Right
+    }
 
     public class DriveSpec {
         public float encodersPerRotation;
@@ -40,6 +57,7 @@ public class ImuChassis {
         this.rightMotor = rightMotor;
         this.imu = imu;
         this.opMode = opMode;
+        this.goodIMU = new GoodIMU(imu, GoodIMU.Unit.DEGREE);
 
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -72,9 +90,6 @@ public class ImuChassis {
         imu.initialize(parameters);
     }
 
-
-    //Simple programs to turn or drive forward at the motor speed you input, as well as stop
-
     public void driveAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(speed);
@@ -90,7 +105,7 @@ public class ImuChassis {
     }
 
     //SmartImu converts angles to Imu angles, which also serves to loop the Imu angle when adding two angles
-    public float smartImu (float input){
+    private float smartImu (float input){
         while (input <= -180 && opMode.opModeIsActive()) {
             input += 360;
         }
@@ -99,6 +114,13 @@ public class ImuChassis {
         }
         return input;
     }
+
+    public void lookAt(Vector2 target, double speed) {
+        float angle = Vector2.Vec2Angle(target, forward);
+
+    }
+
+
 
     public void turnToAngle (float angleTo, double speed) {
 
@@ -111,8 +133,6 @@ public class ImuChassis {
 
         boolean turnToRight = false;
         if (smartImu(currentAngle + angleDifference) == angleTo) turnToRight = true;
-
-        //boolean test;
 
         if (turnToRight) {
 

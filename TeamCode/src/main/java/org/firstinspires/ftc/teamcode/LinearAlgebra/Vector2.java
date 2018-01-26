@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Move;
-
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ModularConstants;
+package org.firstinspires.ftc.teamcode.LinearAlgebra;
 
 /**
  * Created by rostifar on 8/10/17.
@@ -47,8 +45,18 @@ public class Vector2 {
         return new Vector2(a * b.x(), a * b.y());
     }
 
-    public static float Vec2Angle(Vector2 a, Vector2 b) {
+    public static Vector2 Normalize(Vector2 a) {
+        final float norm = a.norm();
+        return new Vector2(a.x() / norm, a.y() / norm);
+    }
+
+    //unsigned
+    public static float UnsignedVec2Angle(Vector2 a, Vector2 b) {
         return (float) Math.acos((double) (Vector2.Dot(a, b) / (a.norm() * b.norm())));
+    }
+
+    public static float Vec2Angle(Vector2 a, Vector2 b) {
+        return (float) Math.atan2(a.x() * b.y() - a.x() * b.x(), a.x() * b.x() + a.y() * b.y());
     }
 
     //angle should represent a global angle, not an imu angle
@@ -59,5 +67,4 @@ public class Vector2 {
     public static Vector2 Array2Vec(float arr[]) {
         return new Vector2(arr[0], arr[1]);
     }
-
 }

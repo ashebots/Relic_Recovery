@@ -2,10 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ImuChassis;
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ModularConstants;
-import org.firstinspires.ftc.teamcode.Autonomous.Move.Vector2;
+import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+
+import java.util.Queue;
 
 /**
  * Created by rostifar on 1/11/18.

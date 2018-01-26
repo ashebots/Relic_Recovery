@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.teamcode.Autonomous.ModularAuto;
 
+import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jezebelquit on 9/23/17.
  */
@@ -35,6 +40,8 @@ public class ModularConstants {
     public static int NEVERREST_40 = 1120;
     public static int NEVERREST_60 = 1680;
 
-    public static final float sqrt2 = 1.41421356237309504880168872420969807856967187537694807317667973799f;
+
+    public static Vector2 V_BALANCE_STONE_A = new Vector2(-4, -4);
+
 
 }
