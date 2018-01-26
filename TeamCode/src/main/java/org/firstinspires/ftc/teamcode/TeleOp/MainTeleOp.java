@@ -23,8 +23,8 @@ public class MainTeleOp extends OpMode{
     DcMotor leftSweeper;
     DcMotor rightSweeper;
 
-    CRServo leftRotate;
-    CRServo rightRotate;
+    Servo leftRotate;
+    Servo rightRotate;
 
     DcMotor lift;
 
@@ -55,10 +55,10 @@ public class MainTeleOp extends OpMode{
         leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
-        leftRotate = hardwareMap.crservo.get("Left rotator");
-        rightRotate = hardwareMap.crservo.get("Right rotator");
+        leftRotate = hardwareMap.servo.get("Left rotator");
+        rightRotate = hardwareMap.servo.get("Right rotator");
 
-        rightRotate.setDirection(CRServo.Direction.REVERSE);
+        rightRotate.setDirection(Servo.Direction.REVERSE);
 
         lift = hardwareMap.dcMotor.get("Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -118,8 +118,16 @@ public class MainTeleOp extends OpMode{
             //armWheelR.setPower(0);
         }
 
-        leftRotate.setPower(gamepad1.right_stick_y/2);
-        rightRotate.setPower(gamepad1.right_stick_y/2);
+        if(Toggle.toggle(gamepad1.a,3)){
+            leftRotate.setPosition(0.7);
+            rightRotate.setPosition(0.7);
+        }else if (gamepad1.right_trigger > 0 || gamepad1.right_bumper){
+            leftRotate.setPosition(0.4);
+            rightRotate.setPosition(0.4);
+        }else{
+            leftRotate.setPosition(0.45);
+            rightRotate.setPosition(0.45);
+        }
 
         liftPos = Toggle.numChange(gamepad1.left_trigger > 0.5, gamepad1.left_bumper, 4, 1);
 
