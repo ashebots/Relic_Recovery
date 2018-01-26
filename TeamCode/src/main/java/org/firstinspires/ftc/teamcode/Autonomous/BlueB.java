@@ -58,7 +58,7 @@ public class BlueB extends LinearOpMode{
         jewelArm = hardwareMap.servo.get("Jewel arm");
         color = hardwareMap.colorSensor.get("Jewel sensor");
 
-        chassis = new ImuChassis(left, right, imu, 2960.0, this);
+        chassis = new ImuChassis(left, right, imu, this);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();

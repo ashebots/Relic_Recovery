@@ -58,15 +58,15 @@ public class BlueA extends LinearOpMode{
         /* TBD */ jewelArm.setPosition(0.5);
         color = hardwareMap.colorSensor.get("Jewel sensor");
 
-        chassis = new ImuChassis(left, right, imu, 2960.0, this);
+        chassis = new ImuChassis(left, right, imu, this);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
         for (int i = 0; i < 10 && opModeIsActive(); i++) { vueMark = mark.vueName(); }
 
-        /* TBD */ leftTray.setPosition(0.825);
-        /* TBD */ rightTray.setPosition(0.825);
+        /* TBD */ leftTray.setPosition(0.875);
+        /* TBD */ rightTray.setPosition(0.875);
 
         intakeLeft.setPower(1);
         intakeRight.setPower(1);

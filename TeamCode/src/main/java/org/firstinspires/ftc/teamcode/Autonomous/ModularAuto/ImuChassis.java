@@ -20,7 +20,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
  */
 
 public class ImuChassis {
-    private LinearOpMode opMode; //this is not a good idea
+
+    private LinearOpMode opMode;
 
     //encodersPerFoot is required for calculating the encoder position to drive
     private int encodersPerFoot;
@@ -36,6 +37,7 @@ public class ImuChassis {
     }
 
     public ImuChassis(DcMotor leftMotor, DcMotor rightMotor, BNO055IMU imu, LinearOpMode opMode) {
+
         this.leftMotor = leftMotor;
         this.rightMotor = rightMotor;
         this.imu = imu;
@@ -46,7 +48,7 @@ public class ImuChassis {
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        initVuforia();
+        initImu();
     }
 
     public ImuChassis(DcMotor leftMotor, DcMotor rightMotor, BNO055IMU imu, LinearOpMode opMode, DriveSpec driveSpec) {
@@ -61,10 +63,10 @@ public class ImuChassis {
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        initVuforia();
+        initImu();
     }
 
-    private void initVuforia() {
+    private void initImu() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json";
@@ -160,15 +162,11 @@ public class ImuChassis {
         encodersPerFoot = (int)((12 * encodersPerRotation) / (gearRatio * Math.PI * wheelDiameter));
     }
 
-<<<<<<< HEAD
-    public void driveFromStart(double feet, double speed){
-=======
     public void driveSetup(DriveSpec spec) {
         encodersPerFoot = (int)((12 * spec.encodersPerRotation) / (spec.gearRatio * Math.PI * spec.wheelDiameter));
     }
 
     public void driveXFeet(double feet, double speed) {
->>>>>>> 1d6d82860f25100cc8a63675d830bbd4427d431b
 
         //speed = speed * maxSpeed / 4000;
         int leftGoal = (int)(-feet*encodersPerFoot);
@@ -196,7 +194,7 @@ public class ImuChassis {
         stop();
     }
 
-    public void driveXFeet(double feet, double speed) {
+    public void driveFromStart(double feet, double speed) {
 
         feet = feet - leftMotor.getCurrentPosition()/encodersPerFoot;
         driveFromStart(feet, speed);

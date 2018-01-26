@@ -12,33 +12,28 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 @TeleOp
 public class MainTeleOp extends OpMode{
 
-    DcMotor leftWheel;
-    DcMotor rightWheel;
+    private DcMotor leftWheel;
+    private DcMotor rightWheel;
 
-    Chassis chassis;
+    private Chassis chassis;
 
-    int slowness;
-    String driveMode;
+    private int slowness;
+    private String driveMode;
 
-    DcMotor leftIntake;
-    DcMotor rightIntake;
+    private DcMotor leftIntake;
+    private DcMotor rightIntake;
 
-    Servo leftTray;
-    Servo rightTray;
+    private Servo leftTray;
+    private Servo rightTray;
 
-    String trayStatus;
+    private String trayStatus;
 
-    DcMotor lift;
+    private DcMotor lift;
 
-    int liftPos;
+    private int liftPos;
 
-    Servo adjusterR;
-    Servo adjusterL;
-
-    String adjusterStatus;
-
-    CRServo armWheelR;
-    CRServo armWheelL;
+    private CRServo intakeWheelRight;
+    private CRServo intakeWheelLeft;
 
     public void init(){
 
@@ -51,10 +46,12 @@ public class MainTeleOp extends OpMode{
 
         leftIntake = hardwareMap.dcMotor.get("Left intake");
         rightIntake = hardwareMap.dcMotor.get("Right intake");
+
         leftIntake.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftTray = hardwareMap.servo.get("Left tray");
         rightTray = hardwareMap.servo.get("Right tray");
+
         rightTray.setDirection(Servo.Direction.REVERSE);
 
         trayStatus = "Dump";
@@ -63,18 +60,10 @@ public class MainTeleOp extends OpMode{
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        adjusterR = hardwareMap.servo.get("Right intake rotator");
-        adjusterR.setPosition(0.95);
-        adjusterL = hardwareMap.servo.get("Left intake rotator");
-        adjusterL.setDirection(Servo.Direction.REVERSE);
-        adjusterL.setPosition(0.95);
+        intakeWheelRight = hardwareMap.crservo.get("Right intake wheel");
+        intakeWheelLeft = hardwareMap.crservo.get("Left intake wheel");
 
-        armWheelR = hardwareMap.crservo.get("Right intake wheel");
-        armWheelL = hardwareMap.crservo.get("Left intake wheel");
-        armWheelL.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        driveMode = "Normal";
-        adjusterStatus = "Raised";
+        intakeWheelLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         Toggle.resetStates();
     }
@@ -91,63 +80,55 @@ public class MainTeleOp extends OpMode{
             driveMode = "Forward";
         }
 
-        if (Toggle.toggle(gamepad1.x || gamepad2.x, 1)){
-            adjusterL.setPosition(0.35);
-            adjusterR.setPosition(0.35);
-            adjusterStatus = "Lowered";
-        }else {
-            adjusterL.setPosition(0.95);
-            adjusterR.setPosition(0.95);
-            adjusterStatus = "Raised";
-        }
-
         if (gamepad1.right_bumper){
 
             leftIntake.setPower(1);
             rightIntake.setPower(1);
 
-            armWheelL.setPower(0.5);
-            armWheelR.setPower(0.5);
+            intakeWheelLeft.setPower(0.5);
+            intakeWheelRight.setPower(0.5);
 
-            leftTray.setPosition(0.875);
-            rightTray.setPosition(0.875);
+            leftTray.setPosition(0.45);
+            rightTray.setPosition(0.45);
 
             trayStatus = "Intake";
+
+             Toggle.setToggle(2, true);
 
         }else if (gamepad1.right_trigger > 0){
 
             leftIntake.setPower(-1);
             rightIntake.setPower(-1);
 
-            armWheelL.setPower(-0.5);
-            armWheelR.setPower(-0.5);
+            intakeWheelLeft.setPower(-0.5);
+            intakeWheelRight.setPower(-0.5);
 
         }else{
 
             leftIntake.setPower(0);
             rightIntake.setPower(0);
 
-            armWheelL.setPower(0);
-            armWheelR.setPower(0);
+            intakeWheelLeft.setPower(0);
+            intakeWheelRight.setPower(0);
 
         }
 
         if (!gamepad1.right_bumper && Toggle.toggle(gamepad1.a, 2)){
 
-            leftTray.setPosition(0.75);
-            rightTray.setPosition(0.75);
+            leftTray.setPosition(0.4);
+            rightTray.setPosition(0.4);
 
             trayStatus = "Lift";
 
         }else if (!gamepad1.right_bumper){
 
-            leftTray.setPosition(0.5);
-            rightTray.setPosition(0.5);
+            leftTray.setPosition(0.7);
+            rightTray.setPosition(0.7);
 
             trayStatus = "Dump";
         }
 
-        liftPos = Toggle.numChange(gamepad1.left_trigger > 0.5, gamepad1.left_bumper, 4, 2);
+        liftPos = Toggle.numChange(gamepad1.left_trigger > 0.25, gamepad1.left_bumper, 4, 2);
 
         lift.setTargetPosition(1105*(liftPos-1));
         lift.setPower(1);
@@ -166,6 +147,5 @@ public class MainTeleOp extends OpMode{
         telemetry.addData("Tray position", trayStatus);
         telemetry.addData("Lift position", liftPos);
 
-        telemetry.addData("Adjuster position", adjusterStatus);
     }
 }
