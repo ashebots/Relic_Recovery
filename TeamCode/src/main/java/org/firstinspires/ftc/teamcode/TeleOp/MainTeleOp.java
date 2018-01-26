@@ -23,10 +23,22 @@ public class MainTeleOp extends OpMode{
     private DcMotor leftIntake;
     private DcMotor rightIntake;
 
+<<<<<<< HEAD
     private Servo leftTray;
     private Servo rightTray;
 
     private String trayStatus;
+=======
+<<<<<<< HEAD
+    Servo leftRotate;
+    Servo rightRotate;
+=======
+    Servo leftTray;
+    Servo rightTray;
+
+    String trayStatus;
+>>>>>>> e7cd22a3cbe007b9c88a52e5c98839e603f538b0
+>>>>>>> b55a3946d8557a1de4a98c70f235e4c38900eee0
 
     private DcMotor lift;
 
@@ -54,7 +66,14 @@ public class MainTeleOp extends OpMode{
 
         rightTray.setDirection(Servo.Direction.REVERSE);
 
+<<<<<<< HEAD
+        leftRotate = hardwareMap.servo.get("Left rotator");
+        rightRotate = hardwareMap.servo.get("Right rotator");
+
+        rightRotate.setDirection(Servo.Direction.REVERSE);
+=======
         trayStatus = "Dump";
+>>>>>>> e7cd22a3cbe007b9c88a52e5c98839e603f538b0
 
         lift = hardwareMap.dcMotor.get("Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -113,12 +132,25 @@ public class MainTeleOp extends OpMode{
 
         }
 
+<<<<<<< HEAD
+        if(Toggle.toggle(gamepad1.a,3)){
+            leftRotate.setPosition(0.7);
+            rightRotate.setPosition(0.7);
+        }else if (gamepad1.right_trigger > 0 || gamepad1.right_bumper){
+            leftRotate.setPosition(0.4);
+            rightRotate.setPosition(0.4);
+        }else{
+            leftRotate.setPosition(0.45);
+            rightRotate.setPosition(0.45);
+        }
+=======
         if (!gamepad1.right_bumper && Toggle.toggle(gamepad1.a, 2)){
 
             leftTray.setPosition(0.4);
             rightTray.setPosition(0.4);
 
             trayStatus = "Lift";
+>>>>>>> e7cd22a3cbe007b9c88a52e5c98839e603f538b0
 
         }else if (!gamepad1.right_bumper){
 
