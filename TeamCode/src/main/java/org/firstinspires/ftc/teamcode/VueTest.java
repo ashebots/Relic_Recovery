@@ -11,12 +11,10 @@ public class VueTest extends OpMode{
 
     VueMarkID mark;
 
-    @Override
     public void init() {
         mark = new VueMarkID(hardwareMap);
     }
 
-    @Override
     public void loop() {
         telemetry.addData("Mark", mark.vueName());
     }

@@ -8,26 +8,19 @@ import org.firstinspires.ftc.teamcode.TeleOp.Toggle;
 /**
  * Created by famil on 11/18/2017.
  */
-//@TeleOp
+@TeleOp
 public class ToggleTest extends OpMode {
 
     public void init(){
-
+        Toggle.resetStates();
     }
 
     public void loop(){
 
-        if (Toggle.toggle(gamepad1.a, 0)){
-            telemetry.addData("A ", "On");
-        }else {
-            telemetry.addData("A", "Off");
-        }
-
-        if (Toggle.toggle(gamepad1.b, 1)){
-            telemetry.addData("B", "On");
-        }else {
-            telemetry.addData("B", "Off");
-        }
+        telemetry.addData("Speed", 100d/Toggle.numChange(gamepad1.dpad_right, gamepad1.dpad_left, 5, 0));
+        telemetry.addData("Reverse", Toggle.toggle(gamepad1.b, 0));
+        telemetry.addData("Lift position", Toggle.numChange(gamepad1.left_trigger > 0.5, gamepad1.left_bumper, 4, 1));
+        telemetry.addData("Adjuster lowered", Toggle.toggle(gamepad1.x, 4));
 
     }
 }

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ImuChassis;
 
 /**
  * Created by Lenovo on 11/9/2017.

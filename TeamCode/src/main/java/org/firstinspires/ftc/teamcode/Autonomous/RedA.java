@@ -3,31 +3,37 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ImuChassis;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ModularConstants;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 @Autonomous
 public class RedA extends LinearOpMode {
 
-    ImuChassis chassis;
-    VueMarkID mark;
+    private ImuChassis chassis;
+    private VueMarkID mark;
 
-    RelicRecoveryVuMark vueMark;
+    private RelicRecoveryVuMark vueMark;
 
-    DcMotor left;
-    DcMotor right;
+    private Servo jewelArm;
+    private ColorSensor color;
 
-    DcMotor intakeL;
-    DcMotor intakeR;
+    private DcMotor left;
+    private DcMotor right;
 
-    CRServo placeL;
-    CRServo placeR;
+    private DcMotor intakeLeft;
+    private DcMotor intakeRight;
 
-    BNO055IMU imu;
+    private Servo leftTray;
+    private Servo rightTray;
+
+    private BNO055IMU imu;
 
     public void runOpMode() throws InterruptedException {
 
@@ -35,85 +41,82 @@ public class RedA extends LinearOpMode {
         right = hardwareMap.dcMotor.get("Right wheel");
         left.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        placeL = hardwareMap.crservo.get("Left rotator");
-        placeR = hardwareMap.crservo.get("Right rotator");
-        placeR.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftTray = hardwareMap.servo.get("Left tray");
+        rightTray = hardwareMap.servo.get("Right tray");
+        rightTray.setDirection(Servo.Direction.REVERSE);
 
-        intakeL = hardwareMap.dcMotor.get("Left sweeper");
-        intakeR = hardwareMap.dcMotor.get("Right sweeper");
-        intakeL.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeLeft = hardwareMap.dcMotor.get("Left intake");
+        intakeRight = hardwareMap.dcMotor.get("Right intake");
+        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
         mark = new VueMarkID(hardwareMap);
 
-        chassis = new ImuChassis(left, right, imu, 2960.0);
+        jewelArm = hardwareMap.servo.get("Jewel arm");
+        color = hardwareMap.colorSensor.get("Jewel sensor");
+
+        chassis = new ImuChassis(left, right, imu, this);
         chassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
-        placeL.setPower(0.5);
-        placeR.setPower(0.5);
-        sleep(1650);
+        for (int i = 0; i < 10 && opModeIsActive(); i++) { vueMark = mark.vueName(); }
 
-        placeL.setPower(0);
-        placeR.setPower(0);
+        /* TBD */ leftTray.setPosition(0.875);
+        /* TBD */ rightTray.setPosition(0.875);
 
-        intakeL.setPower(1);
-        intakeR.setPower(1);
+        intakeLeft.setPower(1);
+        intakeRight.setPower(1);
 
-        sleep(1500);
+        sleep(2000);
 
-        intakeL.setPower(0);
-        intakeR.setPower(0);
+        intakeLeft.setPower(0);
+        intakeRight.setPower(0);
 
-        chassis.driveXFeet(0.125 - 7/6d, 0.5);
+        /* TBD */ jewelArm.setPosition(0.75);
 
-        sleep(1000);
-        vueMark = mark.vueName();
+        if (color.blue() > color.red()){
+            /* TBD */ chassis.driveXFeet(-0.2, 0.15);
+        }else if (color.red() > color.blue()){
+            /* TBD */ chassis.driveXFeet(0.2, 0.15);
+        }
 
-        sleep(250);
+        /* TBD */  jewelArm.setPosition(0.5);
+
         switch (vueMark){
 
             case CENTER:
-                chassis.driveXFeet(-11/6d+left.getCurrentPosition()/713.014145d, 0.5);
+                /* TBD */ chassis.driveFromStart(3, 0.5);
 
                 telemetry.addData("Position", "Center");
                 telemetry.update();
                 break;
 
             case RIGHT:
+                /* TBD */ chassis.driveFromStart(3.625, 0.5);
 
-                chassis.driveXFeet(-7/6d+left.getCurrentPosition()/713.014145d,0.5);
-
-                telemetry.addData("Position", "Right (Or unknown)");
+                telemetry.addData("Position", "Right");
                 telemetry.update();
                 break;
 
             default:
+                /* TBD */ chassis.driveFromStart(2.375, 0.5);
 
-                chassis.driveXFeet(-14/6d+left.getCurrentPosition()/713.014145d, 0.5);
-
-                telemetry.addData("Position", "Left");
+                telemetry.addData("Position", "Left (Or unknown)");
                 telemetry.update();
                 break;
         }
 
-        sleep(250);
-        chassis.turnToAngle(80, 0.5);
+        /* TBD */ chassis.turnToAngle(-85, 0.3);
 
-        placeL.setPower(-0.5);
-        placeR.setPower(-0.5);
-        sleep(1500);
+        /* TBD */ leftTray.setPosition(0.5);
+        /* TBD */ rightTray.setPosition(0.5);
 
-        chassis.driveAtSpeed(-0.4);
-        sleep(1000);
+        left.setPower(-0.3);
+        right.setPower(-0.3);
 
-        placeL.setPower(-0.3);
-        placeR.setPower(-0.3);
-        sleep(1000);
-        placeL.setPower(0);
-        placeR.setPower(0);
+        /* TBD */ sleep(1000);
 
         chassis.driveXFeet(0.5, 0.2);
 

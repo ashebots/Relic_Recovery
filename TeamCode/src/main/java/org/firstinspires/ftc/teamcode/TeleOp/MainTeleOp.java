@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOp;
+/*package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,45 +10,52 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
 @TeleOp
-<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
+//TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
 public class NikoTeleOp extends OpMode {
-=======
 public class MainTeleOp extends OpMode{
->>>>>>> be38e2d03bb1d707d6eca9b917bae2f7776211c1:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
+//TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
 
-    DcMotor leftWheel;
-    DcMotor rightWheel;
+    private DcMotor leftWheel;
+    private DcMotor rightWheel;
 
-    Chassis chassis;
+    private Chassis chassis;
 
-    int slowness;
+    private int slowness;
+    private String driveMode;
 
-    DcMotor leftSweeper;
-    DcMotor rightSweeper;
+    private DcMotor leftIntake;
+    private DcMotor rightIntake;
 
-    CRServo leftRotate;
-    CRServo rightRotate;
+    private Servo leftTray;
+    private Servo rightTray;
 
-    DcMotor lift;
+    private String trayStatus;
+    Servo leftRotate;
+    Servo rightRotate;
+    Servo leftTray;
+    Servo rightTray;
 
-    Servo adjusterR;
-    Servo adjusterL;
-    //CRServo armWheelR;
-    CRServo armWheelL;
+    String trayStatus;
 
     String driveMode;
     String adjusterStatus;
-<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
+TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
     String driver;
 
     public enum lift {TOP, MID, LOW}
 
     lift liftPos = LOW;
-=======
->>>>>>> be38e2d03bb1d707d6eca9b917bae2f7776211c1:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
+TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
 
     public void init() {
+    private DcMotor lift;
 
+    private int liftPos;
+
+    private CRServo intakeWheelRight;
+    private CRServo intakeWheelLeft;
+
+    public void init(){
 
         leftWheel = hardwareMap.dcMotor.get("Left wheel");
         rightWheel = hardwareMap.dcMotor.get("Right wheel");
@@ -57,39 +64,36 @@ public class MainTeleOp extends OpMode{
 
         chassis = new Chassis(leftWheel, rightWheel);
 
-        slowness = 1;
+        leftIntake = hardwareMap.dcMotor.get("Left intake");
+        rightIntake = hardwareMap.dcMotor.get("Right intake");
 
-        leftSweeper = hardwareMap.dcMotor.get("Left sweeper");
-        rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
-        leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftIntake.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        leftTray = hardwareMap.servo.get("Left tray");
+        rightTray = hardwareMap.servo.get("Right tray");
 
-        leftRotate = hardwareMap.crservo.get("Left rotator");
-        rightRotate = hardwareMap.crservo.get("Right rotator");
+        rightTray.setDirection(Servo.Direction.REVERSE);
 
-        rightRotate.setDirection(CRServo.Direction.REVERSE);
+        leftRotate = hardwareMap.servo.get("Left rotator");
+        rightRotate = hardwareMap.servo.get("Right rotator");
+
+        rightRotate.setDirection(Servo.Direction.REVERSE);
+        trayStatus = "Dump";
 
         lift = hardwareMap.dcMotor.get("Lift");
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        adjusterR = hardwareMap.servo.get("Right fly rotator");
-        adjusterR.setPosition(0.95);
-        adjusterL = hardwareMap.servo.get("Left fly rotator");
-        adjusterL.setDirection(Servo.Direction.REVERSE);
-        adjusterL.setPosition(0.95);
-        //armWheelR = hardwareMap.crservo.get("Right fly wheel");
-        armWheelL = hardwareMap.crservo.get("Left fly wheel");
-        armWheelL.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeWheelRight = hardwareMap.crservo.get("Right intake wheel");
+        intakeWheelLeft = hardwareMap.crservo.get("Left intake wheel");
 
-        driveMode = "Normal";
-        adjusterStatus = "Raised";
+        intakeWheelLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        Toggle.resetStates();
     }
 
     public void loop() {
-
-<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
+        TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
         if (Toggle.toggle(gamepad1.back || gamepad2.back, 1)) {
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
             if (!Toggle.toggle(gamepad1.y || gamepad2.y, 1)) {
@@ -198,7 +202,6 @@ public class MainTeleOp extends OpMode{
                 telemetry.addData("Lift position", lift.getCurrentPosition());
                 telemetry.addData("Arm tilt position", tilt.getCurrentPosition());
             }
-=======
         if (Toggle.toggle(gamepad1.a, 0)){
             slowness = 2;
             driveMode = "Slow";
@@ -206,45 +209,77 @@ public class MainTeleOp extends OpMode{
             slowness = 1;
             driveMode = "Normal";
         }
+        slowness = Toggle.numChange(gamepad1.dpad_right, gamepad1.dpad_left, 5, 0);
 
-        if (Toggle.toggle(gamepad1.b, 1)){
+        if (Toggle.toggle(gamepad1.b, 0)){
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
-            driveMode = driveMode + " & Reverse";
+            driveMode = "Reverse";
         }else {
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
-            driveMode = driveMode + " & Forward";
-        }
-
-        if (Toggle.toggle(gamepad1.x || gamepad2.x, 2)){
-            adjusterL.setPosition(0.35);
-            adjusterR.setPosition(0.35);
-            adjusterStatus = "Lowered";
-        }else {
-            adjusterL.setPosition(0.95);
-            adjusterR.setPosition(0.95);
-            adjusterStatus = "Raised";
+            driveMode = "Forward";
         }
 
         if (gamepad1.right_bumper){
-            leftSweeper.setPower(1);
-            rightSweeper.setPower(1);
-            armWheelL.setPower(0.5);
-            //armWheelR.setPower(0.5);
+
+            leftIntake.setPower(1);
+            rightIntake.setPower(1);
+
+            intakeWheelLeft.setPower(0.5);
+            intakeWheelRight.setPower(0.5);
+
+            leftTray.setPosition(0.45);
+            rightTray.setPosition(0.45);
+
+            trayStatus = "Intake";
+
+             Toggle.setToggle(2, true);
+
         }else if (gamepad1.right_trigger > 0){
-            leftSweeper.setPower(-1);
-            rightSweeper.setPower(-1);
-            armWheelL.setPower(-0.5);
-            //armWheelR.setPower(-0.5);
+
+            leftIntake.setPower(-1);
+            rightIntake.setPower(-1);
+
+            intakeWheelLeft.setPower(-0.5);
+            intakeWheelRight.setPower(-0.5);
+
         }else{
-            leftSweeper.setPower(0);
-            rightSweeper.setPower(0);
-            armWheelL.setPower(0);
-            //armWheelR.setPower(0);
+
+            leftIntake.setPower(0);
+            rightIntake.setPower(0);
+
+            intakeWheelLeft.setPower(0);
+            intakeWheelRight.setPower(0);
+
+        }
+
+        if(Toggle.toggle(gamepad1.a,3)){
+            leftRotate.setPosition(0.7);
+            rightRotate.setPosition(0.7);
+        }else if (gamepad1.right_trigger > 0 || gamepad1.right_bumper){
+            leftRotate.setPosition(0.4);
+            rightRotate.setPosition(0.4);
+        }else{
+            leftRotate.setPosition(0.45);
+            rightRotate.setPosition(0.45);
+        }
+        if (!gamepad1.right_bumper && Toggle.toggle(gamepad1.a, 2)){
+
+            leftTray.setPosition(0.4);
+            rightTray.setPosition(0.4);
+
+            trayStatus = "Lift";
+
+        }else if (!gamepad1.right_bumper){
+
+            leftTray.setPosition(0.7);
+            rightTray.setPosition(0.7);
+
+            trayStatus = "Dump";
         }
 
         leftRotate.setPower(gamepad1.right_stick_y/2);
         rightRotate.setPower(gamepad1.right_stick_y/2);
->>>>>>> be38e2d03bb1d707d6eca9b917bae2f7776211c1:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
+TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
 
    /* private void liftMove(lift pos){
         switch (pos){
@@ -280,12 +315,27 @@ public class MainTeleOp extends OpMode{
                 }
                 break;
         }*/
-        }
-<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
-=======
+        /*liftPos = Toggle.numChange(gamepad1.left_trigger > 0.25, gamepad1.left_bumper, 4, 2);
 
+        lift.setTargetPosition(1105*(liftPos-1));
+        lift.setPower(1);
+
+        if (gamepad1.left_bumper){
+            lift.setPower(1);
+        }else if (gamepad1.left_trigger > 0){
+            lift.setPower(-1);
+        }else{
+            lift.setPower(0);
+        }
+//TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
+
+        telemetry.addData("Speed", (int)(100/slowness)+"%");
         telemetry.addData("Drive mode", driveMode);
         telemetry.addData("Adjuster position", adjusterStatus);
->>>>>>> be38e2d03bb1d707d6eca9b917bae2f7776211c1:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
+//TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
+
+        telemetry.addData("Tray position", trayStatus);
+        telemetry.addData("Lift position", liftPos);
+
     }
-}
+}*/

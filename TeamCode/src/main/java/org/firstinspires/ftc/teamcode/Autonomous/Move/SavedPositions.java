@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Move;
 
 
+import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+
 public class SavedPositions {
     public static Vector2 leftStart = new Vector2(4,2); //Left balance pad
     public static Vector2 rightStart = new Vector2(10,4); //Right balance pad

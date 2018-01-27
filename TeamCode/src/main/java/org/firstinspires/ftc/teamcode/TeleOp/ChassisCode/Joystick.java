@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.TeleOp.ChassisCode;
 
-import org.firstinspires.ftc.teamcode.Autonomous.ImuChassis;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ImuChassis;
 
 /**
  * Created by jezebelquit on 8/1/17.
@@ -21,7 +21,7 @@ public class Joystick {
         double[] motorSpeeds = new double[2];
 
         //The distance that the joystick is from the center can be calculated by using the pythagorean theorem.
-        joystickDistance = ImuChassis.smartImu((float)Math.sqrt((xPos * xPos) + (yPos * yPos)));
+        joystickDistance = (float)Math.sqrt((xPos * xPos) + (yPos * yPos));
 
         //When calculating the joystick's distance from the center, sometimes the distance exceeds this by a tiny bit. This if statement sets the distance to 1 if this happens.
         if (joystickDistance > 1) joystickDistance = 1;
