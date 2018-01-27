@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.KeeganCodes.KeeganAutonomousCodes;
+package org.firstinspires.ftc.teamcode.Recreational.Recreational.KeeganCodes.KeeganAutonomousCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Created by Lenovo on 10/7/2017.
  */
-@Autonomous
+//@Autonomous
 public class KeeganFastBot extends LinearOpMode{
 
     DcMotor LeftMotor;

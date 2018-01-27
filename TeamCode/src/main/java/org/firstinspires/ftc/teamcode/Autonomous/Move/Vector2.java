@@ -30,4 +30,8 @@ public class Vector2 {
     public static float Dot(Vector2 a, Vector2 b) {
         return a.x() * b.x() + a.y() + b.y();
     }
+
+    public static Vector2 ScalarProduct(float a, Vector2 b) {
+        return new Vector2(a * b.x(), a * b.y());
+    }
 }

@@ -1,6 +1,4 @@
-package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.KeeganCodes.KeeganTeleOpCodes;
-
-import android.graphics.Path;
+package org.firstinspires.ftc.teamcode.Recreational.Recreational.KeeganCodes.KeeganTeleOpCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -8,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-@TeleOp
+//@TeleOp
 public class KeeganTeleOp2 extends OpMode {
 
         DcMotor leftMotor;

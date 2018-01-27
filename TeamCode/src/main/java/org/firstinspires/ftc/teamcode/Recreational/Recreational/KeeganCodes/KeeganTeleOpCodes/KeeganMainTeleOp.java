@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.KeeganCodes.KeeganTeleOpCodes;
+package org.firstinspires.ftc.teamcode.Recreational.Recreational.KeeganCodes.KeeganTeleOpCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 /**
  * Created by Lenovo on 10/7/2017.
  */
-@TeleOp
+//@TeleOp
 public class KeeganMainTeleOp extends OpMode {
 
     DcMotor leftMotor;

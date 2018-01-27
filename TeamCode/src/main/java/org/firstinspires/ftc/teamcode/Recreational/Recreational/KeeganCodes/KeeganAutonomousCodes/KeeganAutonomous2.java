@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.KeeganCodes.KeeganAutonomousCodes;
+package org.firstinspires.ftc.teamcode.Recreational.Recreational.KeeganCodes.KeeganAutonomousCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous
+//@Autonomous
 public class KeeganAutonomous2 extends LinearOpMode{
 
     DcMotor leftMotor;

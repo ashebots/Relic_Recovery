@@ -7,12 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.AnnualModule;
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ImuChassis;
-import org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous.ModularConstants;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
-@Autonomous
+//@Autonomous
 public class ModularTest extends LinearOpMode{
 
     ImuChassis imuChassis;
@@ -24,7 +22,7 @@ public class ModularTest extends LinearOpMode{
     Servo rTray;
     Servo gemArm;
     VueMarkID mark;
-    AnnualModule annualModule;
+    RelicRecoveryVuMark vuMark;
     float[] s = {0,0};
     float[] b = {1, 1};
     float[][] test = {ModularConstants.BALANCE_STONE_A, ModularConstants.CRYPTOBOX_A};
@@ -32,26 +30,27 @@ public class ModularTest extends LinearOpMode{
     public void runOpMode(){
 
         leftMotor = hardwareMap.dcMotor.get("Left wheel");
+        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightMotor = hardwareMap.dcMotor.get("Right wheel");
-        rightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
-        lTray = hardwareMap.servo.get("Left rotator");
+        /*lTray = hardwareMap.servo.get("Left rotator");
         rTray = hardwareMap.servo.get("Right rotator");
         gemArm = hardwareMap.servo.get("gemArm");
         mark = new VueMarkID(hardwareMap);
+        */
 
+        //annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
+        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0);
 
-        annualModule = new AnnualModule(lTray, rTray, gemArm, mark);
-        imuChassis = new ImuChassis(leftMotor, rightMotor, imu, 2959.0, annualModule);
-
-        imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
+        //imuChassis.driveSetup(ModularConstants.NEVERREST_40, 1.5f, 4);
 
         waitForStart();
 
-        //imuChassis.driveToCoord(s, b, 0.6, 0.2, false);
-        imuChassis.driveToCoords(test,0.8,0.5,true);
+        leftMotor.setPower(1);
+        rightMotor.setPower(-1);
+        sleep(10000);
     }
 }

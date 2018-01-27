@@ -9,12 +9,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.LOW;
-import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.MID;
-import static org.firstinspires.ftc.teamcode.TeleOp.NikoTeleOp.lift.TOP;
-
 @TeleOp
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
 public class NikoTeleOp extends OpMode {
+=======
+public class MainTeleOp extends OpMode{
+>>>>>>> be38e2d03bb1d707d6eca9b917bae2f7776211c1:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
 
     DcMotor leftWheel;
     DcMotor rightWheel;
@@ -25,28 +25,27 @@ public class NikoTeleOp extends OpMode {
 
     DcMotor leftSweeper;
     DcMotor rightSweeper;
-    DcMotor arm;
-    DcMotor tilt;
 
     CRServo leftRotate;
     CRServo rightRotate;
-    Servo wrist;
-    Servo grab;
 
     DcMotor lift;
 
     Servo adjusterR;
     Servo adjusterL;
-    CRServo armWheelR;
+    //CRServo armWheelR;
     CRServo armWheelL;
 
-    String speedStatus;
+    String driveMode;
     String adjusterStatus;
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
     String driver;
 
     public enum lift {TOP, MID, LOW}
 
     lift liftPos = LOW;
+=======
+>>>>>>> be38e2d03bb1d707d6eca9b917bae2f7776211c1:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
 
     public void init() {
 
@@ -64,11 +63,6 @@ public class NikoTeleOp extends OpMode {
         rightSweeper = hardwareMap.dcMotor.get("Right sweeper");
         leftSweeper.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        arm = hardwareMap.dcMotor.get("Relic arm");
-        tilt = hardwareMap.dcMotor.get("Relic arm tilter");
-
-        wrist = hardwareMap.servo.get("Relic arm wrist");
-        grab = hardwareMap.servo.get("Relic arm claw");
 
         leftRotate = hardwareMap.crservo.get("Left rotator");
         rightRotate = hardwareMap.crservo.get("Right rotator");
@@ -84,17 +78,18 @@ public class NikoTeleOp extends OpMode {
         adjusterL = hardwareMap.servo.get("Left fly rotator");
         adjusterL.setDirection(Servo.Direction.REVERSE);
         adjusterL.setPosition(0.95);
-        armWheelR = hardwareMap.crservo.get("Right fly wheel");
+        //armWheelR = hardwareMap.crservo.get("Right fly wheel");
         armWheelL = hardwareMap.crservo.get("Left fly wheel");
         armWheelL.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        speedStatus = "Normal";
+        driveMode = "Normal";
         adjusterStatus = "Raised";
 
     }
 
     public void loop() {
 
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
         if (Toggle.toggle(gamepad1.back || gamepad2.back, 1)) {
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
             if (!Toggle.toggle(gamepad1.y || gamepad2.y, 1)) {
@@ -203,6 +198,53 @@ public class NikoTeleOp extends OpMode {
                 telemetry.addData("Lift position", lift.getCurrentPosition());
                 telemetry.addData("Arm tilt position", tilt.getCurrentPosition());
             }
+=======
+        if (Toggle.toggle(gamepad1.a, 0)){
+            slowness = 2;
+            driveMode = "Slow";
+        } else {
+            slowness = 1;
+            driveMode = "Normal";
+        }
+
+        if (Toggle.toggle(gamepad1.b, 1)){
+            chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
+            driveMode = driveMode + " & Reverse";
+        }else {
+            chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
+            driveMode = driveMode + " & Forward";
+        }
+
+        if (Toggle.toggle(gamepad1.x || gamepad2.x, 2)){
+            adjusterL.setPosition(0.35);
+            adjusterR.setPosition(0.35);
+            adjusterStatus = "Lowered";
+        }else {
+            adjusterL.setPosition(0.95);
+            adjusterR.setPosition(0.95);
+            adjusterStatus = "Raised";
+        }
+
+        if (gamepad1.right_bumper){
+            leftSweeper.setPower(1);
+            rightSweeper.setPower(1);
+            armWheelL.setPower(0.5);
+            //armWheelR.setPower(0.5);
+        }else if (gamepad1.right_trigger > 0){
+            leftSweeper.setPower(-1);
+            rightSweeper.setPower(-1);
+            armWheelL.setPower(-0.5);
+            //armWheelR.setPower(-0.5);
+        }else{
+            leftSweeper.setPower(0);
+            rightSweeper.setPower(0);
+            armWheelL.setPower(0);
+            //armWheelR.setPower(0);
+        }
+
+        leftRotate.setPower(gamepad1.right_stick_y/2);
+        rightRotate.setPower(gamepad1.right_stick_y/2);
+>>>>>>> be38e2d03bb1d707d6eca9b917bae2f7776211c1:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
 
    /* private void liftMove(lift pos){
         switch (pos){
@@ -239,5 +281,11 @@ public class NikoTeleOp extends OpMode {
                 break;
         }*/
         }
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
+=======
+
+        telemetry.addData("Drive mode", driveMode);
+        telemetry.addData("Adjuster position", adjusterStatus);
+>>>>>>> be38e2d03bb1d707d6eca9b917bae2f7776211c1:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
     }
 }

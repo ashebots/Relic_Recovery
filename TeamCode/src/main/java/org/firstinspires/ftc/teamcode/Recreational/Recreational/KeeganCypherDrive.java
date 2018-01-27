@@ -1,18 +1,16 @@
-package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes;
+package org.firstinspires.ftc.teamcode.Recreational.Recreational;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.Transform;
-import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
 /**
  * Created by Lenovo on 10/3/2017.
  */
-@Autonomous
+//@Autonomous
 public class KeeganCypherDrive {
 
     DcMotor boxMotor;

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CharlieIanAndKeeganCodes.KeeganCodes.KeeganAutonomousCodes;
+package org.firstinspires.ftc.teamcode.Recreational.Recreational.KeeganCodes.KeeganAutonomousCodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
  * Created by Lenovo on 9/30/2017.
  */
 
-@Autonomous
+//@Autonomous
 public class KeeganVueMark extends LinearOpMode {
 
     DcMotor LeftMotor;

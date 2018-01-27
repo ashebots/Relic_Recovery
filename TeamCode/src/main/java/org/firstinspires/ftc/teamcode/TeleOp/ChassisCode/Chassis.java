@@ -13,17 +13,20 @@ public class Chassis {
     DcMotor colR;
     DcMotor lift;
     Servo turningServo;
+
     enum directions{
 
         FORWARD, BACKWARD;}
 
     boolean priority;
 
+    //A two wheel drive
     public Chassis(DcMotor motorLeft, DcMotor motorRight){
         this.motorLeft = motorLeft;
         this.motorRight = motorRight;
     }
 
+    //A four wheel drive
     public Chassis (DcMotor motorLeft, DcMotor motorRight, DcMotor motorLeftRear, DcMotor motorRightRear){
         this.motorLeft = motorLeft;
         this.motorRight = motorRight;
@@ -31,6 +34,7 @@ public class Chassis {
         this.motorRightRear = motorRightRear;
     }
 
+    //A car drive
     public Chassis (DcMotor motorLeft,Servo turningServo){
         this.motorLeft = motorLeft;
         this.turningServo = turningServo;
@@ -45,6 +49,7 @@ public class Chassis {
         motorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
+    //NormalDrive sets the chassis motor speeds to what is calculated by Joystick.calculateNormal.
     public void NormalDrive(double xPos, double yPos){
 
         if (xPos != 0 || yPos != 0) {
@@ -56,23 +61,31 @@ public class Chassis {
         double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
         motorLeft.setPower(motorSpeeds[0]);
         motorRight.setPower(motorSpeeds[1]);
+
+        //Checks if you are using a four wheel drive.
         if (motorLeftRear != null){
-            motorLeft.setPower(motorSpeeds[0]);
-            motorRight.setPower(motorSpeeds[1]);
+
             motorLeftRear.setPower(motorSpeeds[0]);
             motorRightRear.setPower(motorSpeeds[1]);
+
         }
     }
 
+    //HoloMecaDrive sets the four wheel drive chassis speeds to what it would need to for a Holonomic Mecanum drive.
     public void HoloMecaDrive (double xPos, double yPos){
+
         if (!priority) {
+
             double[] motorSpeeds = Joystick.calculateNormal(xPos, yPos);
             motorLeft.setPower(motorSpeeds[0]);
             motorRight.setPower(motorSpeeds[1]);
             motorLeftRear.setPower(motorSpeeds[1]);
             motorRightRear.setPower(motorSpeeds[0]);
+
         }
     }
+
+    //CarDrive, as the name suggests, sets the rear motor speed and turning servo
     public void CarDrive (double xPos, double yPos){
         double[] motorSpeeds = Joystick.calculateCar(xPos, yPos);
 

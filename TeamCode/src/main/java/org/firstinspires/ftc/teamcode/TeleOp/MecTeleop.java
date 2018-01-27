@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
-@TeleOp(name = "Mech Teleop", group = "A")
+//@TeleOp
 public class MecTeleop extends OpMode{
 
     Chassis drive;

@@ -22,6 +22,7 @@ public class VueMarkID {
     VuforiaTrackables relicTrackables;
 
     public VueMarkID(HardwareMap hardwareMap){
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = ConfigStrings.vueforiaKey;
@@ -30,12 +31,11 @@ public class VueMarkID {
         relicTrackables = vuforia.loadTrackablesFromAsset("RelicVuMark");
         relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate");
+        relicTrackables.activate();
+
     }
 
-    public RelicRecoveryVuMark vueName() {
-        relicTrackables.activate();
-        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-        relicTrackables.deactivate();
-        return vuMark;
+    public RelicRecoveryVuMark  vueName() {
+        return RelicRecoveryVuMark.from(relicTemplate);
     }
 }

@@ -1,9 +1,11 @@
-package org.firstinspires.ftc.teamcode.Autonomous.ModularAutonomous;
+package org.firstinspires.ftc.teamcode.Recreational.Recreational;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Autonomous.ImuChassis;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
+import org.firstinspires.ftc.teamcode.Autonomous.ModularConstants;
 
 /**
  * Created by famil on 12/7/2017.
@@ -79,11 +81,11 @@ public class AnnualModule {
 
     public static void glyphPlace(float angle){
 
-        ImuChassis.turnToAngle(angle, .4);
-        ImuChassis.driveXFeet(-2, .8);
+        ImuChassis.turnToAngle(angle, 0.4);
+        ImuChassis.driveXFeet(-2, 0.8);
         leftRotator.setPosition(0.4);
         rightRotator.setPosition(0.4);
-        ImuChassis.driveXFeet(2,.8);
+        ImuChassis.driveXFeet(2,0.8);
     }
 
 }

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.Toggle;
 /**
  * Created by famil on 11/18/2017.
  */
-@TeleOp
+//@TeleOp
 public class ToggleTest extends OpMode {
 
     public void init(){

@@ -1,19 +1,21 @@
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Recreational.Recreational.IanCodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /**
- * Created by secre on 9/28/2017.
+ * Created by Lenovo on 9/28/2017.
  */
+//@Autonomous
+public class IanCode extends LinearOpMode {
 
-public class IanCodeAutonomous extends LinearOpMode {
-
-    DcMotor LeftMotor;
     DcMotor RightMotor;
+    DcMotor LeftMotor;
 
-    public void runOpMode(){
+
+    public void runOpMode() {
 
         LeftMotor = hardwareMap.dcMotor.get("Left");
         RightMotor = hardwareMap.dcMotor.get("Right");
@@ -26,12 +28,11 @@ public class IanCodeAutonomous extends LinearOpMode {
 
         sleep(3000);
 
-        RightMotor.setPower(0);
-        LeftMotor.setPower(0);
+        RightMotor.setPower(1);
+        LeftMotor.setPower(-1);
 
+        sleep(1000);
 
 
     }
-
-
 }
