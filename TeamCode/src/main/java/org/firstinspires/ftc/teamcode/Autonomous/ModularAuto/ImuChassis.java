@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous.ModularAuto;
 
-import android.graphics.CornerPathEffect;
-
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,23 +7,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-<<<<<<< HEAD
-=======
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.teamcode.Action;
-import org.firstinspires.ftc.teamcode.Autonomous.DisplayPrograms.ArrayDis;
+
+
 import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
-import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
-import org.firstinspires.ftc.teamcode.Coordinate;
+
 import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
-
-import java.util.Queue;
-
-
-/**
- * Created by jezebelquit on 8/12/17.*-
- */
->>>>>>> e7cd22a3cbe007b9c88a52e5c98839e603f538b0
 
 public class ImuChassis {
 

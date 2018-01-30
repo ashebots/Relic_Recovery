@@ -31,9 +31,6 @@ public class RedB extends LinearOpMode {
     private DcMotor intakeLeft;
     private DcMotor intakeRight;
 
-    private Servo leftTray;
-    private Servo rightTray;
-
     private BNO055IMU imu;
 
     public void runOpMode() throws InterruptedException {
@@ -42,13 +39,9 @@ public class RedB extends LinearOpMode {
         right = hardwareMap.dcMotor.get("Right wheel");
         left.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        leftTray = hardwareMap.servo.get("Left tray");
-        rightTray = hardwareMap.servo.get("Right tray");
-        rightTray.setDirection(Servo.Direction.REVERSE);
-
         intakeLeft = hardwareMap.dcMotor.get("Left intake");
         intakeRight = hardwareMap.dcMotor.get("Right intake");
-        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         imu = hardwareMap.get(BNO055IMU.class, "Imu");
 
@@ -64,29 +57,67 @@ public class RedB extends LinearOpMode {
 
         for (int i = 0; i < 10 && opModeIsActive(); i++) { vueMark = mark.vueName(); }
 
-        /* TBD */ leftTray.setPosition(0.875);
-        /* TBD */ rightTray.setPosition(0.875);
-
         intakeLeft.setPower(1);
         intakeRight.setPower(1);
 
-        sleep(2000);
+        sleep(250);
 
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
 
-        /* TBD */ jewelArm.setPosition(0.75);
+        jewelArm.setPosition(0.75);
 
-        if (color.blue() > color.red()) {
-            /* TBD */ chassis.driveXFeet(-0.2, 0.15);
-        } else if (color.red() > color.blue()) {
-            /* TBD */ chassis.driveXFeet(0.2, 0.15);
+        if (color.blue() > color.red()){
+            chassis.driveXFeet(-0.25, 0.15);
+        }else if (color.red() > color.blue()){
+            chassis.driveXFeet(0.25, 0.15);
         }
 
-        /* TBD */ jewelArm.setPosition(0.5);
+        jewelArm.setPosition(0.5);
 
-        /* TBD */ chassis.driveXFeet(2, 0.5);
-        /* TBD */ chassis.turnToAngle(-85, 0.3);
-        
+        chassis.driveFromStart(2, 0.5);
+        chassis.turnToAngle(-85, 0.3);
+
+        switch (vueMark){
+
+            case CENTER:
+                chassis.driveXFeet(1, 0.5);
+
+                telemetry.addData("Position", "Center");
+                telemetry.update();
+                break;
+
+            case RIGHT:
+                chassis.driveXFeet(0.375, 0.25);
+
+                telemetry.addData("Position", "Right");
+                telemetry.update();
+                break;
+
+            default:
+                chassis.driveXFeet(1.625, 0.5);
+
+                telemetry.addData("Position", "Left (Or unknown)");
+                telemetry.update();
+                break;
+        }
+
+        chassis.turnToAngle(0, 0.3);
+
+        left.setPower(0.3);
+        right.setPower(0.3);
+
+        sleep(750);
+
+        intakeLeft.setPower(-1);
+        intakeRight.setPower(-1);
+
+        sleep(500);
+
+        intakeLeft.setPower(0);
+        intakeRight.setPower(0);
+
+        chassis.driveXFeet(-0.5, 0.2);
+
     }
 }

@@ -95,7 +95,7 @@ public class Transform {
     }
 
     public void lookAt(int angle, double pow){
-        int angleDifrence = imu.yaw() - angle;
+        int angleDifrence = (int)imu.yaw() - angle;
         boolean turnRight = false;
         if (angleDifrence + imu.yaw() == angle){
             turnRight = true;
