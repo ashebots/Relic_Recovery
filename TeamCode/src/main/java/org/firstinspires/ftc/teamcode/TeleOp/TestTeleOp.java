@@ -17,7 +17,6 @@ public class TestTeleOp extends OpMode{
     DcMotor rightMotor;
     DcMotor rearLeftMotor;
     DcMotor rearRightMotor;
-
     Chassis chassis;
 
     public void init() {

@@ -9,6 +9,9 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
 /**
+
+ * Created by Lenovo on 11/4/2017.
+
  * Created by famil on 11/12/2017.
  */
 //@TeleOp
@@ -16,14 +19,16 @@ public class TardisTeleOp extends OpMode {
 
     DcMotor leftMotor;
     DcMotor rightMotor;
+
+    Chassis chassis;
     DcMotor handMotor;
 
     TouchSensor sensorA;
     TouchSensor sensorB;
 
-    Chassis chassis;
+    DcMotor Hand;
 
-    public void init (){
+    public void init () {
 
         leftMotor = hardwareMap.dcMotor.get("Left");
         rightMotor = hardwareMap.dcMotor.get("Right");
@@ -37,9 +42,12 @@ public class TardisTeleOp extends OpMode {
         sensorA = hardwareMap.touchSensor.get("Sensor A");
         sensorB = hardwareMap.touchSensor.get("Sensor B");
 
+        Hand = hardwareMap.dcMotor.get("Hand");
+
     }
 
-    public void loop (){
+
+    public void loop () {
 
         chassis.NormalDrive(0.5*gamepad1.left_stick_x, -0.5*gamepad1.left_stick_y);
 

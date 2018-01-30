@@ -7,11 +7,27 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+<<<<<<< HEAD
+=======
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.teamcode.Action;
+import org.firstinspires.ftc.teamcode.Autonomous.DisplayPrograms.ArrayDis;
+import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
+import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
+import org.firstinspires.ftc.teamcode.Coordinate;
+import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+>>>>>>> 3bb57106bfb38b2d1d7ab1e517e35acad3998459
 
 
 import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
 
+<<<<<<< HEAD
 import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+=======
+/**
+ * Created by jezebelquit on 8/12/17.*-
+ */
+>>>>>>> 3bb57106bfb38b2d1d7ab1e517e35acad3998459
 
 public class ImuChassis {
 

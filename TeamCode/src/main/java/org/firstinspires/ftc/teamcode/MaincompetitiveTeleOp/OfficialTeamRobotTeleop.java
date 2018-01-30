@@ -1,48 +1,68 @@
 package org.firstinspires.ftc.teamcode.MaincompetitiveTeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
 /**
  * Created by Lenovo on 10/19/2017.
  */
+@TeleOp
+public class OfficialTeamRobotTeleop extends OpMode {
 
-public class OfficialTeamRobotTeleop extends LinearOpMode {
+    DcMotor rightMotor;
+    DcMotor leftMotor;
+    DcMotor leftIntake;
+    DcMotor rightIntake;
 
-    DcMotor rightmotor;
-    DcMotor leftmotor;
-    DcMotor leftintake;
-    DcMotor rightintake;
+    Servo rotateLeft;
+    Servo rotateRight;
+
     Chassis chassis;
 
+    public void init() {
 
-    public void runOpMode()  {
+        rightMotor = hardwareMap.dcMotor.get("Right");
+        leftMotor = hardwareMap.dcMotor.get("Left");
+        leftIntake = hardwareMap.dcMotor.get("Left intake");
+        rightIntake = hardwareMap.dcMotor.get("Right intake");
 
-        rightmotor = hardwareMap.dcMotor.get("rightmotor");
-        leftmotor = hardwareMap.dcMotor.get("leftmotor");
-        leftintake = hardwareMap.dcMotor.get("leftintake");
-        rightintake = hardwareMap.dcMotor.get("rightmotor");
-        rightmotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftmotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        rotateRight = hardwareMap.servo.get("Right rotator");
+        rotateLeft = hardwareMap.servo.get("Left rotator");
+        rotateLeft.setDirection(Servo.Direction.REVERSE);
 
-        chassis = new Chassis(leftmotor, rightmotor);
+        leftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftIntake.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        chassis = new Chassis(leftintake, rightintake);
+        chassis = new Chassis(leftMotor, rightMotor);
 
-        waitForStart();
+    }
+    public void loop () {
 
-        chassis.NormalDrive(gamepad1.left_stick_x, gamepad1.left_stick_y);
+        chassis.NormalDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y);
+
+        if (gamepad1.right_bumper){
+            leftIntake.setPower(1);
+            rightIntake.setPower(1);
+
+        } else if (gamepad1.right_trigger > 0){
+            leftIntake.setPower(-1);
+            rightIntake.setPower(-1);
+
+        } else {
+            leftIntake.setPower(0);
+            rightIntake.setPower(0);
 
 
 
+        }
 
-
-
-
-
-
+        rotateLeft.setPosition((1+gamepad1.right_stick_y/2)/2);
+        rotateRight.setPosition((1+gamepad1.right_stick_y/2)/2);
     }
 }

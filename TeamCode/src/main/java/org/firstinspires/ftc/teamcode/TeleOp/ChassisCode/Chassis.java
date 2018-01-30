@@ -111,20 +111,4 @@ public class Chassis {
             lift.setPower(0);
         }
     }
-    public void glyphCollector(boolean buttonrightbumper) {
-
-
-        if (buttonrightbumper) {
-
-            colL.setPower(0.8);
-            colR.setPower(0.8);
-
-        }else {
-            colL.setPower(0);
-            colR.setPower(0);
-        }
-
-    }
-
-
 }
