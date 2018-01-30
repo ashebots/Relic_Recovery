@@ -20,9 +20,11 @@ public class Coordinate {
         this.position = position;
     }
 
+    public Vector2 position() {
+        return position;
+    }
+
     public static Vector2 EasyToGlobalPosition(Vector2 easyVec) {
         return new Vector2(easyVec.x() - FIELD_OFFSET_X, easyVec.y() - FIELD_OFFSET_Y);
     }
-
-
 }
