@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 public class NikoTeleOp extends OpMode {
 public class MainTeleOp extends OpMode{
 //TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
-
+//I hate myself
     private DcMotor leftWheel;
     private DcMotor rightWheel;
 
@@ -24,7 +24,7 @@ public class MainTeleOp extends OpMode{
 
     private DcMotor leftIntake;
     private DcMotor rightIntake;
-
+//im just PR
     private Servo leftTray;
     private Servo rightTray;
 
@@ -233,7 +233,7 @@ TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
 
             leftIntake.setPower(0);
             rightIntake.setPower(0);
-
+//this is line 236
 <<<<<<< HEAD
         }
 =======
