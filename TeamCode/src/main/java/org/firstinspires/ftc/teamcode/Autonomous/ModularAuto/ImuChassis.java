@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
-import org.firstinspires.ftc.teamcode.Coordinate;
+import org.firstinspires.ftc.teamcode.Autonomous.Types.Coordinate;
 import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
 
 

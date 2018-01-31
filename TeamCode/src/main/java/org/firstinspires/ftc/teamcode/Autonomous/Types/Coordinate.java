@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autonomous.Types;
 
+import org.firstinspires.ftc.teamcode.Action;
 import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
 
 import java.util.List;
@@ -8,6 +9,11 @@ import java.util.Queue;
 /**
  * Created by rostifar on 1/25/18.
  */
+
+/*
+* Coordinate represents a node in a navigational graph.
+* Each coordinate contains a Vector2 position in R^2
+*/
 
 public class Coordinate {
     private static final int FIELD_OFFSET_X = 6;

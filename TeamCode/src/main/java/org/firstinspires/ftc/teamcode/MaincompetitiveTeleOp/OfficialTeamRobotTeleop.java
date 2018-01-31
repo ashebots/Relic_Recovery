@@ -26,7 +26,6 @@ public class OfficialTeamRobotTeleop extends OpMode {
     Chassis chassis;
 
     public void init() {
-
         rightMotor = hardwareMap.dcMotor.get("Right");
         leftMotor = hardwareMap.dcMotor.get("Left");
         leftIntake = hardwareMap.dcMotor.get("Left intake");
@@ -40,8 +39,8 @@ public class OfficialTeamRobotTeleop extends OpMode {
         leftIntake.setDirection(DcMotorSimple.Direction.REVERSE);
 
         chassis = new Chassis(leftMotor, rightMotor);
-
     }
+
     public void loop () {
 
         chassis.NormalDrive(gamepad1.left_stick_x, -gamepad1.left_stick_y);

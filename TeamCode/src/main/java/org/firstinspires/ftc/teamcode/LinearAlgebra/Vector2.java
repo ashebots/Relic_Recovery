@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.LinearAlgebra;
 
 /**
  * Vector2 is a data structure that represents an element of the vector space R^2.
- * It's important to note, the our R^2 vector space is over the real numbers rather than any other field.
+ * It's important to note that our R^2 vector space is over the real numbers rather than any other field.
  **/
 
 public class Vector2 {

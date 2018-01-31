@@ -6,10 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.VueMarkID;
 
+@Test
 @TeleOp
 public class VueTest extends OpMode{
 
-    VueMarkID mark;
+    private VueMarkID mark;
 
     public void init() {
         mark = new VueMarkID(hardwareMap);

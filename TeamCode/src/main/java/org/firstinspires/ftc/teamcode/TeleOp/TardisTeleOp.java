@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
+import org.firstinspires.ftc.teamcode.Test;
 
 /**
 
@@ -14,7 +15,8 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
  * Created by famil on 11/12/2017.
  */
-//@TeleOp
+
+@Test
 public class TardisTeleOp extends OpMode {
 
     DcMotor leftMotor;

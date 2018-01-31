@@ -12,16 +12,13 @@ import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
  */
 //@TeleOp
 public class FourWheelDriveTeleOp extends OpMode {
-
         DcMotor RightBack;
         DcMotor RightForward;
         DcMotor LeftBack;
         DcMotor LeftForward;
         Chassis chassis;
 
-
-    public void init (){
-
+    public void init () {
         RightBack = hardwareMap.dcMotor.get("RightBack");
         RightForward = hardwareMap.dcMotor.get("RightForward");
         LeftBack = hardwareMap.dcMotor.get("LeftBack");

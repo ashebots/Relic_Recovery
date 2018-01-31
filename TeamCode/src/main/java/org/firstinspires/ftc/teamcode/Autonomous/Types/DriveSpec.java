@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.ModularAuto;
+package org.firstinspires.ftc.teamcode.Autonomous.Types;
 
 /**
  * Created by rostifar on 1/25/18.
