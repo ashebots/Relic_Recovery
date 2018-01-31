@@ -9,8 +9,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
 @TeleOp
+<<<<<<< HEAD
 public class MainTeleOp extends OpMode {
 
+=======
+//TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
+public class NikoTeleOp extends OpMode {
+public class MainTeleOp extends OpMode{
+//TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
+//I hate myself
+>>>>>>> d5327ef4b170abeed4e51061819717f8f7f1cf1e
     private DcMotor leftWheel;
     private DcMotor rightWheel;
 
@@ -21,7 +29,7 @@ public class MainTeleOp extends OpMode {
 
     private DcMotor leftIntake;
     private DcMotor rightIntake;
-
+//im just PR
     private Servo leftTray;
     private Servo rightTray;
 
@@ -87,7 +95,12 @@ public class MainTeleOp extends OpMode {
 
             leftIntake.setPower(0);
             rightIntake.setPower(0);
+<<<<<<< HEAD
 
+=======
+//this is line 236
+<<<<<<< HEAD
+>>>>>>> d5327ef4b170abeed4e51061819717f8f7f1cf1e
         }
 
         leftTray.setPosition((gamepad1.right_stick_y*0.6 + 1) / 2);

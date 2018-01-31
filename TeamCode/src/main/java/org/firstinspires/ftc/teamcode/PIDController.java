@@ -38,6 +38,7 @@ package org.firstinspires.ftc.teamcode;
  * + K tuning constants must be set for each individual application.
  **/
 
+@Deprecated
 public class PIDController {
     private static final Mode      DEFAULT_MODE        =   Mode.AUTO;
     private static final Direction DEFAULT_DIRECTION   =   Direction.DIRECT;

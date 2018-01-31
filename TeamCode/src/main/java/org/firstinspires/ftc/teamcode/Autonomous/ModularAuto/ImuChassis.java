@@ -6,7 +6,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
+<<<<<<< HEAD
 import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+=======
+import org.firstinspires.ftc.teamcode.Autonomous.Types.Coordinate;
+import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
+
+import java.util.Queue;
+
+
+/**
+ * Created by jezebelquit on 8/12/17.*-
+ */
+>>>>>>> d5327ef4b170abeed4e51061819717f8f7f1cf1e
 
 public class ImuChassis {
 
@@ -98,13 +110,6 @@ public class ImuChassis {
         return input;
     }
 
-    public void lookAt(Vector2 target, double speed) {
-        float angle = Vector2.Vec2Angle(target, forward);
-
-    }
-
-
-
     public void turnToAngle (float angleTo, double speed) {
 
         //speed = speed * maxSpeed / 4000;
@@ -168,40 +173,32 @@ public class ImuChassis {
     }
 
     public void driveXFeet(double feet, double speed) {
-
-        //speed = speed * maxSpeed / 4000;
-        int leftGoal = (int)(-feet*encodersPerFoot);
+        int leftGoal = (int)(-feet * encodersPerFoot);
 
         if (leftMotor.getCurrentPosition() > leftGoal) {
-
             while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(speed);
             }
             while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(-speed/2);
             }
-
-        }else{
-
+        } else {
             while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(-speed);
             }
             while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(speed/2);
             }
-
         }
-
         stop();
     }
 
     public void driveFromStart(double feet, double speed) {
-
         feet = feet - leftMotor.getCurrentPosition()/encodersPerFoot;
         driveFromStart(feet, speed);
-
     }
 
+    //remove?
     public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
 
         //driveSpeed = driveSpeed * (maxSpeed / 4000);
@@ -240,14 +237,15 @@ public class ImuChassis {
 
     }
 
-    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
+    public void navigateTo(Queue<Coordinate> coordinates) {
+        for (Coordinate c : coordinates) {
+            Vector2 target = c.position();
+            float distance = target.norm() - currentPosition.norm();
+            float angle = Vector2.Vec2Angle(Vector2.Normalize(currentPosition), Vector2.Normalize(target));
 
-        for(int i = 1; i < coordList.length; i++){
-            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
-
-            //Scan the pictograph and set next location to the appropriate crypto box position
-            //annualModule.coordCheck(coordList, i);
+            angle = GoodIMU.RadiansToDegrees(angle);
+            turnXDegrees(angle, c.speed());
+            driveXFeet(distance, c.speed());
         }
-
     }
 }

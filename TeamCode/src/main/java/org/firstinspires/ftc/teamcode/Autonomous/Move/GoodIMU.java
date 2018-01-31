@@ -49,4 +49,12 @@ public class GoodIMU {
     public static float IMU2GlobalAngle(float imuAngle) {
         return imuAngle >= 0 ? imuAngle : imuAngle + 360;
     }
+
+    public static float DegreesToRadians(float angle) {
+        return (float) (angle * (Math.PI / 180));
+    }
+
+    public static float RadiansToDegrees(float angle) {
+        return (float) (angle * (180 / Math.PI));
+    }
 }
