@@ -42,6 +42,15 @@ public class ModularConstants {
 
 
     public static Vector2 V_BALANCE_STONE_A = new Vector2(-4, -4);
-
-
+    public static Vector2 V_BALANCE_STONE_B = new Vector2(-4, 2);
+    public static Vector2 V_LEFT_COLUMN_A   = new Vector2(-5.5f, -1.125f);
+    public static Vector2 V_MID_COLUMN_A    = new Vector2(-5.5f, -1);
+    public static Vector2 V_RIGHT_COLUMN_A  = new Vector2(-5.5f, -0.875f);
+    public static Vector2 V_CRYPTOBOX_A     = new Vector2(-4, -1);
+    public static Vector2 V_LEFT_COLUMN_B   = new Vector2(-3.875f, 5.5f);
+    public static Vector2 V_MID_COLUMN_B    = new Vector2(-3, 5.5f);
+    public static Vector2 V_RIGHT_COLUMN_B  = new Vector2(-2.125f, 5.5f);
+    public static Vector2 V_CRYPTOBOX       = new Vector2(-3, 4);
+    public static Vector2 V_PICTOGRAPH_A    = new Vector2(-4, -3);
+    public static Vector2 V_PICTOGRAPH_B    = new Vector2(-4, 3);
 }

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Autonomous.ModularAuto;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -108,13 +107,6 @@ public class ImuChassis {
         return input;
     }
 
-    public void lookAt(Vector2 target, double speed) {
-        float angle = Vector2.Vec2Angle(target, forward);
-
-    }
-
-
-
     public void turnToAngle (float angleTo, double speed) {
 
         //speed = speed * maxSpeed / 4000;
@@ -178,30 +170,23 @@ public class ImuChassis {
     }
 
     public void driveXFeet(double feet, double speed) {
-
-        //speed = speed * maxSpeed / 4000;
-        int leftGoal = (int)(-feet*encodersPerFoot);
+        int leftGoal = (int)(-feet * encodersPerFoot);
 
         if (leftMotor.getCurrentPosition() > leftGoal) {
-
             while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(speed);
             }
             while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(-speed/2);
             }
-
-        }else{
-
+        } else {
             while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(-speed);
             }
             while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(speed/2);
             }
-
         }
-
         stop();
     }
 
@@ -210,6 +195,7 @@ public class ImuChassis {
         driveFromStart(feet, speed);
     }
 
+    //remove?
     public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
 
         //driveSpeed = driveSpeed * (maxSpeed / 4000);
