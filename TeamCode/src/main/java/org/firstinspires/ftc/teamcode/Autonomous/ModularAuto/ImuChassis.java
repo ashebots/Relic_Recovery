@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
 import org.firstinspires.ftc.teamcode.Autonomous.Types.Coordinate;
 import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
 
+import java.util.Queue;
+
 
 /**
  * Created by jezebelquit on 8/12/17.*-
@@ -204,10 +206,8 @@ public class ImuChassis {
     }
 
     public void driveFromStart(double feet, double speed) {
-
         feet = feet - leftMotor.getCurrentPosition()/encodersPerFoot;
         driveFromStart(feet, speed);
-
     }
 
     public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
@@ -248,17 +248,15 @@ public class ImuChassis {
 
     }
 
-    public void driveToCoords(float[][] coordList, double driveSpeed, double turnSpeed, Boolean isRed){
+    public void navigateTo(Queue<Coordinate> coordinates) {
+        for (Coordinate c : coordinates) {
+            Vector2 target = c.position();
+            float distance = target.norm() - currentPosition.norm();
+            float angle = Vector2.Vec2Angle(Vector2.Normalize(currentPosition), Vector2.Normalize(target));
 
-        for(int i = 1; i < coordList.length; i++){
-            driveToCoord(coordList[i-1], coordList[i], driveSpeed, turnSpeed, isRed);
-
-            //Scan the pictograph and set next location to the appropriate crypto box position
-            //annualModule.coordCheck(coordList, i);
+            angle = GoodIMU.RadiansToDegrees(angle);
+            turnXDegrees(angle, c.speed());
+            driveXFeet(distance, c.speed());
         }
-    }
-
-    public void navigateTo(Coordinate coordinate) {
-
     }
 }
