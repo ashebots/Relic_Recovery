@@ -66,7 +66,7 @@ public class BlueB extends LinearOpMode{
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
 
-        jewelArm.setPosition(0.75);
+        jewelArm.setPosition(0.6);
 
         if (color.blue() > color.red()){
             chassis.driveXFeet(-0.25, 0.15);
@@ -74,7 +74,7 @@ public class BlueB extends LinearOpMode{
             chassis.driveXFeet(0.25, 0.15);
         }
 
-        jewelArm.setPosition(0.5);
+        jewelArm.setPosition(0.4);
 
         chassis.driveFromStart(2, 0.5);
         chassis.turnToAngle(-85, 0.3);
