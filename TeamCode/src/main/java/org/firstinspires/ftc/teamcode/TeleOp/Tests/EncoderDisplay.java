@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 /**
  * Created by famil on 1/6/2018.
  */
-//@TeleOp
+@TeleOp
 public class EncoderDisplay extends OpMode {
 
     DcMotor leftMotor;

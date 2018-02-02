@@ -9,16 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.TeleOp.ChassisCode.Chassis;
 
 @TeleOp
-<<<<<<< HEAD
 public class MainTeleOp extends OpMode {
 
-=======
-//TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/NikoTeleOp.java
-public class NikoTeleOp extends OpMode {
-public class MainTeleOp extends OpMode{
-//TeamCode/src/main/java/org/firstinspires/ftc/teamcode/TeleOp/MainTeleOp.java
-//I hate myself
->>>>>>> d5327ef4b170abeed4e51061819717f8f7f1cf1e
     private DcMotor leftWheel;
     private DcMotor rightWheel;
 
@@ -29,14 +21,15 @@ public class MainTeleOp extends OpMode{
 
     private DcMotor leftIntake;
     private DcMotor rightIntake;
-//im just PR
+
     private Servo leftTray;
     private Servo rightTray;
 
     private DcMotor lift;
-    private int liftPos;
+    private boolean liftIsRaised;
 
     Servo jewelArm;
+
     public void init(){
 
         leftWheel = hardwareMap.dcMotor.get("Left wheel");
@@ -59,9 +52,10 @@ public class MainTeleOp extends OpMode{
         lift = hardwareMap.dcMotor.get("Lift");
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         jewelArm = hardwareMap.servo.get("Jewel arm");
         jewelArm.setPosition(0.4);
@@ -95,26 +89,35 @@ public class MainTeleOp extends OpMode{
 
             leftIntake.setPower(0);
             rightIntake.setPower(0);
-<<<<<<< HEAD
 
-=======
-//this is line 236
-<<<<<<< HEAD
->>>>>>> d5327ef4b170abeed4e51061819717f8f7f1cf1e
         }
+
+        /*
+        if (liftIsRaised && lift.getCurrentPosition() < 3300){
+            lift.setPower(1);
+        }else if (!liftIsRaised && lift.getCurrentPosition() > 100){
+            lift.setPower(-1);
+        }else {
+            lift.setPower(0);
+        }
+        */
+
+        if (gamepad1.left_bumper && lift.getCurrentPosition() < 3500) {
+            lift.setPower(1);
+        }
+        else if (gamepad1.left_trigger > 0.25) {
+            lift.setPower(-1);
+        }else{
+            lift.setPower(0);
+        }
+
 
         leftTray.setPosition((gamepad1.right_stick_y*0.6 + 1) / 2);
         rightTray.setPosition((gamepad1.right_stick_y*0.6 + 1) / 2);
 
-        liftPos = Toggle.numChange(gamepad1.left_trigger > 0.25, gamepad1.left_bumper, 4, 2);
-
-        lift.setTargetPosition(1105*(liftPos-1));
-        lift.setPower(1);
-
         telemetry.addData("Speed", 100/slowness+"%");
         telemetry.addData("Drive mode", driveMode);
 
-        telemetry.addData("Lift position", liftPos);
-
+        //telemetry.addData("The Lift and tray are", liftIsRaised);
     }
 }

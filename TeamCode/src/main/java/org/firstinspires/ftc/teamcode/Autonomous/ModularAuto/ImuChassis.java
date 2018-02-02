@@ -6,19 +6,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Autonomous.Move.GoodIMU;
-<<<<<<< HEAD
 import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
-=======
 import org.firstinspires.ftc.teamcode.Autonomous.Types.Coordinate;
-import org.firstinspires.ftc.teamcode.LinearAlgebra.Vector2;
-
 import java.util.Queue;
-
-
-/**
- * Created by jezebelquit on 8/12/17.*-
- */
->>>>>>> d5327ef4b170abeed4e51061819717f8f7f1cf1e
 
 public class ImuChassis {
 
@@ -172,69 +162,32 @@ public class ImuChassis {
         encodersPerFoot = (int)((12 * spec.encodersPerRotation) / (spec.gearRatio * Math.PI * spec.wheelDiameter));
     }
 
-    public void driveXFeet(double feet, double speed) {
-        int leftGoal = (int)(-feet * encodersPerFoot);
+    public void driveFromStart(double feet, double speed) {
 
-        if (leftMotor.getCurrentPosition() > leftGoal) {
-            while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
+        int leftGoal = (int)(feet * encodersPerFoot);
+
+        if (leftMotor.getCurrentPosition() < leftGoal) {
+            while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(speed);
             }
-            while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
+            while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(-speed/2);
             }
         } else {
-            while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
+            while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(-speed);
             }
-            while (leftMotor.getCurrentPosition() > leftGoal && opMode.opModeIsActive()) {
+            while (leftMotor.getCurrentPosition() < leftGoal && opMode.opModeIsActive()) {
                 driveAtSpeed(speed/2);
             }
         }
+
         stop();
     }
 
-    public void driveFromStart(double feet, double speed) {
-        feet = feet - leftMotor.getCurrentPosition()/encodersPerFoot;
+    public void driveXFeet(double feet, double speed) {
+        feet = feet + leftMotor.getCurrentPosition()/encodersPerFoot;
         driveFromStart(feet, speed);
-    }
-
-    //remove?
-    public void driveToCoord (float[] startPosition, float[] coords, double driveSpeed, double turnSpeed, Boolean isRed){
-
-        //driveSpeed = driveSpeed * (maxSpeed / 4000);
-        //turnSpeed = turnSpeed * (maxSpeed / 4000);
-
-        float initialAngle;
-
-        //The distance calculation
-        float distance = (int)Math.sqrt((startPosition[1]-coords[1])*(startPosition[1]-coords[1])+(startPosition[0]-coords[0])*(startPosition[0]-coords[0]));
-
-        //Calculating the angle is a bit tricky, and takes quite a bit of if statements
-        if (startPosition[0] != coords[0]) {
-            initialAngle = (float)-Math.toDegrees(Math.atan((startPosition[1] - coords[1]) / (startPosition[0] - coords[0])));
-        }else if (startPosition[1] < coords[1]){
-            initialAngle = -90;
-        }else{
-            initialAngle = 90;
-        }
-
-
-        if (startPosition[0] > coords[0]){
-            initialAngle = Math.abs(initialAngle)-180;
-
-            if (startPosition[1] >= coords[1]) initialAngle = -initialAngle;
-
-        }
-
-        initialAngle = smartImu(initialAngle+90);
-
-        //If the robots are on the red alliance, the angle needs to be reversed
-        if (isRed) initialAngle = -initialAngle;
-
-        //Turns in the direction of the coordinate, and then drives until it reaches it
-        turnToAngle(initialAngle, turnSpeed);
-        driveXFeet(distance, driveSpeed);
-
     }
 
     public void navigateTo(Queue<Coordinate> coordinates) {

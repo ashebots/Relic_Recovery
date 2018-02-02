@@ -2,10 +2,6 @@ package org.firstinspires.ftc.teamcode.TeleOp.ChassisCode;
 
 import org.firstinspires.ftc.teamcode.Autonomous.ModularAuto.ImuChassis;
 
-/**
- * Created by jezebelquit on 8/1/17.
- */
-
 public class Joystick {
 
     //[0] is the speed of the left motor, and [1] is the speed of the right motor.
