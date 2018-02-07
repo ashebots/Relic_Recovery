@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,9 +20,10 @@ public class BlueA extends LinearOpMode{
     private ImuChassis chassis;
     private VueMarkID mark;
 
-    private RelicRecoveryVuMark vueMark = RelicRecoveryVuMark.UNKNOWN;
+    private RelicRecoveryVuMark vueMark;
 
     private Servo jewelArm;
+    private Servo jewelScorer;
     private ColorSensor color;
 
     private DcMotor left;
@@ -56,6 +58,7 @@ public class BlueA extends LinearOpMode{
         mark = new VueMarkID(hardwareMap);
 
         jewelArm = hardwareMap.servo.get("Jewel arm");
+        jewelScorer = hardwareMap.servo.get("Jewel scorer");
         color = hardwareMap.colorSensor.get("Jewel sensor");
 
         chassis = new ImuChassis(left, right, imu, this);
@@ -65,40 +68,41 @@ public class BlueA extends LinearOpMode{
 
         vueMark = mark.vueName();
 
-        leftTray.setPosition(0);
-        rightTray.setPosition(0);
+        jewelScorer.setPosition(0.5);
 
-        sleep(1000);
+        leftTray.setPosition(0.1);
+        rightTray.setPosition(0.1);
 
-        leftTray.setPosition(0.5);
-        rightTray.setPosition(0.5);
+        sleep(500);
 
         intakeLeft.setPower(0.75);
         intakeRight.setPower(0.75);
 
-        sleep(1000);
+        sleep(1500);
 
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
 
-        jewelArm.setPosition(0.6);
+        jewelArm.setPosition(0.9);
 
         sleep(750);
 
         if (color.blue() > color.red()){
 
             telemetry.addData("Jewel color", "Blue");
-            chassis.driveXFeet(0.25, 0.15);
+            jewelScorer.setPosition(0.7);
 
         }else if (color.red() > color.blue()){
 
             telemetry.addData("Jewel color", "Red");
-            chassis.driveXFeet(-0.25, 0.15);
+            jewelScorer.setPosition(0.3);
 
         }
-        sleep(250);
+        sleep(750);
 
-        jewelArm.setPosition(0.4);
+        jewelArm.setPosition(0.325);
+
+        sleep(500);
 
         switch (vueMark){
 
@@ -107,16 +111,17 @@ public class BlueA extends LinearOpMode{
                 telemetry.addData("Position", "Center");
                 telemetry.update();
 
-                chassis.driveFromStart(-2.5, 0.5);
+                chassis.driveFromStart(-3, 0.5);
+
                 break;
 
             case RIGHT:
-                chassis.driveFromStart(-3, 0.5);
 
                 telemetry.addData("Position", "Right");
                 telemetry.update();
 
-                chassis.driveFromStart(-3, 0.5);
+                chassis.driveFromStart(-3.625, 0.5);
+
                 break;
 
             default:
@@ -124,23 +129,31 @@ public class BlueA extends LinearOpMode{
                 telemetry.addData("Position", "Left (Or unknown)");
                 telemetry.update();
 
-                chassis.driveFromStart(-2, 0.5);
+                chassis.driveFromStart(-2.375, 0.5);
+
                 break;
         }
 
         chassis.turnToAngle(-80, 0.5);
 
-        leftTray.setPosition(1);
-        rightTray.setPosition(1);
-
-        sleep(1000);
-
-        left.setPower(-0.3);
-        right.setPower(-0.3);
+        leftTray.setPosition(0.75);
+        rightTray.setPosition(0.75);
 
         sleep(500);
 
-        chassis.driveXFeet(0.25, 0.2);
+        chassis.driveAtSpeed(-0.5);
 
+        sleep(1250);
+
+        chassis.driveAtSpeed(0.3);
+
+        sleep(250);
+
+        chassis.driveAtSpeed(0);
+
+        leftTray.setPosition(0.25);
+        rightTray.setPosition(0.25);
+
+        sleep(500);
     }
 }

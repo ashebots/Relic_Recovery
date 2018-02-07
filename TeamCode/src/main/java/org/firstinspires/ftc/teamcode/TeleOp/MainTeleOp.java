@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -25,10 +26,13 @@ public class MainTeleOp extends OpMode {
     private Servo leftTray;
     private Servo rightTray;
 
+    private String trayPos;
+
     private DcMotor lift;
     private boolean liftIsRaised;
 
-    Servo jewelArm;
+    private Servo jewelArm;
+    private Servo jewelScorer;
 
     public void init(){
 
@@ -50,35 +54,47 @@ public class MainTeleOp extends OpMode {
         leftTray.setDirection(Servo.Direction.REVERSE);
 
         lift = hardwareMap.dcMotor.get("Lift");
-
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
         jewelArm = hardwareMap.servo.get("Jewel arm");
-        jewelArm.setPosition(0.4);
+        jewelScorer = hardwareMap.servo.get("Jewel scorer");
 
         Toggle.resetStates();
     }
 
     public void loop() {
 
-        slowness = Toggle.numChange(gamepad1.dpad_right, gamepad1.dpad_left, 5, 0);
+        jewelArm.setPosition(0.325);
+        jewelScorer.setPosition(0.7);
+
+        slowness = Toggle.numChange(gamepad1.dpad_right, gamepad1.dpad_left, 4, 0);
 
         if (Toggle.toggle(gamepad1.b, 0)) {
+
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, gamepad1.left_stick_y / slowness);
             driveMode = "Reverse";
+
         } else {
+
             chassis.NormalDrive(gamepad1.left_stick_x / slowness, -gamepad1.left_stick_y / slowness);
             driveMode = "Forward";
+
         }
 
         if (gamepad1.right_bumper) {
 
             leftIntake.setPower(0.75);
             rightIntake.setPower(0.75);
+
+            leftTray.setPosition(0.1);
+            rightTray.setPosition(0.1);
+
+            Toggle.setToggle(1, true);
+
+            trayPos = "Intake";
 
         } else if (gamepad1.right_trigger > 0) {
 
@@ -92,32 +108,36 @@ public class MainTeleOp extends OpMode {
 
         }
 
-        /*
-        if (liftIsRaised && lift.getCurrentPosition() < 3300){
-            lift.setPower(1);
-        }else if (!liftIsRaised && lift.getCurrentPosition() > 100){
-            lift.setPower(-1);
+        if (!gamepad1.right_bumper && Toggle.toggle(gamepad1.a, 1)){
+
+            leftTray.setPosition(0.25);
+            rightTray.setPosition(0.25);
+
+            trayPos = "Lift";
+
+        }else if (!gamepad1.right_bumper){
+
+            leftTray.setPosition(0.75);
+            rightTray.setPosition(0.75);
+
+            trayPos = "Dump";
+
+        }
+
+        liftIsRaised = Toggle.toggle(gamepad1.left_bumper, 2);
+
+        if (liftIsRaised){
+            lift.setTargetPosition(3750);
         }else {
-            lift.setPower(0);
-        }
-        */
-
-        if (gamepad1.left_bumper && lift.getCurrentPosition() < 3500) {
-            lift.setPower(1);
-        }
-        else if (gamepad1.left_trigger > 0.25) {
-            lift.setPower(-1);
-        }else{
-            lift.setPower(0);
+            lift.setTargetPosition(0);
         }
 
-
-        leftTray.setPosition((gamepad1.right_stick_y*0.6 + 1) / 2);
-        rightTray.setPosition((gamepad1.right_stick_y*0.6 + 1) / 2);
+        lift.setPower(1);
 
         telemetry.addData("Speed", 100/slowness+"%");
         telemetry.addData("Drive mode", driveMode);
 
-        //telemetry.addData("The Lift and tray are", liftIsRaised);
+        telemetry.addData("Lift is raised", liftIsRaised);
+        telemetry.addData("Tray position", trayPos);
     }
 }

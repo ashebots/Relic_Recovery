@@ -45,6 +45,7 @@ public class Toggle {
     }
 
     public static void setToggle (int modeNum, boolean state){ output[modeNum] = state; }
+
     public static void setNum (int modeNum, int num){ numOutput[modeNum] = num; }
 
     public static void resetStates(){
