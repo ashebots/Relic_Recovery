@@ -147,13 +147,7 @@ public class BlueA extends LinearOpMode{
 
         chassis.driveAtSpeed(0.3);
 
-        sleep(250);
+        sleep(100);
 
-        chassis.driveAtSpeed(0);
-
-        leftTray.setPosition(0.25);
-        rightTray.setPosition(0.25);
-
-        sleep(500);
     }
 }

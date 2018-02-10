@@ -114,6 +114,7 @@ public class ImuChassis {
 
         if (turnToRight) {
 
+
             while (currentAngle <= angleTo && opMode.opModeIsActive()) {
 
                 turnAtSpeed(speed);
@@ -126,10 +127,10 @@ public class ImuChassis {
                 turnAtSpeed(speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
             }
-
             stop();
 
         } else{
+
 
             while (currentAngle < angleTo && opMode.opModeIsActive()) {
 
@@ -138,7 +139,7 @@ public class ImuChassis {
             }
             stop();
 
-            while (currentAngle > angleTo && opMode.opModeIsActive()){
+            while (currentAngle > angleTo && opMode.opModeIsActive()) {
 
                 turnAtSpeed(-speed);
                 currentAngle = -imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;

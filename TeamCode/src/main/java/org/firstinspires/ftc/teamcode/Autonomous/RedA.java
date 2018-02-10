@@ -111,7 +111,7 @@ public class RedA extends LinearOpMode {
                 telemetry.addData("Position", "Center");
                 telemetry.update();
 
-                chassis.driveFromStart(3, 0.5);
+                chassis.driveFromStart(2.85, 0.5);
 
                 break;
 
@@ -120,7 +120,7 @@ public class RedA extends LinearOpMode {
                 telemetry.addData("Position", "Right");
                 telemetry.update();
 
-                chassis.driveFromStart(2.375, 0.5);
+                chassis.driveFromStart(1.625, 0.5);
 
                 break;
 
@@ -129,12 +129,12 @@ public class RedA extends LinearOpMode {
                 telemetry.addData("Position", "Left (Or unknown)");
                 telemetry.update();
 
-                chassis.driveFromStart(3.625, 0.5);
+                chassis.driveFromStart(3, 0.3);
 
                 break;
         }
 
-        chassis.turnToAngle(-80, 0.5);
+        chassis.turnToAngle(-80,0.5);
 
         leftTray.setPosition(0.75);
         rightTray.setPosition(0.75);
@@ -147,13 +147,7 @@ public class RedA extends LinearOpMode {
 
         chassis.driveAtSpeed(0.3);
 
-        sleep(250);
+        sleep(100);
 
-        chassis.driveAtSpeed(0);
-
-        leftTray.setPosition(0.25);
-        rightTray.setPosition(0.25);
-
-        sleep(500);
     }
 }

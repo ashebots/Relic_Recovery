@@ -69,12 +69,17 @@ public class BlueB extends LinearOpMode{
 
         vueMark = mark.vueName();
 
+        jewelScorer.setPosition(0.5);
+
+        leftTray.setPosition(0.1);
+        rightTray.setPosition(0.1);
+
+        sleep(500);
+
         intakeLeft.setPower(0.75);
         intakeRight.setPower(0.75);
 
-        jewelScorer.setPosition(0.5);
-
-        sleep(125);
+        sleep(1500);
 
         intakeLeft.setPower(0);
         intakeRight.setPower(0);
@@ -100,8 +105,7 @@ public class BlueB extends LinearOpMode{
 
         sleep(500);
 
-        chassis.driveFromStart(2, 0.5);
-        chassis.turnToAngle(-80, 0.3);
+        chassis.driveXFeet(-2, 0.5);
 
         switch (vueMark){
 
@@ -110,7 +114,7 @@ public class BlueB extends LinearOpMode{
                 telemetry.addData("Position", "Center");
                 telemetry.update();
 
-                chassis.driveXFeet(1, 0.5);
+                chassis.turnToAngle(16, 0.5);
 
                 break;
 
@@ -119,7 +123,7 @@ public class BlueB extends LinearOpMode{
                 telemetry.addData("Position", "Right");
                 telemetry.update();
 
-                chassis.driveXFeet(1.625, 0.5);
+                chassis.turnToAngle(25, 0.5);
 
                 break;
 
@@ -128,34 +132,23 @@ public class BlueB extends LinearOpMode{
                 telemetry.addData("Position", "Left (Or unknown)");
                 telemetry.update();
 
-                chassis.driveXFeet(0.375, 0.25);
+                chassis.turnToAngle(6, 0.5);
 
                 break;
         }
 
-        chassis.turnToAngle(-170, 0.5);
-
-        leftTray.setPosition(0.1);
-        rightTray.setPosition(0.1);
-
-        intakeLeft.setPower(0.75);
-        intakeRight.setPower(0.75);
-
-        sleep(1500);
-
-        intakeLeft.setPower(0);
-        intakeRight.setPower(0);
-
         leftTray.setPosition(0.75);
         rightTray.setPosition(0.75);
 
+        sleep(500);
+
         chassis.driveAtSpeed(-0.5);
 
-        sleep(1250);
+        sleep(2500);
 
-        chassis.driveAtSpeed(0.1);
+        chassis.driveAtSpeed(0.3);
 
-        sleep(500);
+        sleep(100);
 
     }
 }
