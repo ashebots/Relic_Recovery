@@ -70,7 +70,7 @@ public class MainTeleOp extends OpMode {
         jewelArm.setPosition(0.325);
         jewelScorer.setPosition(0.7);
 
-        slowness = Toggle.numChange(gamepad1.dpad_right, gamepad1.dpad_left, 4, 0);
+        slowness = Toggle.numChange(gamepad1.dpad_right, gamepad1.dpad_left, 4, 1);
 
         if (Toggle.toggle(gamepad1.b, 0)) {
 
@@ -84,10 +84,11 @@ public class MainTeleOp extends OpMode {
 
         }
 
+
         if (gamepad1.right_bumper) {
 
-            leftIntake.setPower(0.75);
-            rightIntake.setPower(0.75);
+            leftIntake.setPower(0.5);
+            rightIntake.setPower(0.5);
 
             leftTray.setPosition(0.1);
             rightTray.setPosition(0.1);
@@ -98,8 +99,8 @@ public class MainTeleOp extends OpMode {
 
         } else if (gamepad1.right_trigger > 0) {
 
-            leftIntake.setPower(-0.75);
-            rightIntake.setPower(-0.75);
+            leftIntake.setPower(-0.5);
+            rightIntake.setPower(-0.5);
 
         } else {
 
@@ -117,8 +118,8 @@ public class MainTeleOp extends OpMode {
 
         }else if (!gamepad1.right_bumper){
 
-            leftTray.setPosition(0.75);
-            rightTray.setPosition(0.75);
+            leftTray.setPosition(0.8);
+            rightTray.setPosition(0.8);
 
             trayPos = "Dump";
 

@@ -76,8 +76,8 @@ public class RedB extends LinearOpMode {
 
         sleep(500);
 
-        intakeLeft.setPower(0.75);
-        intakeRight.setPower(0.75);
+        intakeLeft.setPower(0.5);
+        intakeRight.setPower(0.5);
 
         sleep(1500);
 
@@ -114,7 +114,7 @@ public class RedB extends LinearOpMode {
                 telemetry.addData("Position", "Center");
                 telemetry.update();
 
-                chassis.turnToAngle(164, 0.5);
+                chassis.turnToAngle(174, 0.4);
 
                 break;
 
@@ -123,7 +123,7 @@ public class RedB extends LinearOpMode {
                 telemetry.addData("Position", "Right");
                 telemetry.update();
 
-                chassis.turnToAngle(174, 0.5);
+                chassis.turnToAngle(-176, 0.4);
 
                 break;
 
@@ -132,7 +132,7 @@ public class RedB extends LinearOpMode {
                 telemetry.addData("Position", "Left (Or unknown)");
                 telemetry.update();
 
-                chassis.turnToAngle(155, 0.5);
+                chassis.turnToAngle(165, 0.4);
 
                 break;
         }
@@ -148,7 +148,9 @@ public class RedB extends LinearOpMode {
 
         chassis.driveAtSpeed(0.3);
 
-        sleep(100);
+        sleep(75);
+
+        chassis.driveAtSpeed(0);
 
     }
 }

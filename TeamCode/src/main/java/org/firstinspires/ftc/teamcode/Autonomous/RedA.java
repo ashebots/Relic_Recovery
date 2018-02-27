@@ -75,8 +75,8 @@ public class RedA extends LinearOpMode {
 
         sleep(500);
 
-        intakeLeft.setPower(0.75);
-        intakeRight.setPower(0.75);
+        intakeLeft.setPower(0.5);
+        intakeRight.setPower(0.5);
 
         sleep(1500);
 
@@ -111,7 +111,7 @@ public class RedA extends LinearOpMode {
                 telemetry.addData("Position", "Center");
                 telemetry.update();
 
-                chassis.driveFromStart(2.85, 0.5);
+                chassis.driveFromStart(2.5, 0.5);
 
                 break;
 
@@ -147,7 +147,8 @@ public class RedA extends LinearOpMode {
 
         chassis.driveAtSpeed(0.3);
 
-        sleep(100);
+        sleep(500);
 
+        chassis.driveAtSpeed(0);
     }
 }

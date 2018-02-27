@@ -75,8 +75,8 @@ public class BlueA extends LinearOpMode{
 
         sleep(500);
 
-        intakeLeft.setPower(0.75);
-        intakeRight.setPower(0.75);
+        intakeLeft.setPower(0.5);
+        intakeRight.setPower(0.5);
 
         sleep(1500);
 
@@ -136,18 +136,26 @@ public class BlueA extends LinearOpMode{
 
         chassis.turnToAngle(-80, 0.5);
 
-        leftTray.setPosition(0.75);
-        rightTray.setPosition(0.75);
-
         sleep(500);
 
-        chassis.driveAtSpeed(-0.5);
+        chassis.driveXFeet(-1, 0.4);
 
         sleep(1250);
 
+        leftTray.setPosition(0.75);
+        rightTray.setPosition(0.75);
+
+        sleep(1000);
+
+        chassis.driveAtSpeed(-0.5);
+
+        sleep(750);
+
         chassis.driveAtSpeed(0.3);
 
-        sleep(100);
+        sleep(500);
+
+        chassis.stop();
 
     }
 }

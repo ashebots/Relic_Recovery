@@ -79,12 +79,13 @@ public class ImuChassis {
         leftMotor.setPower(speed);
         rightMotor.setPower(speed);
     }
-    private void turnAtSpeed(double speed) {
+
+    public void turnAtSpeed(double speed) {
         leftMotor.setPower(speed);
         rightMotor.setPower(-speed);
     }
 
-    private  void stop() {
+    public void stop() {
         leftMotor.setPower(0);
         rightMotor.setPower(0);
     }
