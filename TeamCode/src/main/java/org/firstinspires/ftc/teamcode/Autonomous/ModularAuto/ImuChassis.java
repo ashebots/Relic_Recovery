@@ -188,8 +188,29 @@ public class ImuChassis {
     }
 
     public void driveXFeet(double feet, double speed) {
+
         feet = feet + leftMotor.getCurrentPosition()/encodersPerFoot;
         driveFromStart(feet, speed);
+
+    }
+
+    public void driveToCoord(float[] startPos, float[] endPos, double driveSpeed, double turnSpeed, boolean onRedTeam) {
+
+        float distance = (float)Math.sqrt(Math.pow(endPos[0]-startPos[0], 2) + Math.pow(endPos[1]-startPos[1], 2));
+        float angle = 0;
+
+        double side = 0;
+
+        if (startPos[1] != endPos[1]) { angle = (float)Math.atan((endPos[0]-startPos[0])/(endPos[1]-startPos[1])); }
+        else if (startPos[0] > endPos[0]) { angle = -90; }
+        else { angle = 90; }
+
+        if (startPos[0] != endPos[0]) side = Math.abs(endPos[0]-startPos[0])/(endPos[0]-startPos[0]);
+
+        if (startPos[1]>endPos[1]) angle += side*180;
+
+        turnToAngle(angle, turnSpeed);
+        driveXFeet(distance, driveSpeed);
     }
 
     public void navigateTo(Queue<Coordinate> coordinates) {

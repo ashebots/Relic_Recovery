@@ -138,7 +138,7 @@ public class BlueA extends LinearOpMode{
 
         sleep(500);
 
-        chassis.driveXFeet(-1, 0.4);
+        chassis.driveXFeet(-1.25, 0.4);
 
         sleep(1250);
 
